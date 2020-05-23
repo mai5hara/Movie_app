@@ -1,8 +1,8 @@
-export const SEARCH_MOVIES_REQUEST   = 'SEARCH_MOVIES_REQUEST';
-export const SEARCH_MOVIES_SECCESS = 'SEARCH_MOVIES_SECCESS';
-export const SEARCH_MOVIES_FAILURE = 'SEARCH_MOVIES_FAILURE';
-export const SEARCH_PLOT_SUCCESS = 'SEARCH_PLOT_SUCCESS';
-export const SEARCH_PLOT_FAILURE = 'SEARCH_PLOT_FAILURE';
+// export const SEARCH_MOVIES_REQUEST   = 'SEARCH_MOVIES_REQUEST';
+// export const SEARCH_MOVIES_SECCESS = 'SEARCH_MOVIES_SECCESS';
+// export const SEARCH_MOVIES_FAILURE = 'SEARCH_MOVIES_FAILURE';
+// export const SEARCH_PLOT_SUCCESS = 'SEARCH_PLOT_SUCCESS';
+// export const SEARCH_PLOT_FAILURE = 'SEARCH_PLOT_FAILURE';
 
 export const searchMovieRequest = () => {
     return {
@@ -10,11 +10,23 @@ export const searchMovieRequest = () => {
     }
 }
 
-export const SearchMovieSuccess = (movies) => {
+export const searchMovieSuccess = (movies) => {
     console.log(movies)
-    return {
-        type: 'SEARCH_MOVIES_SECCESS',
-        payload: {movies}
+    return (dispatch, {getFirestore, getFirebase}) => {
+        const firestore = getFirestore();
+        const firebase = getFirebase();
+
+        firestore.collection('movies').add({
+            ...movies,
+            movie: firestore.movie
+        }).then(() => {
+            dispatch({type: 'SEARCH_MOVIES_SECCESS', movies})
+        }).catch((err) => {
+            console.log(err)
+        })
+
+        // type: 'SEARCH_MOVIES_SECCESS',
+        // payload: {movies}
     }
 }
 
@@ -43,11 +55,12 @@ export const searchPlotFailure = (error) => {
 export const fetchMovies = (value) => {
     return dispatch => {
         dispatch(searchMovieRequest());
+
         fetch(`https://www.omdbapi.com/?s=${value}&apikey=4a3b711b`)
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            dispatch(SearchMovieSuccess(data.Search));
+            dispatch(searchMovieSuccess(data.Search));
             // return jsonResponse.Search;
         })
         .catch(error => {
@@ -62,7 +75,7 @@ export const fetchPlot = (targetImdbID) => {
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            dispatch(searchPlotSuccess(data.Search));
+            dispatch(searchPlotSuccess(data));
         })
         .catch(error => {
             dispatch(searchPlotFailure(error));

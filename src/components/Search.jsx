@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {fetchMovies} from '../actions/movieActions';
+import {fetchMovies} from '../store/actions/movieActions';
 
 
 export default class Search extends Component {
