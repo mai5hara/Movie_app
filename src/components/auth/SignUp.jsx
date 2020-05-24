@@ -1,51 +1,56 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
-import {signUp} from '../../store/actions/authActions';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { signUp } from '../../store/actions/authActions';
 
-class SignUp extends Component {
-    state = {
+const SignUp = ({auth, authError, signUp}) => {
+    const [state, setState] = useState({
         name: '',
         email: '',
         password: ''
-    }
+    })
 
-    handleChange = (e) => {
+    console.log(state)
+
+    const handleChange = (e) => {
         e.preventDefault();
-        this.setState({
+        setState({
+            ...state,
             [e.target.id]: e.target.value
         })
     }
 
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        this.props.signUp(this.state)
-        console.log(this.state.email, this.state.password)
+        signUp(state)
     }
 
-    render() {
+    if (auth.uid) return <Redirect to="/"/>
+
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <div>
                         <p>Name</p>
-                        <input type="text" id="name" onChange={this.handleChange}/>
+                        <input type="text" id="name" onChange={handleChange}/>
                     </div>
                     <div>
                         <p>Email</p>
-                        <input type="email" id="email" onChange={this.handleChange}/>
+                        <input type="email" id="email" onChange={handleChange}/>
                     </div>
                     <div>
                         <p>Password</p>
-                        <input type="password" id="password" onChange={this.handleChange}/>
+                        <input type="password" id="password" onChange={handleChange}/>
                     </div>
                     <div>
                         <button>Sign Up</button>
+                        <div>
+                            { authError ? <p>{authError}</p> : null }
+                        </div>
                     </div>
                 </form>
             </div>
         )
-    }
 }
 
 const mapStateToProps = (state) => {

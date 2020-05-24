@@ -1,10 +1,3 @@
-// import {SEARCH_MOVIES_REQUEST, 
-//         SEARCH_MOVIES_SECCESS, 
-//         SEARCH_MOVIES_FAILURE,
-//         SEARCH_PLOT_SUCCESS,
-//         SEARCH_PLOT_FAILURE} 
-//         from '../actions/movieActions';
-
 const initState = {
     loading: false,
     movies: [],
@@ -23,7 +16,7 @@ const movieReducer = (state = initState, action) => {
             };
         case 'SEARCH_MOVIES_SECCESS':
             console.log(action)
-            const movies = action.movies
+            const movies = action.payload.movies
             console.log(movies)
             return {
                 ...state,
@@ -37,7 +30,7 @@ const movieReducer = (state = initState, action) => {
                 error: action.error
             };
         case 'SEARCH_PLOT_SUCCESS':
-            const movieDetail = action.movieDetail
+            const movieDetail = action.payload
             console.log(movieDetail)
             return {
                 ...state,

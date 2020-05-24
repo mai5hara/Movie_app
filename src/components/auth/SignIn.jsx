@@ -1,41 +1,40 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {signIn} from '../../store/actions/authActions';
-import {Redirect} from 'react-router-dom';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { signIn } from '../../store/actions/authActions';
+import { Redirect } from 'react-router-dom';
 
-class SignIn extends Component {
-    state = {
+const SignIn = ({auth, authError, signIn}) => {
+
+    const [state, setState] = useState({
         email: '',
         password: ''
-    }
+    })
 
-    handleChange = (e) => {
+    const handleChange = (e) => {
         e.preventDefault();
-        this.setState({
+        setState({
+            ...state,
             [e.target.id]: e.target.value
         })
     }
 
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        this.props.signIn(this.state)
-        console.log(this.state.email, this.state.password)
+        signIn(state)
     }
 
-    render() {
-        const { authError, auth } = this.props;
-        if (auth.uid) return <Redirect to="/"/>
+    if (auth.uid) return <Redirect to="/"/>
 
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <div>
                         <p>Email</p>
-                        <input type="email" id="email" onChange={this.handleChange}/>
+                        <input type="email" id="email" onChange={handleChange}/>
                     </div>
                     <div>
                         <p>Password</p>
-                        <input type="password" id="password" onChange={this.handleChange}/>
+                        <input type="password" id="password" onChange={handleChange}/>
                     </div>
                     <div>
                         <button>Sign In</button>
@@ -46,7 +45,6 @@ class SignIn extends Component {
                 </form>
             </div>
         )
-    }
 }
 
 const mapStateToProps = (state) => {

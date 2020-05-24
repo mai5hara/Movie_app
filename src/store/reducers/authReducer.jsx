@@ -3,6 +3,8 @@ const initState = {
 }
 
 const authReducer = (state = initState, action) => {
+    // console.log(state)
+    // console.log(action)
     switch(action.type) {
         case 'LOGIN_ERROR':
             console.log('login failed')
@@ -29,7 +31,7 @@ const authReducer = (state = initState, action) => {
             console.log('signup error')
             return {
                 ...state,
-                authError: action.error.message
+                authError: action.err.message
             }
         default:
             return state;

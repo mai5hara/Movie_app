@@ -1,9 +1,3 @@
-// export const SEARCH_MOVIES_REQUEST   = 'SEARCH_MOVIES_REQUEST';
-// export const SEARCH_MOVIES_SECCESS = 'SEARCH_MOVIES_SECCESS';
-// export const SEARCH_MOVIES_FAILURE = 'SEARCH_MOVIES_FAILURE';
-// export const SEARCH_PLOT_SUCCESS = 'SEARCH_PLOT_SUCCESS';
-// export const SEARCH_PLOT_FAILURE = 'SEARCH_PLOT_FAILURE';
-
 export const searchMovieRequest = () => {
     return {
         type: 'SEARCH_MOVIES_REQUEST'
@@ -12,21 +6,22 @@ export const searchMovieRequest = () => {
 
 export const searchMovieSuccess = (movies) => {
     console.log(movies)
-    return (dispatch, {getFirestore, getFirebase}) => {
-        const firestore = getFirestore();
-        const firebase = getFirebase();
+    // return (dispatch, {getFirestore, getFirebase}) => {
+    //     const firestore = getFirestore();
+    //     const firebase = getFirebase();
 
-        firestore.collection('movies').add({
-            ...movies,
-            movie: firestore.movie
-        }).then(() => {
-            dispatch({type: 'SEARCH_MOVIES_SECCESS', movies})
-        }).catch((err) => {
-            console.log(err)
-        })
+    //     firestore.collection('movies').add({
+    //         ...movies,
+    //         movie: firestore.movie
+    //     }).then(() => {
+    //         dispatch({type: 'SEARCH_MOVIES_SECCESS', movies})
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    return {
 
-        // type: 'SEARCH_MOVIES_SECCESS',
-        // payload: {movies}
+        type: 'SEARCH_MOVIES_SECCESS',
+        payload: {movies}
     }
 }
 
@@ -37,11 +32,11 @@ export const searchMovieFeilure = (error) => {
     }
 }
 
-export const searchPlotSuccess = (id) => {
-    console.log(id)
+export const searchPlotSuccess = (movieDetail) => {
+    console.log(movieDetail)
     return {
         type: 'SEARCH_PLOT_SUCCESS',
-        payload: {id}
+        payload: movieDetail
     }
 }
 
@@ -70,6 +65,7 @@ export const fetchMovies = (value) => {
 }
 
 export const fetchPlot = (targetImdbID) => {
+    console.log(targetImdbID)
     return dispatch => {
         fetch(`http://www.omdbapi.com/?apikey=4a3b711b&i=${targetImdbID}`)
         .then(response => response.json())
