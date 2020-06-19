@@ -1,27 +1,29 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import MovieList from './components/MovieList';
-// import Movie from './components/Movie';
-import Navbar from './components/layout/Navbar';
-import SignUp from './components/auth/SignUp';
-import SignIn from './components/auth/SignIn';
-import MovieDetails from './components/MovieDetail';
+import MovieList from './containers/movieList';
+import Navbar from './containers/navbar';
+import SignUp from './containers/signUp';
+import SignIn from './containers/signIn';
+// import SignIn from './components/auth/SignIn';
+import MovieDetails from './containers/movieDetaile';
+import Review from './containers/review';
 
-import './App.css'; 
+import './App.css';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-          <div className="App">
-            <Navbar />
-            <Switch>
-              <Route exact path='/' component={MovieList} />
-              <Route path='/movielist/:id' component={MovieDetails} />
-              <Route path='/signup' component={SignUp} />
-              <Route path='/signin' component={SignIn} />
-            </Switch>
-          </div>
+        <div className="App">
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={MovieList} />
+            <Route path="/movie/:id" component={MovieDetails} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="/:id/review" component={Review} />
+          </Switch>
+        </div>
       </BrowserRouter>
     );
   }

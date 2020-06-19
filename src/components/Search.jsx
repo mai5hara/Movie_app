@@ -1,18 +1,16 @@
-import React,{Component} from 'react';
-import {fetchMovies} from '../store/actions/movieActions';
-
-
+import React, { Component } from 'react';
+import { fetchMovies } from '../store/actions/movieActions';
 export default class Search extends Component {
     state = {
         searchValue: []
     }
 
     handleChange = (e) => {
-        this.setState({searchValue: e.target.value})
+        this.setState({ searchValue: e.target.value })
     }
 
     resetInputField = () => {
-        this.setState({searchValue: ''})
+        this.setState({ searchValue: '' })
     }
 
     callSearchFunction = (e) => {
@@ -20,16 +18,16 @@ export default class Search extends Component {
         this.props.dispatch(fetchMovies(this.state.searchValue));
     }
 
-    render(){
+    render() {
         return (
             <div>
-                <input 
+                <input
                     type="text"
                     onChange={this.handleChange}
                 />
-                <button 
-                    onClick={() => 
-                    this.props.dispatch(fetchMovies(this.state.searchValue))}
+                <button
+                    onClick={() =>
+                        this.props.dispatch(fetchMovies(this.state.searchValue))}
                 >
                     Search
                 </button>

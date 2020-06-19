@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { signUp } from '../../store/actions/authActions';
 
-const SignUp = ({auth, authError, signUp}) => {
+const SignUp = ({ auth, authError, signUp }) => {
     const [state, setState] = useState({
         name: '',
         email: '',
@@ -25,45 +23,32 @@ const SignUp = ({auth, authError, signUp}) => {
         signUp(state)
     }
 
-    if (auth.uid) return <Redirect to="/"/>
+    if (auth.uid) return <Redirect to="/" />
 
-        return (
-            <div>
-                <form onSubmit={handleSubmit}>
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <p>Name</p>
+                    <input type="text" id="name" onChange={handleChange} />
+                </div>
+                <div>
+                    <p>Email</p>
+                    <input type="email" id="email" onChange={handleChange} />
+                </div>
+                <div>
+                    <p>Password</p>
+                    <input type="password" id="password" onChange={handleChange} />
+                </div>
+                <div>
+                    <button>Sign Up</button>
                     <div>
-                        <p>Name</p>
-                        <input type="text" id="name" onChange={handleChange}/>
+                        {authError ? <p>{authError}</p> : null}
                     </div>
-                    <div>
-                        <p>Email</p>
-                        <input type="email" id="email" onChange={handleChange}/>
-                    </div>
-                    <div>
-                        <p>Password</p>
-                        <input type="password" id="password" onChange={handleChange}/>
-                    </div>
-                    <div>
-                        <button>Sign Up</button>
-                        <div>
-                            { authError ? <p>{authError}</p> : null }
-                        </div>
-                    </div>
-                </form>
-            </div>
-        )
+                </div>
+            </form>
+        </div>
+    )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        auth: state.firebase.auth,
-        authError: state.auth.authError
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        signUp: (newUser) => dispatch(signUp(newUser))
-    }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(SignUp);
+export default SignUp;
