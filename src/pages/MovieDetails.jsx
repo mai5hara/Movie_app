@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import ShowReview from './ShowReview';
-import { Link } from 'react-router-dom';
+import ScoreReviews from '../components/organisms/ScoreReviews';
+import MovieInfo from '../components/organisms/MovieInfo';
 
 const MovieDetails = ({
   movieDetail,
@@ -84,40 +84,17 @@ const MovieDetails = ({
           : clipToggle.clipCount - 1,
     });
   };
-
-  // console.log(movieDetail)
   return (
     <div>
-      <h2>{movieDetail.Title}</h2>
-      <img
-        width="200"
-        alt={`The movie title ${movieDetail.Title}`}
-        src={movieDetail.Poster}
+      <MovieInfo
+        viewHandleClick={viewHandleClick}
+        clipHandleClick={clipHandleClick}
+        id={id}
+        movieDetail={movieDetail}
+        totalView={totalView}
+        clipToggle={clipToggle}
       />
-      <p>{movieDetail.Director}</p>
-      <p>{movieDetail.Actors}</p>
-      <p>{movieDetail.Plot}</p>
-      <div>
-        <button id="viewCount" onClick={viewHandleClick}>
-          View {totalView}
-        </button>
-        <button id="clipCount" onClick={clipHandleClick}>
-          Clip {clipToggle.clipCount}
-        </button>
-        <button id="viewCount" onClick={viewHandleClick}>
-          test
-        </button>
-        <button>
-          <Link to={'/' + id + '/review'} key={id}>
-            Review
-          </Link>
-        </button>
-        <h2>Score ・ Review</h2>
-        {reviews &&
-          reviews.map((review) => {
-            return <ShowReview review={review} />;
-          })}
-      </div>
+      <ScoreReviews reviews={reviews} />
     </div>
   );
 };

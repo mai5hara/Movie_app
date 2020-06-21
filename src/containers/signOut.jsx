@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import SignedInLinks from '../components/layout/SignedInLinks';
+import SignedInLinks from '../components/molecules/SignedInLinks';
 import { signOut } from '../../store/actions/authActions';
 
 const mapDispatchToProps = (dispatch) => {

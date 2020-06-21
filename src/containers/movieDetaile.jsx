@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchPlot } from '../store/actions/movieActions';
-import MovieDetails from '../components/MovieDetail';
+import MovieDetails from '../pages/MovieDetails';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 

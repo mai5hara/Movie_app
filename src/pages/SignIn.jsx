@@ -1,0 +1,63 @@
+import React from 'react';
+import SignEmail from '../components/molecules/SignEmail';
+import SignPassword from '../components/molecules/SignPassword';
+import SignInBtn from '../components/atoms/SignUpBtn';
+import { Redirect } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+
+const SignIn = ({ auth, signIn }) => {
+
+  const handleSubmit = (values) => {
+    console.log(values)
+    signIn(values);
+  };
+
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email('Enter a correct email')
+      .required('Enter an email'),
+    password: Yup.string()
+      .required('Enter a password'),
+  })
+
+  if (auth.uid) return <Redirect to="/" />;
+
+  return (
+    <>
+      <Formik
+        onSubmit={(values, { setSubmitting }) => {
+          setSubmitting(false);
+          handleSubmit(values);
+        }}
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+      >
+        {props => {
+          console.log(props)
+          const { handleChange, errors, touched, isSubmitting } = props;
+          console.log(handleChange)
+          return (
+            <>
+              <Form>
+                <SignEmail
+                  handleChange={handleChange}
+                  errors={errors}
+                  touched={touched}
+                />
+                <SignPassword
+                  handleChange={handleChange}
+                  errors={errors}
+                  touched={touched}
+                />
+                <SignInBtn isSubmitting={isSubmitting} />
+              </Form>
+            </>
+          );
+        }}
+      </Formik>
+    </>
+  );
+};
+
+export default SignIn;

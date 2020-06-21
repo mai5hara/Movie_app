@@ -1,4 +1,5 @@
 import React from 'react';
+import MovieDetailBtns from '../molecules/MovieDetailBtns';
 
 const DEFAULT_PLACEHOLDER_IMAGE = 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg';
 
@@ -16,6 +17,7 @@ const Movie = ({ movie }) => {
                 />
             </div>
             <p>{movie.poster}</p>
+            <MovieDetailBtns />
         </div>
     )
 }

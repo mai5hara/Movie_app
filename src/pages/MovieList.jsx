@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import Movie from './Movie';
+import SearchBar from '../components/molecules/SearchBar';
+import Movie from '../components/organisms/Movie';
 import { Link } from 'react-router-dom';
 
 const MovieList = ({ error, movies, loading, fetchMovies }) => {
-  const [searchValue, setSearchValue] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
   console.log(searchValue);
 
   const handleChange = (e) => {
@@ -19,8 +20,7 @@ const MovieList = ({ error, movies, loading, fetchMovies }) => {
   return (
     <div>
       <form onSubmit={callSearchFunction}>
-        <input type="text" onChange={handleChange} />
-        <button>Search</button>
+        <SearchBar handleChange={handleChange} />
       </form>
 
       {loading && !error ? (

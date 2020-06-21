@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Review from '../components/Review';
+import Review from '../pages/Review';
 import { postReview } from '../store/actions/movieActions';
 
 const mapDispatchToProps = (dispatch) => {
