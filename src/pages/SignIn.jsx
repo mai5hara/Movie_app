@@ -1,7 +1,9 @@
 import React from 'react';
-import SignEmail from '../components/molecules/SignEmail';
-import SignPassword from '../components/molecules/SignPassword';
-import SignInBtn from '../components/atoms/SignUpBtn';
+// import SignEmail from '../components/molecules/SignEmail';
+// import SignPassword from '../components/molecules/SignPassword';
+// import SignInBtn from '../components/atoms/SignUpBtn';
+import BtnStyle from '../components/atoms/BtnStyle';
+import SignStyle from '../components/molecules/SignStyle';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -40,7 +42,28 @@ const SignIn = ({ auth, signIn }) => {
           return (
             <>
               <Form>
-                <SignEmail
+                <SignStyle
+                  signTitle="Email"
+                  name="email"
+                  type="email"
+                  id="email"
+                  placeholder="Email"
+                  handleChange={handleChange}
+                  errors={errors}
+                  touched={touched}
+                />
+                {errors.email && touched.email && (<div>{errors.email}</div>)}
+                <SignStyle
+                  name="password"
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  handleChange={handleChange}
+                  errors={errors}
+                  touched={touched}
+                />
+                {errors.password && touched.password && (<div>{errors.password}</div>)}
+                {/* <SignEmail
                   handleChange={handleChange}
                   errors={errors}
                   touched={touched}
@@ -49,8 +72,9 @@ const SignIn = ({ auth, signIn }) => {
                   handleChange={handleChange}
                   errors={errors}
                   touched={touched}
-                />
-                <SignInBtn isSubmitting={isSubmitting} />
+                /> */}
+                <BtnStyle btnText="Sign In" type="submit" submit={isSubmitting} />
+                {/* <SignInBtn isSubmitting={isSubmitting} /> */}
               </Form>
             </>
           );

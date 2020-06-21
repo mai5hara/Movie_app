@@ -1,13 +1,14 @@
 import React from 'react';
-import SearchBtn from '../atoms/SearchBtn';
+import BtnStyle from '../atoms/BtnStyle';
 import SearchInput from '../atoms/SearchInput';
 
 const SearchBar = ({ handleChange }) => {
+  const searchBtnText = 'Search';
 
   return (
     <div>
       <SearchInput handleChange={handleChange} />
-      <SearchBtn />
+      <BtnStyle btnText={searchBtnText} />
     </div>
   )
 }

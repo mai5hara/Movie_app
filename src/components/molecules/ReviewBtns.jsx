@@ -1,12 +1,15 @@
 import React from 'react';
-import ReviewCancelBtn from '../atoms/ReviewCancelBtn';
-import ReviewPublishBtn from '../atoms/ReviewPublishBtn';
+import { Link } from 'react-router-dom';
+import BtnStyle from '../atoms/BtnStyle';
 
 const ReviewBtns = ({ movieId }) => {
+
   return (
     <div>
-      <ReviewCancelBtn movieId={movieId} />
-      <ReviewPublishBtn />
+      <Link to={'/movie/' + movieId}>
+        <BtnStyle btnText="Publish" />
+      </Link>
+      <BtnStyle btnText="Cancel" />
     </div>
   )
 }

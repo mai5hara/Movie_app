@@ -3,6 +3,7 @@ import { signIn } from '../store/actions/authActions';
 import { signOut } from '../store/actions/authActions';
 import { signUp } from '../store/actions/authActions';
 import Navbar from '../components/organisms/Navbar';
+// import SignIn from '../pages/SignIn';
 
 const mapStateToProps = (state) => {
   return {

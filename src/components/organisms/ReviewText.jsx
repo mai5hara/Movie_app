@@ -1,14 +1,13 @@
 import React from 'react';
-import ReviewScore from '../molecules/ReviewScore';
-import ReviewComment from '../molecules/ReviewComment';
-import ReviewTags from '../molecules/ReviewTags';
+import ReviewInputStyle from '../molecules/ReviewInputStyle';
 
 const ReviewText = ({ handleChange }) => {
+
   return (
     <div>
-      <ReviewScore handleChange={handleChange} />
-      <ReviewComment handleChange={handleChange} />
-      <ReviewTags handleChange={handleChange} />
+      <ReviewInputStyle inputTitle="Score" handleChange={handleChange} type="text" id="score" />
+      <ReviewInputStyle inputTitle="Review Comment" handleChange={handleChange} type="comment" id="text" />
+      <ReviewInputStyle inputTitle="Tags" handleChange={handleChange} type="text" id="tag" />
     </div>
   )
 }

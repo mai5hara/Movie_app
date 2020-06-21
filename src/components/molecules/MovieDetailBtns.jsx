@@ -1,7 +1,6 @@
 import React from 'react';
-import ViewBtn from '../atoms/ViewBtn';
-import ClipBtn from '../atoms/ClipBtn';
-import ReviewBtn from '../atoms/ReviewBtn';
+import BtnStyle from '../atoms/BtnStyle'
+import { Link } from 'react-router-dom';
 
 const MovieDetailBtns = ({
   viewHandleClick,
@@ -12,9 +11,11 @@ const MovieDetailBtns = ({
 
   return (
     <div>
-      <ViewBtn viewHandleClick={viewHandleClick} totalView={totalView} />
-      <ClipBtn clipHandleClick={clipHandleClick} clipToggle={clipToggle} />
-      <ReviewBtn id={id} />
+      <BtnStyle btnText="View" btnCount={totalView} btnFunc={viewHandleClick} id="viewCount" />
+      <BtnStyle btnText="Clip" btnFunc={clipHandleClick} id="clipCount" />
+      <Link to={'/' + id + '/review'} key={id}>
+        <BtnStyle btnText="Review" />
+      </Link>
     </div>
   )
 };

@@ -1,9 +1,11 @@
 import React from 'react';
-import SignEmail from '../components/molecules/SignEmail';
-import SignPassword from '../components/molecules/SignPassword';
-import SignName from '../components/molecules/SignName';
-import SignConfirm from '../components/molecules/SignConfirm';
-import SignUpBtn from '../components/atoms/SignUpBtn';
+// import SignEmail from '../components/molecules/SignEmail';
+// import SignPassword from '../components/molecules/SignPassword';
+// import SignName from '../components/molecules/SignName';
+// import SignConfirm from '../components/molecules/SignConfirm';
+// import SignUpBtn from '../components/atoms/SignUpBtn';
+import BtnStyle from '../components/atoms/BtnStyle';
+import SignStyle from '../components/molecules/SignStyle';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -47,7 +49,52 @@ const SignUp = ({ auth, signUp }) => {
                     console.log(props)
                     return (
                         <Form>
-                            <SignName
+                            <SignStyle
+                                signTitle="Name"
+                                name="name"
+                                type="text"
+                                id="name"
+                                placeholder="Name"
+                                handleChange={handleChange}
+                                errors={errors}
+                                touched={touched}
+                            />
+                            {errors.name && touched.name && (<div>{errors.name}</div>)}
+                            <SignStyle
+                                signTitle="Email"
+                                name="email"
+                                type="email"
+                                id="email"
+                                placeholder="Email"
+                                handleChange={handleChange}
+                                errors={errors}
+                                touched={touched}
+                            />
+                            {errors.email && touched.email && (<div>{errors.email}</div>)}
+                            <SignStyle
+                                signTitle="Password"
+
+                                name="password"
+                                type="password"
+                                id="password"
+                                placeholder="Password"
+                                handleChange={handleChange}
+                                errors={errors}
+                                touched={touched}
+                            />
+                            {errors.password && touched.password && (<div>{errors.password}</div>)}
+                            <SignStyle
+                                signTitle="Confirm Password"
+                                name="confirmpassword"
+                                type="password"
+                                id="confirmpassword"
+                                placeholder="Confirm Password"
+                                handleChange={handleChange}
+                                errors={errors}
+                                touched={touched}
+                            />
+                            {errors.confirmpassword && touched.confirmpassword && (<div>{errors.confirmpassword}</div>)}
+                            {/* <SignName
                                 handleChange={handleChange}
                                 errors={errors}
                                 touched={touched}
@@ -66,8 +113,9 @@ const SignUp = ({ auth, signUp }) => {
                                 handleChange={handleChange}
                                 errors={errors}
                                 touched={touched}
-                            />
-                            <SignUpBtn isSubmitting={isSubmitting} />
+                            /> */}
+                            <BtnStyle btnText="Sign Up" type="submit" submit={isSubmitting} />
+                            {/* <SignUpBtn isSubmitting={isSubmitting} /> */}
                         </Form>
                     )
                 }}
