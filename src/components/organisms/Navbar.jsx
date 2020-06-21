@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import SignedInLinks from '../molecules/SignedInLinks';
 import SignedOutLinks from '../molecules/SignedOutLinks';
 
-const Navbar = ({ auth, profile }) => {
-  const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks />;
+const Navbar = ({ auth, profile, signOut }) => {
+  const links = auth.uid ? <SignedInLinks signOut={signOut} /> : <SignedOutLinks />;
   return (
     <nav>
       <div>
