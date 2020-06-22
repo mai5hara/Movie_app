@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import MovieList from './containers/movieList';
 import Navbar from './containers/navbar';
-// import SignUp from './pages/SignUp';
-import SignIn from './containers/navbar';
-import SignUp from './containers/navbar';
-// import SignIn from './pages/SignIn';
+import SignIn from './containers/signIn';
+import SignUp from './containers/signUp';
 import MovieDetails from './containers/movieDetaile';
 import Review from './containers/review';
 
