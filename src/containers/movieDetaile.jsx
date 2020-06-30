@@ -13,6 +13,7 @@ const mapStateToProps = (state, ownProps) => {
     reviews: state.firestore.ordered.reviews,
     viewCounts: state.firestore.ordered.viewCounter,
     viewCountsId: state.firestore.ordered.id,
+    auth: state.firebase.auth
   };
 };
 

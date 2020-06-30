@@ -24,6 +24,7 @@ const SignIn = ({ auth, signIn }) => {
   })
 
   if (auth.uid) return <Redirect to="/" />;
+  console.log(auth)
 
   return (
     <>

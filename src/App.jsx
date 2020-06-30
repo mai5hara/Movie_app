@@ -6,6 +6,7 @@ import SignIn from './containers/signIn';
 import SignUp from './containers/signUp';
 import MovieDetails from './containers/movieDetaile';
 import Review from './containers/review';
+import Mypage from './pages/Mypage'
 
 import './App.css';
 
@@ -13,16 +14,17 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="App">
-          <Navbar />
-          <Switch>
-            <Route exact path="/" component={MovieList} />
-            <Route path="/movie/:id" component={MovieDetails} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="/:id/review" component={Review} />
-          </Switch>
-        </div>
+        {/* <div className="App"> */}
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={MovieList} />
+          <Route path="/movie/:id" component={MovieDetails} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/signin" component={SignIn} />
+          <Route path="/:id/review" component={Review} />
+          <Route path="/mypage" component={Mypage} />
+        </Switch>
+        {/* </div> */}
       </BrowserRouter>
     );
   }

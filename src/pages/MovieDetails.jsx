@@ -9,10 +9,11 @@ const MovieDetails = ({
   reviews,
   test,
   viewCounts,
+  auth,
   viewCountsId,
   viewCounter,
 }) => {
-
+  console.log(id)
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
     viewCountsId: '',
@@ -94,7 +95,7 @@ const MovieDetails = ({
         totalView={totalView}
         clipToggle={clipToggle}
       />
-      <ScoreReviews reviews={reviews} />
+      <ScoreReviews reviews={reviews} id={id} />
     </div>
   );
 };

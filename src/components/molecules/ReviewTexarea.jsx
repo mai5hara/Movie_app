@@ -2,7 +2,7 @@
 
 import { jsx, css } from '@emotion/core'
 
-const ReviewInputStyle = ({ inputFunc, inputTitle, id, type, pStyle, inputStyle }) => {
+const ReviewTextarea = ({ inputFunc, inputTitle, id, type, pStyle, inputStyle }) => {
   const Styles = {
     p: css`
     ${pStyle}
@@ -19,8 +19,9 @@ const ReviewInputStyle = ({ inputFunc, inputTitle, id, type, pStyle, inputStyle 
         <textarea css={Styles.input} type={type} id={id} onChange={inputFunc} ></textarea> :
         <input css={Styles.input} type={type} id={id} onChange={inputFunc} />
       }
+      {/* <textarea css={Styles.input} type={type} id={id} onChange={inputFunc} ></textarea> */}
     </div>
   )
 }
 
-export default ReviewInputStyle;
+export default ReviewTextarea;

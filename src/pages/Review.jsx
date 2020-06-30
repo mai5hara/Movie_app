@@ -1,10 +1,35 @@
+/** @jsx jsx */
+
 import React, { useState } from 'react';
+import { jsx, css } from '@emotion/core'
 import ReviewText from '../components/organisms/ReviewText';
 import ReviewBtns from '../components/molecules/ReviewBtns';
 import ReviewConditions from '../components/organisms/ReviewConditions';
+import MyReview from '../components/organisms/MyReview';
+import ReviewForm from '../components/organisms/ReviewForm';
 
-const Review = ({ match, postReview }) => {
+const Styles = {
+  formwrap: css`
+    width: 60%;
+    margin: 0 auto;
+  `,
+}
+
+const Review = ({ match, postReview, auth, reviews }) => {
+  console.log(auth.uid)
+  console.log(reviews)
+
   const movieId = match.params.id;
+  console.log(movieId)
+
+
+  // const test = reviews.filter((item) => {
+
+  //   if (item.authorId === auth.uid && movieId === item.movieId) return true;
+  // })
+
+  // console.log(test)
+
 
   const [review, setReview] = useState({
     movieId: movieId,
@@ -45,19 +70,72 @@ const Review = ({ match, postReview }) => {
     setReview('');
   };
 
+  // const showReview = reviews && reviews.map((review) => {
+  //   // if (auth.uid === review.id) {
+  //   //   console.log(review)
+  //   // }
+  //   return review
+  // })
+
+  // console.log(showReview)
+
+  // if (auth.uid === review.id && movieId === review.movieId) {
+  //   console.log(review)
+  // }
+
+  /* <form onSubmit={handleSubmit}>
+          <ReviewText handleChange={handleChange} />
+          <p>Conditions</p>
+          <ReviewConditions
+            review={review}
+            handleChangeRadio={handleChangeRadio}
+            handleChangeCheck={handleChangeCheck}
+            handleChange={handleChange}
+          />
+          <ReviewBtns movieId={movieId} postReview={postReview} />
+        </form> */
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <ReviewText handleChange={handleChange} />
-        <p>Conditions</p>
-        <ReviewConditions
-          review={review}
-          handleChangeRadio={handleChangeRadio}
-          handleChangeCheck={handleChangeCheck}
-          handleChange={handleChange}
-        />
-        <ReviewBtns movieId={movieId} />
-      </form>
+      {reviews && reviews.map((review) => {
+        // const matchMovie = reviews.filter((item) => {
+        //   if (auth.uid === item.authorId && movieId === item.movieId) return true
+        // })
+        // console.log(matchMovie)
+        //   if (item.authorId === auth.uid && movieId === item.movieId) return true;
+        if (auth.uid === review.authorId && movieId === review.movieId) {
+          const matchMovie = review;
+          console.log(matchMovie)
+        };
+
+        if (auth.uid === review.authorId && movieId === review.movieId) {
+          return (
+            <div>
+              <p>{review.score}</p>
+              <p>{review.comment}</p>
+              <p>{review.tag}</p>
+              <p>{review.record}</p>
+            </div>
+          )
+        } else {
+          return (
+            <div css={Styles.formwrap}>
+              <form onSubmit={handleSubmit}>
+                <ReviewText handleChange={handleChange} />
+                <p>Conditions</p>
+                <ReviewConditions
+                  review={review}
+                  handleChangeRadio={handleChangeRadio}
+                  handleChangeCheck={handleChangeCheck}
+                  handleChange={handleChange}
+                />
+                <ReviewBtns movieId={movieId} postReview={postReview} />
+              </form>
+            </div>
+          )
+        }
+      }
+      )}
     </div>
   );
 };
