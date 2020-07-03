@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchPlot } from '../store/actions/movieActions';
+import { viewCounter } from '../store/actions/movieActions';
 import MovieDetails from '../pages/MovieDetails';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -20,8 +21,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchPlot: (movieDetail) => dispatch(fetchPlot(movieDetail)),
-    // viewCounter: (viewCount) => dispatch(viewCounter(viewCount)),
-    test: (viewCount) => dispatch(test(viewCount)),
+    viewCounter: (viewCount) => dispatch(viewCounter(viewCount)),
+    // test: (viewCount) => dispatch(test(viewCount)),
   };
 };
 

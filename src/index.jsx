@@ -33,7 +33,7 @@ const config = {
 const rrfProps = {
   firebase,
   config,
-  // config: fbConfig,
+  //config: fbConfig,
   dispatch: store.dispatch,
   createFirestoreInstance,
 };

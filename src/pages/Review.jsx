@@ -16,11 +16,9 @@ const Styles = {
 }
 
 const Review = ({ match, postReview, auth, reviews }) => {
-  console.log(auth.uid)
   console.log(reviews)
 
   const movieId = match.params.id;
-  console.log(movieId)
 
 
   // const test = reviews.filter((item) => {
@@ -31,7 +29,7 @@ const Review = ({ match, postReview, auth, reviews }) => {
   // console.log(test)
 
 
-  const [review, setReview] = useState({
+  const [reviewDetail, setReview] = useState({
     movieId: movieId,
     score: 0,
     comment: '',
@@ -43,30 +41,33 @@ const Review = ({ match, postReview, auth, reviews }) => {
 
   const handleChangeCheck = () => {
     setReview({
-      ...review,
-      spoiler: !review.spoiler,
+      ...reviewDetail,
+      spoiler: !reviewDetail.spoiler,
     });
   };
 
   const handleChangeRadio = (e) => {
+    console.log(e)
+    console.log(reviewDetail)
     setReview({
-      ...review,
-      [e.target.id]: e.target.value,
+      ...reviewDetail,
+      condition: e.target.value,
     });
   };
 
   const handleChange = (e) => {
-    console.log(review.record);
+    console.log(reviewDetail)
+    console.log(reviewDetail.record);
     e.preventDefault();
     setReview({
-      ...review,
+      ...reviewDetail,
       [e.target.id]: e.target.value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postReview(review);
+    postReview(reviewDetail);
     setReview('');
   };
 
@@ -94,7 +95,7 @@ const Review = ({ match, postReview, auth, reviews }) => {
           />
           <ReviewBtns movieId={movieId} postReview={postReview} />
         </form> */
-
+  console.log(reviewDetail)
   return (
     <div>
       {reviews && reviews.map((review) => {
@@ -105,26 +106,26 @@ const Review = ({ match, postReview, auth, reviews }) => {
         //   if (item.authorId === auth.uid && movieId === item.movieId) return true;
         if (auth.uid === review.authorId && movieId === review.movieId) {
           const matchMovie = review;
-          console.log(matchMovie)
+          // console.log(matchMovie)
         };
 
         if (auth.uid === review.authorId && movieId === review.movieId) {
-          return (
-            <div>
-              <p>{review.score}</p>
-              <p>{review.comment}</p>
-              <p>{review.tag}</p>
-              <p>{review.record}</p>
-            </div>
-          )
+          // return (
+          //   <div>
+          //     {/* <p>{review.score}</p>
+          //     <p>{review.comment}</p>
+          //     <p>{review.tag}</p>
+          //     <p>{review.record}</p> */}
+          //   </div>
+          // )
         } else {
           return (
             <div css={Styles.formwrap}>
               <form onSubmit={handleSubmit}>
-                <ReviewText handleChange={handleChange} />
+                <ReviewText handleChange={handleChange} review={reviewDetail} />
                 <p>Conditions</p>
                 <ReviewConditions
-                  review={review}
+                  review={reviewDetail}
                   handleChangeRadio={handleChangeRadio}
                   handleChangeCheck={handleChangeCheck}
                   handleChange={handleChange}

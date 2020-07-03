@@ -3,6 +3,7 @@
 import { jsx, css } from '@emotion/core'
 import ReviewInputStyle from '../molecules/ReviewInputStyle';
 import ReviewTextArea from '../molecules/ReviewTexarea';
+import ReviewScore from '../molecules/ReviewScore';
 
 const Styles = {
   reviewtext: css`
@@ -18,6 +19,7 @@ const pStyle = css({
 const inputCommentStyle = css({
   width: '100%',
   height: '200px',
+  boxSizing: 'border-box',
   padding: '1rem',
   outlineStyle: 'none',
   userSelect: 'none',
@@ -31,11 +33,10 @@ const inputTagStyle = css(
   height: '10px',
 })
 
-const ReviewText = ({ handleChange }) => {
-
+const ReviewText = ({ handleChange, review }) => {
   return (
     <div css={Styles.reviewtext}>
-      <ReviewInputStyle inputTitle="Score" inputFunc={handleChange} type="text" id="score" />
+      <ReviewScore inputTitle="Score" inputFunc={handleChange} review={review} type="range" id="score" />
       <ReviewInputStyle pStyle={pStyle} inputStyle={inputCommentStyle} inputTitle="Review Comment" inputFunc={handleChange} type="text" id="comment" />
       <ReviewInputStyle pStyle={pStyle} inputStyle={inputTagStyle} inputTitle="Tags" inputFunc={handleChange} type="text" id="tag" />
     </div>

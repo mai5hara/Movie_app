@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ScoreReviews from '../components/organisms/ScoreReviews';
 import MovieInfo from '../components/organisms/MovieInfo';
+// import viewCounter from '../containers/movieDetaile';
 
 const MovieDetails = ({
   movieDetail,
@@ -16,9 +17,7 @@ const MovieDetails = ({
   console.log(id)
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
-    viewCountsId: '',
     isToggle: false,
-    viewCount: 0,
   });
 
   const [clipToggle, setClipToggle] = useState({
@@ -53,7 +52,7 @@ const MovieDetails = ({
     });
     console.log(viewToggle);
     // viewCounter(viewToggle);
-    test(viewToggle);
+    viewCounter(viewToggle);
   };
 
   const isFirstRender = useRef(false);
@@ -68,7 +67,7 @@ const MovieDetails = ({
       isFirstRender.current = false;
     } else {
       // viewCounter(viewToggle);
-      test(viewToggle);
+      viewCounter(viewToggle);
       // setViewToggle({ ...viewToggle, viewCountsId });
     }
     // viewCounter(viewToggle);
