@@ -1,18 +1,30 @@
-// import { connect } from 'react-redux';
-// import movieList from '../components/MovieList';
-// // import fetchMoviesAction from '../actions/fetchMovies';
-// // import {bindActionCreaters} from 'redux';
+import { connect } from 'react-redux';
+import { fetchMovies, viewCounter } from '../store/actions/movieActions';
+import movieList from '../pages/MovieList';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 
-// const mapStateToProps = state => {
-//     return {
-//         error: state.movieList.error,
-//         movies: state.movieList.movies,
-//         loading:state.movieList.loading
-//     }
-// }
+const mapStateToProps = (state, ownProps) => {
+  console.log(ownProps);
+  console.log(state);
+  return {
+    error: state.movie.error,
+    movies: state.movie.movies,
+    loading: state.movie.loading,
+    reviews: state.firestore.ordered.reviews,
+    auth: state.firebase.auth
+  }
+}
 
-// // const mapDispatchToProps = dispatch => bindActionCreaters({
-// //         fetchMovies: fetchMoviesAction
-// // }, dispatch)
+const mapDispatchToProps = (dispatch) => {
+  console.log(dispatch)
+  return {
+    fetchMovies: (searchValue) => dispatch(fetchMovies(searchValue)),
+    viewCounter: (viewToggle) => dispatch(viewCounter(viewToggle))
+  };
+};
 
-// export default connect (mapStateToProps)(movieList)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([{ collection: 'reviews' }, { collection: 'viewCounter' }]))
+  (movieList);
