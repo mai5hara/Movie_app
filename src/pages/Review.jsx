@@ -20,15 +20,6 @@ const Review = ({ match, postReview, auth, reviews }) => {
 
   const movieId = match.params.id;
 
-
-  // const test = reviews.filter((item) => {
-
-  //   if (item.authorId === auth.uid && movieId === item.movieId) return true;
-  // })
-
-  // console.log(test)
-
-
   const [reviewDetail, setReview] = useState({
     movieId: movieId,
     score: 0,
@@ -37,6 +28,7 @@ const Review = ({ match, postReview, auth, reviews }) => {
     condition: 'public',
     spoiler: false,
     record: '',
+    date: ''
   });
 
   const handleChangeCheck = () => {
@@ -47,8 +39,6 @@ const Review = ({ match, postReview, auth, reviews }) => {
   };
 
   const handleChangeRadio = (e) => {
-    console.log(e)
-    console.log(reviewDetail)
     setReview({
       ...reviewDetail,
       condition: e.target.value,
@@ -56,8 +46,6 @@ const Review = ({ match, postReview, auth, reviews }) => {
   };
 
   const handleChange = (e) => {
-    console.log(reviewDetail)
-    console.log(reviewDetail.record);
     e.preventDefault();
     setReview({
       ...reviewDetail,
@@ -95,7 +83,16 @@ const Review = ({ match, postReview, auth, reviews }) => {
           />
           <ReviewBtns movieId={movieId} postReview={postReview} />
         </form> */
-  console.log(reviewDetail)
+  const showReview = () => {
+    reviews && reviews.map((review) =>
+      (auth.uid === review.authorId && movieId === review.movieId ? true : false))
+    return
+  }
+
+  const filteredShowReview = showReview();
+
+  console.log(showReview())
+
   return (
     <div>
       {reviews && reviews.map((review) => {
@@ -122,7 +119,7 @@ const Review = ({ match, postReview, auth, reviews }) => {
           return (
             <div css={Styles.formwrap}>
               <form onSubmit={handleSubmit}>
-                <ReviewText handleChange={handleChange} review={reviewDetail} />
+                <ReviewText handleChange={handleChange} review={reviewDetail} handleChangeCheck={handleChangeCheck} />
                 <p>Conditions</p>
                 <ReviewConditions
                   review={reviewDetail}

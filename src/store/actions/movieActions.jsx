@@ -6,7 +6,7 @@ export const SEARCH_PLOT_SUCCESS = 'SEARCH_PLOT_SUCCESS';
 export const SEARCH_PLOT_FAILURE = 'SEARCH_PLOT_FAILURE';
 export const CREATE_REVIEW = 'CREATE_REVIEW';
 export const COUNT_VIEWNUMBER = 'COUNT_VIEWNUMBER';
-
+export const COUNT_CLIPNUMBER = 'COUNT_CLIPNUMBER';
 
 export const searchMovieRequest = () => {
   return {
@@ -44,6 +44,20 @@ export const searchPlotFailure = (error) => {
   };
 };
 
+export const setViewCounter = (viewCount) => {
+  return {
+    type: COUNT_VIEWNUMBER,
+    payload: { viewCount }
+  };
+};
+
+export const setClipCounter = (clipCount) => {
+  return {
+    type: COUNT_CLIPNUMBER,
+    payload: { clipCount }
+  };
+};
+
 export const postReview = (review) => {
   console.log(review);
   return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -78,129 +92,31 @@ export const postReview = (review) => {
   };
 };
 
-// export const viewCounter = (viewToggle) => {
-//   console.log(viewToggle);
-//   return (dispatch, getState, { getFirebase, getFirestore }) => {
-//     const firestore = getFirestore();
-//     // const firebase = getFirebase();
-//     const profile = getState().firebase.profile;
+export const clipCounter = (clipCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  try {
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+    const batch = firestore.batch();
+    const userRef = firestore.collection('users').doc(authorId);
+    const clipCountRef = firestore.collection('clipCounter').doc(authorId);
 
-//     if (viewToggle.isToggle === true) {
-//       firestore
-//         .collection('viewCounter')
-//         .add({
-//           ...viewToggle,
-//           authorName: profile.name,
-//         })
-//         .then(() => {
-//           dispatch({ type: COUNT_VIEWNUMBER, viewToggle });
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-//     } else {
-//       firestore
-//         .collection('viewCounter')
-//         .doc(viewToggle.viewCountsId)
-//         .delete()
-//         .then(() => {
-//           console.log('deleted!');
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-//     }
-//   };
-// };
+    await batch.update((userRef), {
+      clipCount: {
+        [clipCount.movieId]: clipCount.isToggle
+      }
+    });
+    await batch.set((clipCountRef), {
+      ...clipCount,
+    })
+    await batch.commit().then(console.log('done'));
+    return dispatch(setClipCounter(clipCount))
+  } catch (error) {
+    console.log(error)
+  }
+};
 
-
-
-// export const viewCounter = (viewToggle) => async (ispatch, getState, { getFirebase, getFirestore }) => {
-//   console.log(viewToggle);
-//   // return (dispatch, getState, { getFirebase, getFirestore }) => {
-//   const firestore = getFirestore();
-//   const firebase = getFirebase();
-//   // const profile = getState().firebase.profile;
-//   const authorId = getState().firebase.auth.uid;
-//   const viewCounter = firestore.collection('viewCounter');
-//   const viewCountUserId = firestore.collection('viewCounter').doc(authorId);
-//   const usersViewId = firestore.collection('users').doc(authorId);
-//   const profile = getState().firebase.profile;
-
-//   // const upDateViewCount = updateViewCount = async count => {
-//   try {
-//     // let batch = firestore.batch();
-//     await fireStore.runTransaction(async transaction => {
-//       await transaction.get(userView);
-//       await transaction.update(userView, {
-//         [`viewlist.${viewToggle.movieId}: ${viewToggle.isToggle}`]
-//       });
-
-//     })
-//   } catch (error) {
-//     console.log(error)
-//   }
-//   // }
-// }
-
-// const autoId = (model) => {
-//   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-//   let autoId = ''
-//   for (let i = 0; i < 20; i++) {
-//     autoId += chars.charAt(Math.floor(Math.random() * chars.length))
-//   }
-//   return autoId
-// }
-
-// export const viewCounter = (viewCountToggle) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-//   console.log(viewCountToggle)
-//   const firestore = getFirestore();
-//   const firebase = getFirebase();
-//   const today = new Date(Date.now());
-//   const authorId = getState().firebase.auth.uid;
-//   const profile = getState().firebase.profile;
-//   console.log(authorId)
-//   console.log(profile)
-//   const newViewCounter = autoId('count')
-//   // const viewCount = autoId('viewCount');
-//   // const viewCountRef = firestore.collection('viewCounter').dog(authorId);
-//   const viewCountRef = firestore.collection('viewCounter').doc('5V6XsnvPaM9PW67Yc2ti');
-//   const userRef = firestore.collection('users').doc(authorId);
-//   console.log(viewCountRef)
-//   console.log(userRef)
-//   firestore.runTransaction(async transaction => {
-//     // try {
-//     await Promise.all(transaction.get(userRef), transaction.get(viewCountRef))
-//     // transaction.get(viewCountRef)
-//     transaction.set(viewCountRef, {
-//       views: {
-//         ...viewCountToggle,
-//       }
-//       // authorName: profile.name,
-//       // createdAt: today,
-//       // updatedAt: today
-//       // viewCountId: 'testtest'
-//     })
-//     transaction.set(userRef, {
-//       views: {
-//         ...viewCountToggle,
-//       }
-//       // password: '112233Aaa@',
-//     })
-//   })
-//     .then(() => {
-//       return dispatch({ type: COUNT_VIEWNUMBER, viewCountToggle });
-//     })
-
-//     // } 
-//     .catch(error => {
-//       console.log(error)
-
-//     })
-// }
-
-export const viewCounter = (viewCountToggle) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-
+export const viewCounter = (viewCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(viewCount)
   try {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
@@ -209,30 +125,19 @@ export const viewCounter = (viewCountToggle) => async (dispatch, getState, { get
     const viewCountRef = firestore.collection('viewCounter').doc(authorId);
 
     await batch.update((userRef), {
-      reviewCount: {
-        [viewCountToggle.movieId]: viewCountToggle.isToggle
+      viewCount: {
+        [viewCount.movieId]: viewCount.isToggle
       }
     });
-
     await batch.set((viewCountRef), {
-      ...viewCountToggle,
+      ...viewCount,
     })
-
-    // if (authorId === viewCountToggle.auth) {
-    //   await batch.update((viewCountRef), {
-    //     ...viewCountToggle,
-    //     authId: authorId
-    //   })
-    // }
-
     await batch.commit().then(console.log('done'));
+    return dispatch(setViewCounter(viewCount))
   } catch (error) {
     console.log(error)
   }
-}
-
-
-
+};
 
 export const fetchMovies = (value) => async (dispatch) => {
   dispatch(searchMovieRequest());
@@ -243,7 +148,7 @@ export const fetchMovies = (value) => async (dispatch) => {
   } catch (error) {
     return dispatch(searchMovieFeilure(error));
   }
-}
+};
 
 export const fetchPlot = (targetImdbID) => async (dispatch) => {
   try {
@@ -253,22 +158,4 @@ export const fetchPlot = (targetImdbID) => async (dispatch) => {
   } catch (error) {
     return dispatch(dispatch(searchPlotFailure(error)));
   }
-}
-
-export const test = (viewToggle) => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firestore = getFirestore();
-    const profile = getState().firebase.profile;
-    const authorId = getState().firebase.auth.uid;
-
-    firestore
-      .collection(`users/${authorId}/viewCounter`)
-      .add(viewToggle)
-      .then(() => {
-        dispatch({ type: 'COUNT_VIEWNUMBER', viewToggle });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 };

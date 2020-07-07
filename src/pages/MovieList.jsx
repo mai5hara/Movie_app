@@ -50,6 +50,7 @@ const MovieList = ({
   id,
   auth
 }) => {
+  console.log(movies)
   const [searchValue, setSearchValue] = useState('');
   console.log(searchValue);
 

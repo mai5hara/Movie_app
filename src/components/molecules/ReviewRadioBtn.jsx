@@ -5,10 +5,8 @@ import styled from '@emotion/styled';
 const btnWrap = css({
   display: 'block',
   position: 'relative',
-  margin: '40px auto',
   height: 'auto',
   width: '500px',
-  padding: '20px'
 })
 
 const ul = css({
@@ -22,32 +20,27 @@ const ul = css({
 const list = css({
   display: 'block',
   position: 'relative',
-  color: '#AAAAAA',
+  color: '#d3d3d3',
   height: '100px',
-  width: '100%',
+  width: '35%',
   float: 'left',
-  '&:hover': {
-    radioBtn: {
-      border: '5px solid #ffc0cb'
-    }
+  // radioBtn: {
+  '&:hover .css-ycxl5w-ReviewRadioBtn': {
+    border: '5px solid #ffc0cb'
+    // }
   }
+
 })
 
 const input = css({
   position: 'absolute',
   visibility: 'hidden',
-  '&:checked': {
-    label: {
-      color: 'pink'
-    }
-  }
-
 })
 
 const label = css({
   display: 'block',
   position: 'relative',
-  padding: '25px 25px 25px 80px',
+  padding: '29px 25px 25px 54px',
   zIndex: 9,
   margin: '10px auto',
   height: '30px',
@@ -61,12 +54,11 @@ const label = css({
 const radioBtn = css({
   display: 'block',
   position: 'absolute',
-  border: '5px solid #aaaaaa',
+  border: '5px solid #d3d3d3',
   borderRadius: '100%',
   height: '23px',
   width: '25px',
   top: '30px',
-  left: '20px',
   zIndex: 5,
   transition: 'border 0.25s linear',
 })
@@ -74,8 +66,8 @@ const radioBtn = css({
 const inside = css({
   width: '15px',
   height: '15px',
-  background: '#111111',
-  display: 'block',
+  background: '#d3d3d3',
+  display: 'none',
   position: 'absolute',
   content: '',
   borderRadius: '100%',
@@ -85,14 +77,38 @@ const inside = css({
   margin: 'auto',
   transition: 'background 0.25s linear',
   WebkitTransition: 'background 0.25s linear',
+
 })
 
-const ReviewRadioBtn = ({ review, handleChangeRadio, InputStyles, listStyles, ulStyles, btnWrapStyles, labelStyles, radioBtnStyle, btnInside }) => {
+const checkedInside = css(
+  inside, {
+  background: '#c71585',
+  display: 'block',
+})
+
+const checkedRadioBtn = css(
+  radioBtn, {
+  border: '5px solid #c71585',
+})
+
+const checkedList = css(
+  list, {
+  color: '#c71585',
+})
+
+const checkedLabel = css(
+  label, {
+  '&:hover': {
+    color: '#c71585'
+  }
+})
+
+const ReviewRadioBtn = ({ review, handleChangeRadio }) => {
   console.log(review)
   return (
     <div css={btnWrap}>
       <ul css={ul}>
-        <li css={list}>
+        <li css={review.condition === 'public' ? checkedList : list}>
           <input
             type="radio"
             name="radio"
@@ -102,21 +118,25 @@ const ReviewRadioBtn = ({ review, handleChangeRadio, InputStyles, listStyles, ul
             onChange={handleChangeRadio}
             css={input}
           />
-          <label css={label} for="condition">Public</label>
-          <div css={radioBtn} ><div css={inside}></div></div>
+          <label css={review.condition === 'public' ? checkedLabel : label} for="condition">Public</label>
+          <div css={review.condition === 'public' ? checkedRadioBtn : radioBtn} >
+            <div css={review.condition === 'public' ? checkedInside : inside}></div>
+          </div>
         </li>
-        <li css={list}>
+        <li css={review.condition === 'private' ? checkedList : list}>
           <input
             type="radio"
             name="radio"
             id="condition1"
             value="private"
-            defaultChecked={review.condition === 'private'}
+            // defaultChecked={review.condition === 'private'}
             onChange={handleChangeRadio}
             css={input}
           />
-          <label css={label} for="condition1">Private</label>
-          <div css={radioBtn}><div css={inside}></div></div>
+          <label css={review.condition === 'private' ? checkedLabel : label} for="condition1">Private</label>
+          <div css={review.condition === 'private' ? checkedRadioBtn : radioBtn}>
+            <div css={review.condition === 'private' ? checkedInside : inside}></div>
+          </div>
         </li>
       </ul>
     </div>

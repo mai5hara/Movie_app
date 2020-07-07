@@ -43,8 +43,8 @@ const Styles = {
 }
 
 const ShowReview = ({ review, id }) => {
-  console.log(review)
-  console.log(id)
+  // console.log(review)
+  // console.log(id)
 
   const reviewFilter = () => {
     if (review.movieId === id) {

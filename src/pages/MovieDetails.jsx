@@ -1,20 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ScoreReviews from '../components/organisms/ScoreReviews';
 import MovieInfo from '../components/organisms/MovieInfo';
-// import viewCounter from '../containers/movieDetaile';
 
 const MovieDetails = ({
   movieDetail,
   id,
   fetchPlot,
   reviews,
-  test,
   viewCounts,
+  clipCounts,
   auth,
-  viewCountsId,
   viewCounter,
+  clipCounter
 }) => {
-  console.log(id)
+  // console.log(id)
+  // console.log(viewCounts)
+  console.log(clipCounts)
+
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
     isToggle: false,
@@ -23,21 +25,25 @@ const MovieDetails = ({
   const [clipToggle, setClipToggle] = useState({
     movieId: id,
     isToggle: false,
-    clipCount: 0,
   });
 
-  console.log(viewToggle);
+  let totalView = () => {
+    let totalViewCount = 0;
+    viewCounts && viewCounts.map((count) =>
+      (count.movieId === id && count.isToggle === true ? totalViewCount++ : null));
+    return totalViewCount
+  };
 
-  const totalView =
-    viewCounts && viewCounts.reduce((p, x) => p + x.viewCount, 0);
+  const totalViewCount = totalView();
 
-  console.log(totalView);
+  let totalClip = () => {
+    let totalClipCount = 0;
+    clipCounts && clipCounts.map((count) =>
+      (count.movieId === id && count.isToggle === true ? totalClipCount++ : null));
+    return totalClipCount
+  };
 
-  useEffect(() => {
-    fetchPlot(id);
-    isFirstRender.current = true;
-    console.log('loaded!');
-  }, []);
+  const totalClipCount = totalClip();
 
   const viewHandleClick = (e) => {
     console.log('Clicked!');
@@ -45,54 +51,45 @@ const MovieDetails = ({
     setViewToggle({
       ...viewToggle,
       isToggle: !viewToggle.isToggle,
-      viewCount:
-        viewToggle.isToggle === false
-          ? viewToggle.viewCount + 1
-          : viewToggle.viewCount - 1,
     });
-    console.log(viewToggle);
-    // viewCounter(viewToggle);
     viewCounter(viewToggle);
   };
-
-  const isFirstRender = useRef(false);
-  console.log(isFirstRender);
-
-  // useEffect(() => {
-  //   isFirstRender.current = true;
-  // },[]);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-    } else {
-      // viewCounter(viewToggle);
-      viewCounter(viewToggle);
-      // setViewToggle({ ...viewToggle, viewCountsId });
-    }
-    // viewCounter(viewToggle);
-  }, [viewToggle]);
 
   const clipHandleClick = (e) => {
     e.preventDefault();
     setClipToggle({
       ...clipToggle,
       isToggle: !clipToggle.isToggle,
-      clipCount:
-        clipToggle.isToggle === false
-          ? clipToggle.clipCount + 1
-          : clipToggle.clipCount - 1,
     });
   };
+
+  useEffect(() => {
+    fetchPlot(id);
+    isFirstRender.current = true;
+    console.log('loaded!');
+  }, []);
+
+  const isFirstRender = useRef(false);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      viewCounter(viewToggle);
+      clipCounter(clipToggle);
+    }
+  }, [viewToggle, clipToggle]);
+
   return (
     <div>
       <MovieInfo
         viewHandleClick={viewHandleClick}
         clipHandleClick={clipHandleClick}
+        totalViewCount={totalViewCount}
+        totalClipCount={totalClipCount}
         id={id}
         movieDetail={movieDetail}
-        totalView={totalView}
-        clipToggle={clipToggle}
+      // clipToggle={clipToggle}
       />
       <ScoreReviews reviews={reviews} id={id} />
     </div>

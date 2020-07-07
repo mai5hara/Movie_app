@@ -45,11 +45,12 @@ const MovieInfo = ({
   clipToggle,
   viewHandleClick,
   clipHandleClick,
-  totalView,
+  totalViewCount,
+  totalClipCount,
   id,
   auth
 }) => {
-
+  console.log(totalViewCount)
   console.log(id)
   return (
     <div css={Styles.infoSection}>
@@ -81,8 +82,9 @@ const MovieInfo = ({
             viewHandleClick={viewHandleClick}
             clipHandleClick={clipHandleClick}
             id={id}
-            totalView={totalView}
-            clipToggle={clipToggle}
+            totalViewCount={totalViewCount}
+            totalClipCount={totalClipCount}
+          // clipToggle={clipToggle}
           />
         </DetailWrap>
       </div>

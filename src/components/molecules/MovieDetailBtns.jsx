@@ -34,15 +34,15 @@ const viewLinkBtn = css(
 const MovieDetailBtns = ({
   viewHandleClick,
   clipHandleClick,
-  totalView,
-  clipToggle,
+  totalViewCount,
+  totalClipCount,
   id }) => {
   console.log(id)
 
   return (
     <div css={Styles.btnWrap}>
-      <BtnStyle btnText="View" btnCount={totalView} btnFunc={viewHandleClick} id="viewCount" btnStyle={btnsStyle} />
-      <BtnStyle btnText="Clip" btnFunc={clipHandleClick} id="clipCount" btnStyle={btnsStyle} />
+      <BtnStyle btnText="View" btnCount={totalViewCount} btnFunc={viewHandleClick} id="viewCount" btnStyle={btnsStyle} />
+      <BtnStyle btnText="Clip" btnCount={totalClipCount} btnFunc={clipHandleClick} id="clipCount" btnStyle={btnsStyle} />
       <Link to={'/' + id + '/review'} key={id} css={Styles.linkBtn}>
         <BtnStyle btnText="Review" btnStyle={viewLinkBtn} />
       </Link>

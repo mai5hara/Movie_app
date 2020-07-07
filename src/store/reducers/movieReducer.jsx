@@ -5,7 +5,8 @@ import {
   SEARCH_PLOT_SUCCESS,
   SEARCH_PLOT_FAILURE,
   CREATE_REVIEW,
-  COUNT_VIEWNUMBER
+  COUNT_VIEWNUMBER,
+  COUNT_CLIPNUMBER,
 } from '../actions/movieActions';
 
 const initState = {
@@ -16,6 +17,7 @@ const initState = {
 };
 
 const movieReducer = (state = initState, action) => {
+  console.log(state)
   switch (action.type) {
     case SEARCH_MOVIES_REQUEST:
       return {
@@ -30,7 +32,7 @@ const movieReducer = (state = initState, action) => {
       return {
         ...state,
         loading: false,
-        movies: movies,
+        movies,
       };
     case SEARCH_MOVIES_FAILURE:
       return {
@@ -44,7 +46,7 @@ const movieReducer = (state = initState, action) => {
       return {
         ...state,
         loading: false,
-        movieDetail: movieDetail,
+        movieDetail,
       };
     case SEARCH_PLOT_FAILURE:
       return {
@@ -58,9 +60,16 @@ const movieReducer = (state = initState, action) => {
         review: action.review,
       };
     case COUNT_VIEWNUMBER:
+      const viewCount = action.payload.viewCount
       return {
         ...state,
-        viewCount: action.viewToggle,
+        viewCount,
+      };
+    case COUNT_CLIPNUMBER:
+      const clipCount = action.payload.clipCount
+      return {
+        ...state,
+        clipCount,
       };
     default:
       return state;
