@@ -50,8 +50,7 @@ const MovieInfo = ({
   id,
   auth
 }) => {
-  console.log(totalViewCount)
-  console.log(id)
+
   return (
     <div css={Styles.infoSection}>
       <h2>{movieDetail.Title}</h2>

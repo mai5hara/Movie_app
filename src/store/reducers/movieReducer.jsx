@@ -5,6 +5,7 @@ import {
   SEARCH_PLOT_SUCCESS,
   SEARCH_PLOT_FAILURE,
   CREATE_REVIEW,
+  GET_REVIEW,
   COUNT_VIEWNUMBER,
   COUNT_CLIPNUMBER,
 } from '../actions/movieActions';
@@ -55,10 +56,18 @@ const movieReducer = (state = initState, action) => {
         error: action.error,
       };
     case CREATE_REVIEW:
+      const reviews = action.payload.review
       return {
         ...state,
-        review: action.review,
+        reviews,
       };
+    case GET_REVIEW:
+      console.log(action)
+      const review = action.payload.review
+      return {
+        ...state,
+        review,
+      }
     case COUNT_VIEWNUMBER:
       const viewCount = action.payload.viewCount
       return {

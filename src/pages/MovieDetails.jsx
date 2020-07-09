@@ -13,9 +13,6 @@ const MovieDetails = ({
   viewCounter,
   clipCounter
 }) => {
-  // console.log(id)
-  // console.log(viewCounts)
-  console.log(clipCounts)
 
   const [viewToggle, setViewToggle] = useState({
     movieId: id,

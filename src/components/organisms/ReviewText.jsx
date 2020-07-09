@@ -34,11 +34,11 @@ const inputTagStyle = css(
   height: '10px',
 })
 
-const ReviewText = ({ handleChange, review, handleChangeCheck }) => {
+const ReviewText = ({ handleChange, review, handleChangeCheck, selectReview }) => {
   return (
     <div css={Styles.reviewtext}>
       <ReviewScore inputTitle="Score" inputFunc={handleChange} review={review} type="range" id="score" />
-      <ReviewInputStyle pStyle={pStyle} inputStyle={inputCommentStyle} inputTitle="Review Comment" inputFunc={handleChange} type="text" id="comment" />
+      <ReviewInputStyle pStyle={pStyle} inputStyle={inputCommentStyle} selectReview={selectReview} inputTitle="Review Comment" inputFunc={handleChange} type="text" id="comment" />
       <ReviewSpoiler review={review} handleChangeCheck={handleChangeCheck} />
       <ReviewInputStyle pStyle={pStyle} inputStyle={inputTagStyle} inputTitle="Tags" inputFunc={handleChange} type="text" id="tag" />
     </div>

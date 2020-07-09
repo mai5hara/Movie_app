@@ -2,7 +2,8 @@
 
 import { jsx, css } from '@emotion/core'
 
-const ReviewInputStyle = ({ inputFunc, inputTitle, id, type, pStyle, inputStyle }) => {
+const ReviewInputStyle = ({ inputFunc, inputTitle, id, type, pStyle, inputStyle, selectReview }) => {
+  console.log(selectReview)
   const Styles = {
     p: css`
     ${pStyle}

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { jsx, css } from '@emotion/core'
 import ReviewText from '../components/organisms/ReviewText';
 import ReviewBtns from '../components/molecules/ReviewBtns';
@@ -15,11 +15,8 @@ const Styles = {
   `,
 }
 
-const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) => {
-  // console.log(match.params.id)
-  // console.log(reviews)
-  console.log(selectReview)
-  // console.log(getReview)
+const Review = ({ match, postReview, auth, reviews }) => {
+  console.log(reviews)
 
   const movieId = match.params.id;
 
@@ -77,33 +74,12 @@ const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) =
     })
   }
 
-  useEffect(() => {
-    console.log(movieId)
-    getReview(movieId)
-    console.log('call')
-  }, [])
-
-
-
   return (
     <div css={Styles.formwrap}>
-      <form onSubmit={handleSubmit}>
-        <ReviewText
-          handleChange={handleChange}
-          review={reviewDetail}
-          handleChangeCheck={handleChangeCheck}
-          selectReview={selectReview}
-        />
-        <p>Conditions</p>
-        <ReviewConditions
-          review={reviewDetail}
-          handleChangeRadio={handleChangeRadio}
-          handleChangeCheck={handleChangeCheck}
-          handleChange={handleChange}
-          selectReview={selectReview}
-        />
-        <ReviewBtns movieId={movieId} postReview={postReview} />
-      </form>
+      <p>{review.score}</p>
+      <p>{review.comment}</p>
+      <p>{review.tag}</p>
+      <p>{review.record}</p>
     </div>
 
   );
