@@ -18,7 +18,6 @@ const initState = {
 };
 
 const movieReducer = (state = initState, action) => {
-  console.log(state)
   switch (action.type) {
     case SEARCH_MOVIES_REQUEST:
       return {
@@ -65,8 +64,13 @@ const movieReducer = (state = initState, action) => {
       console.log(action)
       const review = action.payload.review
       return {
-        ...state,
-        review,
+        score: review.score,
+        comment: review.comment,
+        tag: review.tag,
+        spoiler: review.spoiler,
+        record: review.record,
+        date: review.date,
+        confition: review.condition
       }
     case COUNT_VIEWNUMBER:
       const viewCount = action.payload.viewCount

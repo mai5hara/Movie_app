@@ -69,7 +69,7 @@ const inside = css({
   background: '#d3d3d3',
   display: 'none',
   position: 'absolute',
-  content: '',
+  // content: '',
   borderRadius: '100%',
   width: '15px',
   top: '4px',

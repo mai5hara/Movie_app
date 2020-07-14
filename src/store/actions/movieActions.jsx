@@ -114,16 +114,15 @@ export const getReview = (movieId) => async (dispatch, getState, { getFirebase, 
   try {
     const reviewRef = firestore.collection('reviews').doc(movieId);
     const reviewDoc = await reviewRef.get();
+    console.log(reviewDoc)
     if (reviewDoc.exists) {
-      // console.log(postDoc.id)
+      //console.log(postDoc.id)
       console.log(reviewDoc.data())
-      // console.log(postDoc.get('title'))
+      return dispatch(setGetReview(reviewDoc.data()))
     } else {
       console.log('No such document!')
     }
-
     // await firestore.app.delete();
-    return dispatch(setGetReview(reviewDoc.data()))
   } catch (error) {
     console.log(error)
   }

@@ -1,6 +1,5 @@
 /** @jsx jsx */
 
-import React from 'react';
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom';
 import SignedInLinks from '../molecules/SignedInLinks';
@@ -24,7 +23,6 @@ const Styles = {
 }
 
 const Navbar = ({ auth, profile, signOut, signIn, signUp }) => {
-  console.log(auth)
   const links = auth.uid ? <SignedInLinks signOut={signOut} profile={profile} /> : <SignedOutLinks signIn={signIn} signUp={signUp} auth={auth} />;
   return (
     <nav css={Styles.nav}>

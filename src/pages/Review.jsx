@@ -18,7 +18,7 @@ const Styles = {
 const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) => {
   // console.log(match.params.id)
   // console.log(reviews)
-  console.log(selectReview)
+  console.log(selectReview.comment)
   // console.log(getReview)
 
   const movieId = match.params.id;
@@ -26,13 +26,15 @@ const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) =
   const [reviewDetail, setReview] = useState({
     movieId: movieId,
     score: 0,
-    comment: '',
+    comment: getReview.comment || '',
     tag: '',
-    condition: 'public',
+    condition: getReview.condition || 'public',
     spoiler: false,
     record: '',
     date: ''
   });
+
+  console.log(reviewDetail)
 
   const handleChangeCheck = () => {
     setReview({
@@ -78,15 +80,18 @@ const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) =
   }
 
   useEffect(() => {
-    console.log(movieId)
     getReview(movieId)
-    console.log('call')
   }, [])
 
 
 
+
   return (
-    <div css={Styles.formwrap}>
+    <div css={Styles.formwrap} {...selectReview}>
+      {selectReview ? <p>{selectReview.comment}</p> : <p></p>
+
+
+      }
       <form onSubmit={handleSubmit}>
         <ReviewText
           handleChange={handleChange}

@@ -37,7 +37,6 @@ const MovieDetailBtns = ({
   totalViewCount,
   totalClipCount,
   id }) => {
-  console.log(id)
 
   return (
     <div css={Styles.btnWrap}>

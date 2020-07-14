@@ -58,7 +58,7 @@ const p = css({
   fontSize: '0.9rem',
 })
 
-const ReviewSpoiler = ({ review, handleChangeCheck }) => {
+const ReviewSpoiler = ({ review, handleChangeCheck, selectReview }) => {
   return (
     <div css={checkboxWrap}>
       <label css={label}>
@@ -66,11 +66,13 @@ const ReviewSpoiler = ({ review, handleChangeCheck }) => {
           type="checkbox"
           name="spoiler"
           id="spoiler"
-          defaultChecked={review.spoiler}
+          defaultChecked={selectReview.spoiler}
+          value={review.spoiler}
           onChange={handleChangeCheck}
           css={input}
+        // value={selectReview.spoiler}
         />
-        <span css={review.spoiler ? spanClicked : span}>
+        <span css={review.spoiler || selectReview.spoiler ? spanClicked : span}>
           <img src={Warning} css={warning} />
           <p css={p}>Spoiler</p>
         </span>

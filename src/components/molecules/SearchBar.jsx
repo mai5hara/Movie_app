@@ -1,6 +1,5 @@
 /** @jsx jsx */
 
-import React from 'react';
 import { jsx, css } from '@emotion/core'
 import BtnStyle from '../atoms/BtnStyle';
 import SearchInput from '../atoms/SearchInput';

@@ -88,7 +88,7 @@ const dateInput = css({
 
 const calendar = css({
   position: 'absolute',
-  content: '',
+  // content: '',
   top: 0,
   // right: '-43px',
   width: '65%',
@@ -104,7 +104,7 @@ const calendar = css({
 
 const imageWrap = css({
   position: 'absolute',
-  content: '',
+  // content: '',
   top: 0,
   right: '-43px',
   width: '36px',
@@ -113,18 +113,19 @@ const imageWrap = css({
   borderRadius: '5px',
 })
 
-const ReviewSelect = ({ review, handleChange }) => {
+const ReviewSelect = ({ review, handleChange, selectReview }) => {
   return (
     <div css={conditionsWrap}>
       <label css={label}>
         <div css={imageWrap}><span css={calendar}></span></div>
-        <input onChange={handleChange} id="date" type="date" css={dateInput} />
+        <input onChange={handleChange} id="date" type="date" css={dateInput} defaultValue={selectReview.date ? selectReview.date : review.date} />
       </label>
       <div css={selectWrap}>
         <span css={dropDown}></span>
         <select
           name="record"
           id="record"
+          defaultValue={selectReview.record ? selectReview.record : review.record}
           value={review.record}
           onChange={handleChange}
           css={select}

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/core'
-import React from 'react';
+import { jsx, css } from '@emotion/core';
+import { v4 as uuidv4 } from 'uuid';
 import ShowReview from '../molecules/ShowReview';
 
 const Styles = {
@@ -18,7 +18,7 @@ const ScoreReviews = ({ reviews, id }) => {
       <h2>Score ・ Review</h2>
       {reviews &&
         reviews.map((review) => {
-          return <ShowReview review={review} id={id} />;
+          return <ShowReview key={uuidv4()} review={review} id={id} />;
         })}
     </div>
   )

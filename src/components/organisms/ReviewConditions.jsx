@@ -8,12 +8,12 @@ const wrap = css({
   display: 'flex'
 })
 
-const ReviewConditions = ({ review, handleChangeRadio, handleChangeCheck, handleChange }) => {
+const ReviewConditions = ({ review, handleChangeRadio, handleChangeCheck, handleChange, selectReview }) => {
   return (
     <div>
-      <ReviewSelect review={review} handleChange={handleChange} />
+      <ReviewSelect review={review} handleChange={handleChange} selectReview={selectReview} />
       {/* <ReviewSpoiler review={review} handleChangeCheck={handleChangeCheck} /> */}
-      <ReviewRadioBtn review={review} handleChangeRadio={handleChangeRadio} />
+      <ReviewRadioBtn review={review} handleChangeRadio={handleChangeRadio} selectReview={selectReview} />
     </div>
   )
 }

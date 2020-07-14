@@ -1,6 +1,5 @@
 /** @jsx jsx */
 
-import React, { useState } from 'react';
 import { jsx, css } from '@emotion/core'
 import MovieDetailBtns from '../molecules/MovieDetailBtns';
 

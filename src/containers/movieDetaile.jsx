@@ -7,8 +7,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps);
-  console.log(state);
+
   return {
     movieDetail: state.movie.movieDetail,
     id: ownProps.match.params.id,

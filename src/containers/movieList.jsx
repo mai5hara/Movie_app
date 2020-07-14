@@ -5,8 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps);
-  console.log(state);
+
   return {
     error: state.movie.error,
     movies: state.movie.movies,
@@ -17,7 +16,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log(dispatch)
   return {
     fetchMovies: (searchValue) => dispatch(fetchMovies(searchValue)),
     viewCounter: (viewToggle) => dispatch(viewCounter(viewToggle))

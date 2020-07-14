@@ -2,8 +2,17 @@
 
 import { jsx, css } from '@emotion/core'
 
-const ReviewInputStyle = ({ inputFunc, inputTitle, id, type, pStyle, inputStyle, selectReview }) => {
-  console.log(selectReview)
+const ReviewInputStyle = ({
+  inputFunc,
+  inputTitle,
+  id,
+  type,
+  pStyle,
+  inputStyle,
+  selectReview,
+  review
+}) => {
+
   const Styles = {
     p: css`
     ${pStyle}
@@ -17,7 +26,14 @@ const ReviewInputStyle = ({ inputFunc, inputTitle, id, type, pStyle, inputStyle,
     <div>
       <p css={Styles.p}>{inputTitle}</p>
       {id === 'comment' ?
-        <textarea css={Styles.input} type={type} id={id} onChange={inputFunc} ></textarea> :
+        <textarea
+          css={Styles.input}
+          type={type} id={id}
+          onChange={inputFunc}
+          defaultValue={selectReview.comment}
+          value={review.comment}
+        >
+        </textarea> :
         <input css={Styles.input} type={type} id={id} onChange={inputFunc} />
       }
     </div>

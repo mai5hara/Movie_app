@@ -1,6 +1,5 @@
 /** @jsx jsx */
 
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { jsx, css } from '@emotion/core'
 import styled from '@emotion/styled';
@@ -24,7 +23,6 @@ const Styles = {
 }
 
 const SignedInLinks = ({ signOut, profile }) => {
-    console.log(profile)
     return (
         <ul css={Styles.navlink}>
             <Lists><NavLink to="/" css={Styles.linkto}>Home</NavLink></Lists>

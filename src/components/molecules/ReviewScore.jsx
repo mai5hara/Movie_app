@@ -83,12 +83,23 @@ const rangeSliderValue = css({
   color: lowerColor,
 })
 
-const ReviewScore = ({ review, inputFunc, type, id }) => {
+const ReviewScore = ({ review, inputFunc, type, id, selectReview }) => {
   return (
     <div>
       <p>Score</p>
-      <p css={rangeSliderValue}>{review.score}</p>
-      <input css={rangeSliderRange} onChange={inputFunc} type={type} id={id} min="0" max="100" value={review.score} />
+      <p css={rangeSliderValue}>{selectReview.score ? selectReview.spoiler : review.score}</p>
+      <input
+        css={rangeSliderRange}
+        onChange={inputFunc}
+        type={type}
+        id={id}
+        min="0"
+        max="100"
+        value={
+          selectReview.score ?
+            selectReview.score :
+            review.score
+        } />
     </div>
   )
 }
