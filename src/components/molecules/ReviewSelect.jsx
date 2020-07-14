@@ -118,14 +118,16 @@ const ReviewSelect = ({ review, handleChange, selectReview }) => {
     <div css={conditionsWrap}>
       <label css={label}>
         <div css={imageWrap}><span css={calendar}></span></div>
-        <input onChange={handleChange} id="date" type="date" css={dateInput} defaultValue={selectReview.date ? selectReview.date : review.date} />
+        {/* <input onChange={handleChange} id="date" type="date" css={dateInput} defaultValue={selectReview.date ? selectReview.date : review.date} /> */}
+        <input onChange={handleChange} id="date" type="date" css={dateInput} />
+
       </label>
       <div css={selectWrap}>
         <span css={dropDown}></span>
         <select
           name="record"
           id="record"
-          defaultValue={selectReview.record ? selectReview.record : review.record}
+          // defaultValue={selectReview.record ? selectReview.record : review.record}
           value={review.record}
           onChange={handleChange}
           css={select}

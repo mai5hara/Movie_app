@@ -87,7 +87,8 @@ const ReviewScore = ({ review, inputFunc, type, id, selectReview }) => {
   return (
     <div>
       <p>Score</p>
-      <p css={rangeSliderValue}>{selectReview.score ? selectReview.spoiler : review.score}</p>
+      {/* <p css={rangeSliderValue}>{selectReview.score ? selectReview.spoiler : review.score}</p> */}
+      <p css={rangeSliderValue}>{review.score}</p>
       <input
         css={rangeSliderRange}
         onChange={inputFunc}
@@ -95,11 +96,13 @@ const ReviewScore = ({ review, inputFunc, type, id, selectReview }) => {
         id={id}
         min="0"
         max="100"
-        value={
-          selectReview.score ?
-            selectReview.score :
-            review.score
-        } />
+        // value={
+        //   selectReview.score ?
+        //     selectReview.score :
+        //     review.score
+        // } 
+        value={review.score}
+      />
     </div>
   )
 }

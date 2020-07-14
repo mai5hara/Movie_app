@@ -66,13 +66,15 @@ const ReviewSpoiler = ({ review, handleChangeCheck, selectReview }) => {
           type="checkbox"
           name="spoiler"
           id="spoiler"
-          defaultChecked={selectReview.spoiler}
+          // defaultChecked={selectReview.spoiler}
           value={review.spoiler}
           onChange={handleChangeCheck}
           css={input}
         // value={selectReview.spoiler}
         />
-        <span css={review.spoiler || selectReview.spoiler ? spanClicked : span}>
+        {/* <span css={review.spoiler || selectReview.spoiler ? spanClicked : span}> */}
+        <span css={review.spoiler ? spanClicked : span}>
+
           <img src={Warning} css={warning} />
           <p css={p}>Spoiler</p>
         </span>

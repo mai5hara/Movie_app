@@ -6,7 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 const mapStateToProps = (state) => {
-  console.log(state)
+  console.log(state.movie)
   return {
     auth: state.firebase.auth,
     reviews: state.firestore.ordered.reviews,

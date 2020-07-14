@@ -108,7 +108,6 @@ export const postReview = (reviews) => (dispatch, getState, { getFirebase, getFi
 };
 
 export const getReview = (movieId) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  // const reviewsRef = firestore.collection('reviews').doc(reviews.movieId);
   const firestore = getFirestore();
 
   try {
@@ -116,17 +115,14 @@ export const getReview = (movieId) => async (dispatch, getState, { getFirebase, 
     const reviewDoc = await reviewRef.get();
     console.log(reviewDoc)
     if (reviewDoc.exists) {
-      //console.log(postDoc.id)
-      console.log(reviewDoc.data())
+      // console.log(reviewDoc.data())
       return dispatch(setGetReview(reviewDoc.data()))
     } else {
       console.log('No such document!')
     }
-    // await firestore.app.delete();
   } catch (error) {
     console.log(error)
   }
-
 };
 
 export const clipCounter = (clipCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {

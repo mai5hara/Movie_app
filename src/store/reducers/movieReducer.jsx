@@ -71,6 +71,8 @@ const movieReducer = (state = initState, action) => {
         record: review.record,
         date: review.date,
         confition: review.condition
+        // ...state,
+        // review
       }
     case COUNT_VIEWNUMBER:
       const viewCount = action.payload.viewCount

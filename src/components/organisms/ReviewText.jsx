@@ -36,7 +36,7 @@ const inputTagStyle = css(
 
 const ReviewText = ({ handleChange, review, handleChangeCheck, selectReview }) => {
   console.log(selectReview)
-  console.log(selectReview.comment)
+  // console.log(selectReview.comment)
 
   return (
     <div css={Styles.reviewtext}>

@@ -22,6 +22,8 @@ const ReviewInputStyle = ({
   `,
   }
 
+  console.log(inputFunc)
+
   return (
     <div>
       <p css={Styles.p}>{inputTitle}</p>
@@ -30,7 +32,7 @@ const ReviewInputStyle = ({
           css={Styles.input}
           type={type} id={id}
           onChange={inputFunc}
-          defaultValue={selectReview.comment}
+          // defaultValue={selectReview.comment}
           value={review.comment}
         >
         </textarea> :
