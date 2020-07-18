@@ -4,22 +4,24 @@ import { jsx, css } from '@emotion/core'
 import { Field } from 'formik';
 
 const inputField = css({
-  marginBottom: '1.5rem'
+  marginTop: '1.8rem',
+  marginBottom: '0.7rem'
 })
 
 const input = css({
-  height: '2rem',
-  width: '18rem',
+  height: '2.1rem',
+  width: '25rem',
   borderRadius: '30px',
   userSelect: 'none',
-  borderStyle: 'none',
-  padding: '0 0.7rem'
+  border: '1.5px solid #e249a2',
+  padding: '0 0.7rem',
+  outline: 'none'
 })
 
 const p = css({
-  fontSize: '0.8rem',
-  marginBottom: '0.4rem',
-  marginLeft: '1rem',
+  fontSize: '1rem',
+  marginBottom: '0.6rem',
+  marginLeft: '0.6rem',
 })
 
 const SignStyle = ({ signTitle, handleChange, errors, touched, name, type, id, placeholder }) => {

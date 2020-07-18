@@ -2,9 +2,6 @@
 
 import { jsx, css } from '@emotion/core'
 import React, { useState } from 'react';
-// import SignEmail from '../components/molecules/SignEmail';
-// import SignPassword from '../components/molecules/SignPassword';
-// import SignInBtn from '../components/atoms/SignUpBtn';
 import BtnStyle from '../components/atoms/BtnStyle';
 import SignStyle from '../components/molecules/SignStyle';
 import { Redirect } from 'react-router-dom';
@@ -18,23 +15,35 @@ const signWrap = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#23589e'
 })
 
-const inputWrap = css({
-  borderRadius: '15px',
-  border: '2px solid #e249a2',
-  backgroundColor: 'rgba(255,255,255,0.4)',
-  padding: '7rem 15rem'
+const title = css({
+  textAlign: 'center',
+  margin: '46vh 0',
+  fontSize: '3rem'
 })
 
-const input = css({
-  height: '2rem',
-  width: '18rem',
-  borderRadius: '30px',
-  userSelect: 'none',
-  borderStyle: 'none',
-  padding: '0 0.7rem'
+const subTitle = css({
+  fontSize: '2rem',
+  marginBottom: '2rem'
+})
+
+const signLeft = css({
+  height: '100vh',
+  width: '50%',
+  backgroundColor: '#23589e',
+  color: '#fff'
+})
+
+const signRight = css({
+  width: '50%',
+  display: 'flex',
+  justifyContent: 'center'
+})
+
+const error = css({
+  color: 'red',
+  fontSize: '0.8rem'
 })
 
 const SignIn = ({ auth, signIn }) => {
@@ -57,7 +66,9 @@ const SignIn = ({ auth, signIn }) => {
 
   return (
     <div css={signWrap}>
-      <h2>Movie Dialy</h2>
+      <div css={signLeft}>
+        <h2 css={title}>Movie Diary</h2>
+      </div>
       <Formik
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
@@ -71,44 +82,35 @@ const SignIn = ({ auth, signIn }) => {
           const { handleChange, errors, touched, isSubmitting } = props;
           console.log(handleChange)
           return (
-            <div css={inputWrap}>
-              <p>Sign In</p>
-              <Form>
-                <SignStyle
-                  signTitle="Email"
-                  name="email"
-                  type="email"
-                  id="email"
-                  placeholder="Email"
-                  handleChange={handleChange}
-                  errors={errors}
-                  touched={touched}
-                />
-                {errors.email && touched.email && (<div>{errors.email}</div>)}
-                <SignStyle
-                  signTitle="Password"
-                  name="password"
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  handleChange={handleChange}
-                  errors={errors}
-                  touched={touched}
-                />
-                {errors.password && touched.password && (<div>{errors.password}</div>)}
-                {/* <SignEmail
-                  handleChange={handleChange}
-                  errors={errors}
-                  touched={touched}
-                />
-                <SignPassword
-                  handleChange={handleChange}
-                  errors={errors}
-                  touched={touched}
-                /> */}
-                <BtnStyle btnText="Sign In" type="submit" submit={isSubmitting} btnStyle={signInStyle} />
-                {/* <SignInBtn isSubmitting={isSubmitting} /> */}
-              </Form>
+            <div css={signRight}>
+              <div>
+                <p css={subTitle}>Sign In</p>
+                <Form>
+                  <SignStyle
+                    signTitle="Email"
+                    name="email"
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    handleChange={handleChange}
+                    errors={errors}
+                    touched={touched}
+                  />
+                  {errors.email && touched.email && (<div css={error}>{errors.email}</div>)}
+                  <SignStyle
+                    signTitle="Password"
+                    name="password"
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    handleChange={handleChange}
+                    errors={errors}
+                    touched={touched}
+                  />
+                  {errors.password && touched.password && (<div css={error}>{errors.password}</div>)}
+                  <BtnStyle btnText="Sign In" type="submit" submit={isSubmitting} btnStyle={signInStyle} />
+                </Form>
+              </div>
             </div>
           );
         }}

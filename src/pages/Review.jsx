@@ -101,7 +101,6 @@ const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) =
           review={reviewDetail}
           handleChangeCheck={handleChangeCheck}
           selectReview={selectReview}
-          spoilerValue={!reviewDetail.spoiler}
         />
         <p>Conditions</p>
         <ReviewConditions

@@ -3,16 +3,16 @@
 import { jsx, css } from '@emotion/core'
 
 export const signInStyle = css({
-  margin: '0 auto',
   display: 'flex',
-  padding: '0.6rem 1.5rem',
+  padding: '0.8rem 1.8rem',
   borderRadius: '30px',
   borderStyle: 'none',
   backgroundColor: '#e249a2',
   color: '#fff',
   fontWeight: '600',
-  fontSize: '0.9rem',
-  cursor: 'pointer'
+  fontSize: '1rem',
+  cursor: 'pointer',
+  marginTop: '3rem'
 })
 
 
