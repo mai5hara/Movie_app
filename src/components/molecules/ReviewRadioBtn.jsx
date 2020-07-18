@@ -103,7 +103,7 @@ const checkedLabel = css(
   }
 })
 
-const ReviewRadioBtn = ({ review, handleChangeRadio }) => {
+const ReviewRadioBtn = ({ review, handleChange, handleChangeRadio, selectReview }) => {
   console.log(review)
   return (
     <div css={btnWrap}>
@@ -114,8 +114,8 @@ const ReviewRadioBtn = ({ review, handleChangeRadio }) => {
             name="radio"
             id="condition"
             value="public"
-            defaultChecked={review.condition === 'public'}
-            onChange={handleChangeRadio}
+            defaultChecked={selectReview.condition === 'public'}
+            onChange={handleChange('condition')}
             css={input}
           />
           <label css={review.condition === 'public' ? checkedLabel : label} for="condition">Public</label>
@@ -129,8 +129,8 @@ const ReviewRadioBtn = ({ review, handleChangeRadio }) => {
             name="radio"
             id="condition1"
             value="private"
-            // defaultChecked={review.condition === 'private'}
-            onChange={handleChangeRadio}
+            defaultChecked={selectReview.condition === 'private'}
+            onChange={handleChange('condition')}
             css={input}
           />
           <label css={review.condition === 'private' ? checkedLabel : label} for="condition1">Private</label>

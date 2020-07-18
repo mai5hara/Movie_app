@@ -116,7 +116,8 @@ export const getReview = (movieId) => async (dispatch, getState, { getFirebase, 
     console.log(reviewDoc)
     if (reviewDoc.exists) {
       // console.log(reviewDoc.data())
-      return dispatch(setGetReview(reviewDoc.data()))
+      dispatch(setGetReview(reviewDoc.data()))
+      return reviewDoc.data()
     } else {
       console.log('No such document!')
     }

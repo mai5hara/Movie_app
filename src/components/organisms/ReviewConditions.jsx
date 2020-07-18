@@ -13,7 +13,7 @@ const ReviewConditions = ({ review, handleChangeRadio, handleChangeCheck, handle
     <div>
       <ReviewSelect review={review} handleChange={handleChange} selectReview={selectReview} />
       {/* <ReviewSpoiler review={review} handleChangeCheck={handleChangeCheck} /> */}
-      <ReviewRadioBtn review={review} handleChangeRadio={handleChangeRadio} selectReview={selectReview} />
+      <ReviewRadioBtn review={review} handleChange={handleChange} handleChangeRadio={handleChangeRadio} selectReview={selectReview} />
     </div>
   )
 }

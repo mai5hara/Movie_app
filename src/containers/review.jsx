@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
     reviews: state.firestore.ordered.reviews,
-    selectReview: state.movie,
+    selectReview: state.movie.review || {},
   }
 }
 

@@ -58,7 +58,8 @@ const p = css({
   fontSize: '0.9rem',
 })
 
-const ReviewSpoiler = ({ review, handleChangeCheck, selectReview }) => {
+const ReviewSpoiler = ({ review, handleChange, handleChangeCheck, selectReview, spoilerValue }) => {
+  console.log(review)
   return (
     <div css={checkboxWrap}>
       <label css={label}>
@@ -67,8 +68,10 @@ const ReviewSpoiler = ({ review, handleChangeCheck, selectReview }) => {
           name="spoiler"
           id="spoiler"
           // defaultChecked={selectReview.spoiler}
-          value={review.spoiler}
-          onChange={handleChangeCheck}
+          defaultChecked={selectReview.spoiler}
+          // value={review.spoiler}
+          onChange={handleChangeCheck('spoiler')}
+          checked={spoilerValue}
           css={input}
         // value={selectReview.spoiler}
         />
@@ -79,7 +82,7 @@ const ReviewSpoiler = ({ review, handleChangeCheck, selectReview }) => {
           <p css={p}>Spoiler</p>
         </span>
       </label>
-    </div>
+    </div >
   )
 }
 

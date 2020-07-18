@@ -83,7 +83,8 @@ const rangeSliderValue = css({
   color: lowerColor,
 })
 
-const ReviewScore = ({ review, inputFunc, type, id, selectReview }) => {
+const ReviewScore = ({ review, handleChange, type, id, selectReview }) => {
+  console.log(review)
   return (
     <div>
       <p>Score</p>
@@ -91,17 +92,13 @@ const ReviewScore = ({ review, inputFunc, type, id, selectReview }) => {
       <p css={rangeSliderValue}>{review.score}</p>
       <input
         css={rangeSliderRange}
-        onChange={inputFunc}
+        onChange={handleChange('score')}
         type={type}
         id={id}
         min="0"
         max="100"
-        // value={
-        //   selectReview.score ?
-        //     selectReview.score :
-        //     review.score
-        // } 
-        value={review.score}
+        // value={review.score}
+        defaultValue={selectReview.score}
       />
     </div>
   )

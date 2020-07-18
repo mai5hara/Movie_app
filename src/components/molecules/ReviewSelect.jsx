@@ -113,13 +113,15 @@ const imageWrap = css({
   borderRadius: '5px',
 })
 
-const ReviewSelect = ({ review, handleChange, selectReview }) => {
+const ReviewSelect = ({ review, handleChange, handleChangeCheck, selectReview }) => {
+  console.log(review)
+
   return (
     <div css={conditionsWrap}>
       <label css={label}>
         <div css={imageWrap}><span css={calendar}></span></div>
-        {/* <input onChange={handleChange} id="date" type="date" css={dateInput} defaultValue={selectReview.date ? selectReview.date : review.date} /> */}
-        <input onChange={handleChange} id="date" type="date" css={dateInput} />
+        <input onChange={handleChange('date')} id="date" type="date" css={dateInput} defaultValue={selectReview.date} />
+        {/* <input onChange={handleChange('date')} id="date" type="date" css={dateInput} /> */}
 
       </label>
       <div css={selectWrap}>
@@ -127,9 +129,9 @@ const ReviewSelect = ({ review, handleChange, selectReview }) => {
         <select
           name="record"
           id="record"
-          // defaultValue={selectReview.record ? selectReview.record : review.record}
-          value={review.record}
-          onChange={handleChange}
+          defaultValue={selectReview.record}
+          // value={review.record}
+          onChange={handleChange('record')}
           css={select}
         >
           <option value="-----">--- Select ---</option>

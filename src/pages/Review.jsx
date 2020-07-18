@@ -7,7 +7,6 @@ import ReviewBtns from '../components/molecules/ReviewBtns';
 import ReviewConditions from '../components/organisms/ReviewConditions';
 import MyReview from '../components/organisms/MyReview';
 import ReviewForm from '../components/organisms/ReviewForm';
-import ReviewReducer from '../store/reducers/movieReducer'
 
 const Styles = {
   formwrap: css`
@@ -16,52 +15,37 @@ const Styles = {
   `,
 }
 
+const initialState = {}
+
+const reducer = (state = initialState, action) => {
+  console.log(action)
+  console.log(state.review)
+  console.log(state)
+  console.log(action)
+
+  switch (action.type) {
+    case 'INITIALVALUE':
+      return action.payload
+    case 'UPDATE':
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value
+      }
+    default:
+  }
+}
+
+
 const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) => {
 
   const movieId = match.params.id;
 
-  // const [reviewDetail, setReview] = useState({
-  //   movieId: movieId,
-  //   score: selectReview.score || 0,
-  //   comment: selectReview.comment || '',
-  //   tag: selectReview.tag || '',
-  //   condition: selectReview.condition || 'public',
-  //   spoiler: selectReview.spoiler || false,
-  //   record: selectReview.record || '',
-  //   date: ''
-  // });
-  console.log(reviews)
+  const [reviewDetail, dispatch] = useReducer(reducer, initialState);
+  // const { review } = reviewDetail;
 
-  const test = [{ test1: 1, review: { test2: 2, test3: 1 } }, { test1: 3, review: { test2: 4, test3: 1 } }, { test1: 1, review: { test2: 3, test3: 1 } }]
-  const filteredReview = test.filter((item) => item.review.test2 === 2);
-  const filteredReview1 = reviews && reviews.filter((item) => item.review.authorId === auth.uid);
+  // const test = ({initialCount}) => {  
+  //   const [state, dispatch] = useReducer(reducer, test, init);
 
-  console.log(filteredReview1)
-  // console.log(filteredReview1['id'])
-
-
-  console.log(reviews, auth)
-
-  // setTimeout(() => { const score = selectReview.score ? selectReview.score : 0 }, 10)
-
-  const initialState = {
-    movieId: movieId,
-    score: selectReview.score,
-    comment: selectReview.comment || 'aaaa',
-    tag: selectReview.tag || '',
-    condition: selectReview.condition || 'public',
-    spoiler: selectReview.spoiler || false,
-    record: selectReview.record || '',
-    date: ''
-  }
-
-  console.log(selectReview.score)
-  console.log(initialState.score)
-
-  const [reviewDetail, dispatch] = useReducer(ReviewReducer, initialState);
-
-
-  console.log(dispatch)
   console.log(reviewDetail)
 
   // const handleChangeCheck = () => {
@@ -71,6 +55,16 @@ const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) =
   //   });
   // };
 
+  const handleChangeCheck = (key) => (e) => {
+    //   setReview({
+    //     ...reviewDetail,
+    //     spoiler: !reviewDetail.spoiler,
+    //   });
+    e.preventDefault();
+    dispatch({ type: 'UPDATE', payload: { key, value: !reviewDetail.spoiler } })
+
+  };
+
   // const handleChangeRadio = (e) => {
   //   setReview({
   //     ...reviewDetail,
@@ -78,56 +72,36 @@ const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) =
   //   });
   // };
 
-  const handleChange = (e) => {
+  const handleChange = (key) => (e) => {
+    console.log(e.target)
     e.preventDefault();
-    console.log(e)
-    dispatch({ type: e.target.id, payload: e.target.value })
-    // setReview({
-    //   ...reviewDetail,
-    //   [e.target.id]: e.target.value,
-    // });
+    dispatch({ type: 'UPDATE', payload: { key, value: e.target.value } })
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getReview(reviewDetail));
-    // setReview('');
+    postReview(reviewDetail);
   };
 
-  const eachReview = () => {
-    let shoeReview = ''
-    reviews && reviews.map((review) =>
-      (auth.uid === review.authorId && movieId === review.movieId && !review.movieId.length === 0 ? shoeReview : <ReviewForm />))
-  }
-
-  // const filteredShowReview = showReview();
-
-  const filterReview = () => {
-    const muchReview = auth.uid === reviews.authorId && movieId === reviews.movieId;
-    reviews.filter((muchReview) => {
-      console.log(muchReview)
-    })
-  }
-
   useEffect(() => {
-    getReview(movieId)
+    console.log('hey')
+    const init = async () => {
+      const { review } = await getReview(movieId);
+      dispatch({ type: 'INITIALVALUE', payload: review })
+      console.log(review)
+    }
+    init()
   }, [])
-
-
-
 
   return (
     <div css={Styles.formwrap}>
-      {/* {selectReview ? <p>{selectReview.comment}</p> : <p></p>
-
-
-      } */}
       <form onSubmit={handleSubmit}>
         <ReviewText
           handleChange={handleChange}
           review={reviewDetail}
-          // handleChangeCheck={handleChangeCheck}
+          handleChangeCheck={handleChangeCheck}
           selectReview={selectReview}
+          spoilerValue={!reviewDetail.spoiler}
         />
         <p>Conditions</p>
         <ReviewConditions

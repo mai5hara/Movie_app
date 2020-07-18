@@ -34,16 +34,17 @@ const inputTagStyle = css(
   height: '10px',
 })
 
-const ReviewText = ({ handleChange, review, handleChangeCheck, selectReview }) => {
+const ReviewText = ({ handleChange, review, handleChangeCheck, selectReview, spoilerValue }) => {
   console.log(selectReview)
+  console.log(review)
   // console.log(selectReview.comment)
 
   return (
     <div css={Styles.reviewtext}>
-      <ReviewScore inputTitle="Score" inputFunc={handleChange} review={review} selectReview={selectReview} type="range" id="score" />
-      <ReviewInputStyle pStyle={pStyle} inputStyle={inputCommentStyle} review={review} selectReview={selectReview} inputTitle="Review Comment" inputFunc={handleChange} type="text" id="comment" />
-      <ReviewSpoiler review={review} handleChangeCheck={handleChangeCheck} selectReview={selectReview} />
-      <ReviewInputStyle pStyle={pStyle} inputStyle={inputTagStyle} review={review} selectReview={selectReview} inputTitle="Tags" inputFunc={handleChange} type="text" id="tag" />
+      <ReviewScore inputTitle="Score" type="range" id="score" review={review} selectReview={selectReview} handleChange={handleChange} />
+      <ReviewInputStyle inputTitle="Review Comment" type="text" id="comment" pStyle={pStyle} inputStyle={inputCommentStyle} review={review} selectReview={selectReview} handleChange={handleChange} />
+      <ReviewSpoiler review={review} handleChange={handleChange} handleChangeCheck={handleChangeCheck} selectReview={selectReview} spoilerValue={spoilerValue} />
+      <ReviewInputStyle inputTitle="Tags" type="text" id="tag" pStyle={pStyle} inputStyle={inputTagStyle} review={review} selectReview={selectReview} handleChange={handleChange} />
     </div>
   )
 }

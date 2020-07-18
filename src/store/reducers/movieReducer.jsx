@@ -13,11 +13,14 @@ import {
 const initState = {
   loading: false,
   movies: [],
+  review: {},
   error: null,
   movieDetail: [],
 };
 
 const movieReducer = (state = initState, action) => {
+  console.log(state)
+  console.log(action)
   switch (action.type) {
     case SEARCH_MOVIES_REQUEST:
       return {
@@ -61,18 +64,12 @@ const movieReducer = (state = initState, action) => {
         reviews,
       };
     case GET_REVIEW:
-      console.log(action)
+      console.log(state)
+      console.log(action.payload.review)
       const review = action.payload.review
       return {
-        score: review.score,
-        comment: review.comment,
-        tag: review.tag,
-        spoiler: review.spoiler,
-        record: review.record,
-        date: review.date,
-        confition: review.condition
-        // ...state,
-        // review
+        ...state,
+        review
       }
     case COUNT_VIEWNUMBER:
       const viewCount = action.payload.viewCount

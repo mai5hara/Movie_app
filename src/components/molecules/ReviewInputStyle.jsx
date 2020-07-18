@@ -3,7 +3,7 @@
 import { jsx, css } from '@emotion/core'
 
 const ReviewInputStyle = ({
-  inputFunc,
+  handleChange,
   inputTitle,
   id,
   type,
@@ -22,7 +22,7 @@ const ReviewInputStyle = ({
   `,
   }
 
-  console.log(inputFunc)
+  console.log(handleChange)
 
   return (
     <div>
@@ -31,12 +31,12 @@ const ReviewInputStyle = ({
         <textarea
           css={Styles.input}
           type={type} id={id}
-          onChange={inputFunc}
-          // defaultValue={selectReview.comment}
-          value={review.comment}
+          onChange={handleChange('comment')}
+          defaultValue={selectReview.comment}
+        // value={selectReview.comment}
         >
         </textarea> :
-        <input css={Styles.input} type={type} id={id} onChange={inputFunc} />
+        <input css={Styles.input} type={type} id={id} onChange={handleChange('tags')} />
       }
     </div>
   )
