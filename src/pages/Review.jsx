@@ -29,6 +29,7 @@ const reducer = (state = initialState, action) => {
     case 'UPDATE':
       return {
         ...state,
+        // movieId: action.payliad.movied,
         [action.payload.key]: action.payload.value
       }
     default:
@@ -37,8 +38,10 @@ const reducer = (state = initialState, action) => {
 
 
 const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) => {
+  console.log(Object.keys(selectReview).length)
 
   const movieId = match.params.id;
+  console.log(movieId)
 
   const [reviewDetail, dispatch] = useReducer(reducer, initialState);
   // const { review } = reviewDetail;
@@ -84,11 +87,10 @@ const Review = ({ match, postReview, auth, reviews, selectReview, getReview }) =
   };
 
   useEffect(() => {
-    console.log('hey')
     const init = async () => {
-      const { review } = await getReview(movieId);
-      dispatch({ type: 'INITIALVALUE', payload: review })
+      const review = await getReview(movieId);
       console.log(review)
+      dispatch({ type: 'INITIALVALUE', payload: { ...review, movieId } })
     }
     init()
   }, [])

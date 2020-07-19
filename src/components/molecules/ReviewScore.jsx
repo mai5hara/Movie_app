@@ -85,11 +85,23 @@ const rangeSliderValue = css({
 
 const ReviewScore = ({ review, handleChange, type, id, selectReview }) => {
   console.log(review)
+
+  const scoreNum = () => {
+    if (review === undefined || review.score === '0') {
+      return <p css={rangeSliderValue}>0</p>
+    } else if (review.score !== 0) {
+      return <p css={rangeSliderValue}>{review.score}</p>
+    }
+  }
+
   return (
     <div>
       <p>Score</p>
       {/* <p css={rangeSliderValue}>{selectReview.score ? selectReview.spoiler : review.score}</p> */}
-      <p css={rangeSliderValue}>{review.score}</p>
+      <p css={rangeSliderValue}>{review === undefined || review.score === '0' ? '0' : review.score}</p>
+      {/* <p css={rangeSliderValue}>{review.score}</p> */}
+
+      {scoreNum}
       <input
         css={rangeSliderRange}
         onChange={handleChange('score')}

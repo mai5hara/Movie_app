@@ -114,6 +114,7 @@ const imageWrap = css({
 })
 
 const ReviewSelect = ({ review, handleChange, handleChangeCheck, selectReview }) => {
+  console.log(selectReview.record)
   console.log(review)
 
   return (
@@ -129,6 +130,7 @@ const ReviewSelect = ({ review, handleChange, handleChangeCheck, selectReview })
         <select
           name="record"
           id="record"
+          selectedValue={selectReview.record}
           defaultValue={selectReview.record}
           // value={review.record}
           onChange={handleChange('record')}

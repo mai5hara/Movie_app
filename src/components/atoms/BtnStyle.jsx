@@ -22,8 +22,8 @@ const BtnStyle = ({ btnText, btnFunc, btnCount, btnType, submit, id, btnStyle })
     ${btnStyle}
     `
   }
-
   return (
+
     <button type={btnType} id={id} onClick={btnFunc} disabled={submit} css={Styles.btn}>
       {btnText} {btnCount}
     </button>

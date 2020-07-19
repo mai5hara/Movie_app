@@ -7,11 +7,12 @@ const MovieDetails = ({
   id,
   fetchPlot,
   reviews,
-  viewCounts,
-  clipCounts,
-  auth,
   viewCounter,
-  clipCounter
+  clipCounter,
+  getViewCount,
+  getClipCount,
+  viewCount,
+  clipCount
 }) => {
 
   const [viewToggle, setViewToggle] = useState({
@@ -26,8 +27,12 @@ const MovieDetails = ({
 
   let totalView = () => {
     let totalViewCount = 0;
-    viewCounts && viewCounts.map((count) =>
-      (count.movieId === id && count.isToggle === true ? totalViewCount++ : null));
+
+    if (viewCount === undefined) {
+      totalViewCount = 0;
+    } else {
+      viewCount && Object.values(viewCount).forEach(count => count === true ? totalViewCount++ : null)
+    }
     return totalViewCount
   };
 
@@ -35,8 +40,12 @@ const MovieDetails = ({
 
   let totalClip = () => {
     let totalClipCount = 0;
-    clipCounts && clipCounts.map((count) =>
-      (count.movieId === id && count.isToggle === true ? totalClipCount++ : null));
+
+    if (clipCount === undefined) {
+      totalClipCount = 0;
+    } else {
+      clipCount && Object.values(clipCount).forEach(count => count === true ? totalClipCount++ : null)
+    }
     return totalClipCount
   };
 
@@ -53,25 +62,32 @@ const MovieDetails = ({
   };
 
   const clipHandleClick = (e) => {
+    console.log('Clicked!');
     e.preventDefault();
     setClipToggle({
       ...clipToggle,
       isToggle: !clipToggle.isToggle,
     });
+    clipCounter(viewToggle);
   };
 
   useEffect(() => {
-    fetchPlot(id);
     isFirstRender.current = true;
+    fetchPlot(id);
+    getViewCount(id);
+    getClipCount(id);
     console.log('loaded!');
   }, []);
 
   const isFirstRender = useRef(false);
 
+
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
     } else {
+      getViewCount(id);
+      getClipCount(id);
       viewCounter(viewToggle);
       clipCounter(clipToggle);
     }
@@ -86,7 +102,6 @@ const MovieDetails = ({
         totalClipCount={totalClipCount}
         id={id}
         movieDetail={movieDetail}
-      // clipToggle={clipToggle}
       />
       <ScoreReviews reviews={reviews} id={id} />
     </div>

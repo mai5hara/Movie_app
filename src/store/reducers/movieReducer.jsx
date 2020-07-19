@@ -8,6 +8,8 @@ import {
   GET_REVIEW,
   COUNT_VIEWNUMBER,
   COUNT_CLIPNUMBER,
+  GET_VIEWCOUNT,
+  GET_CLIPCOUNT,
 } from '../actions/movieActions';
 
 const initState = {
@@ -19,8 +21,7 @@ const initState = {
 };
 
 const movieReducer = (state = initState, action) => {
-  console.log(state)
-  console.log(action)
+
   switch (action.type) {
     case SEARCH_MOVIES_REQUEST:
       return {
@@ -29,9 +30,7 @@ const movieReducer = (state = initState, action) => {
         error: null,
       };
     case SEARCH_MOVIES_SECCESS:
-      console.log(action);
       const movies = action.payload.movies;
-      console.log(movies);
       return {
         ...state,
         loading: false,
@@ -64,12 +63,22 @@ const movieReducer = (state = initState, action) => {
         reviews,
       };
     case GET_REVIEW:
-      console.log(state)
-      console.log(action.payload.review)
       const review = action.payload.review
       return {
         ...state,
         review
+      }
+    case GET_VIEWCOUNT:
+      const totalViewCount = action.payload
+      return {
+        ...state,
+        totalViewCount
+      }
+    case GET_CLIPCOUNT:
+      const totalClipCount = action.payload
+      return {
+        ...state,
+        totalClipCount
       }
     case COUNT_VIEWNUMBER:
       const viewCount = action.payload.viewCount

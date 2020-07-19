@@ -60,6 +60,7 @@ const p = css({
 
 const ReviewSpoiler = ({ review, handleChange, handleChangeCheck, selectReview }) => {
   console.log(review)
+  console.log(selectReview)
   return (
     <div css={checkboxWrap}>
       <label css={label}>
@@ -72,11 +73,8 @@ const ReviewSpoiler = ({ review, handleChange, handleChangeCheck, selectReview }
           // value={review.spoiler}
           onChange={handleChangeCheck('spoiler')}
           css={input}
-        // value={selectReview.spoiler}
         />
-        {/* <span css={review.spoiler || selectReview.spoiler ? spanClicked : span}> */}
-        <span css={review.spoiler ? spanClicked : span}>
-
+        <span css={review === undefined || review.spoiler === false ? span : spanClicked}>
           <img src={Warning} css={warning} />
           <p css={p}>Spoiler</p>
         </span>
