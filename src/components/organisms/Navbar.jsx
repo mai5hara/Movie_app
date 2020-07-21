@@ -9,8 +9,10 @@ const Styles = {
   nav: css`
     height: 4rem;
     display: flex;
-    margin: 0 2rem;
+    padding: 0 2rem;
     justify-content: space-between;
+    background-color: #23589e;
+    color: #fff;
   `,
   navWrap: css`
     display: flex;
@@ -19,6 +21,7 @@ const Styles = {
     text-decoration: none;
     line-height: 4rem;
     vertical-align: middle;
+    color: #fff;
   `,
 }
 
@@ -27,7 +30,7 @@ const Navbar = ({ auth, profile, signOut, signIn, signUp }) => {
   return (
     <nav css={Styles.nav}>
       {/* <div css={Styles.navWrap}> */}
-      <Link to="/" css={Styles.logo}>Movie Buff</Link>
+      <Link to="/" css={Styles.logo}>Movie Diary</Link>
       {auth.isLoaded && links}
       {/* </div> */}
     </nav>

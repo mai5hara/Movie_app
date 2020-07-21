@@ -121,7 +121,7 @@ const ReviewSelect = ({ review, handleChange, handleChangeCheck, selectReview })
     <div css={conditionsWrap}>
       <label css={label}>
         <div css={imageWrap}><span css={calendar}></span></div>
-        <input onChange={handleChange('date')} id="date" type="date" css={dateInput} defaultValue={selectReview.date} />
+        <input onChange={handleChange('date')} id="date" type="date" css={dateInput} defaultValue={review.date} />
         {/* <input onChange={handleChange('date')} id="date" type="date" css={dateInput} /> */}
 
       </label>
@@ -130,9 +130,9 @@ const ReviewSelect = ({ review, handleChange, handleChangeCheck, selectReview })
         <select
           name="record"
           id="record"
-          selectedValue={selectReview.record}
-          defaultValue={selectReview.record}
-          // value={review.record}
+          selectedValue={review.record}
+          defaultValue={review.record}
+          value={review.record}
           onChange={handleChange('record')}
           css={select}
         >

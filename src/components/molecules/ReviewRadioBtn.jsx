@@ -69,7 +69,6 @@ const inside = css({
   background: '#d3d3d3',
   display: 'none',
   position: 'absolute',
-  // content: '',
   borderRadius: '100%',
   width: '15px',
   top: '4px',
@@ -104,52 +103,38 @@ const checkedLabel = css(
 })
 
 const ReviewRadioBtn = ({ review, handleChange, handleChangeRadio, selectReview }) => {
-  console.log(review)
-  console.log(selectReview)
-
-  // const defaultChecked = () => {
-  //   if (selectReview.condition === 'public' || selectReview === undefined) {
-  //     return 'public'
-  //   } else if (selectReview.condition === 'private') {
-  //     return 'private'
-  //   }
-  // }
+  console.log(review.condition)
+  console.log(selectReview.condition)
 
   return (
     <div css={btnWrap}>
       <ul css={ul}>
-        <li css={review === undefined || review.condition === 'public' ? checkedList : list}>
+        <li css={review.condition === undefined || review.condition === 'public' ? checkedList : list}>
           <input
             type="radio"
             name="radio"
             id="condition"
-            // value="public"
-            // defaultValue={selectReview.condition === 'public'}
-            defaultChecked={selectReview.condition === 'public'}
-            // checked={selectReview.condition === 'public'}
+            defaultChecked={review.condition === 'public'}
             onChange={handleChange('condition')}
             css={input}
           />
-          <label css={review === undefined || review.condition === 'public' ? checkedLabel : label} for="condition">Public</label>
-          <div css={review === undefined || review.condition === 'public' ? checkedRadioBtn : radioBtn} >
-            <div css={review === undefined || review.condition === 'public' ? checkedInside : inside}></div>
+          <label css={review.condition === undefined || review.condition === 'public' ? checkedLabel : label} for="condition">Public</label>
+          <div css={review.condition === undefined || review.condition === 'public' ? checkedRadioBtn : radioBtn} >
+            <div css={review.condition === undefined || review.condition === 'public' ? checkedInside : inside}></div>
           </div>
         </li>
-        <li css={review === undefined || review.condition === 'private' ? checkedList : list}>
+        <li css={review.condition === 'private' ? checkedList : list}>
           <input
             type="radio"
             name="radio"
             id="condition1"
-            // value="private"
-            // defaultValue={selectReview.condition === 'private'}
-            defaultChecked={selectReview.condition === 'private'}
-            // checked={selectReview.condition === 'private'}
+            defaultChecked={review.condition === 'private'}
             onChange={handleChange('condition')}
             css={input}
           />
-          <label css={review === undefined || review.condition === 'private' ? checkedLabel : label} for="condition1">Private</label>
-          <div css={review === undefined || review.condition === 'private' ? checkedRadioBtn : radioBtn}>
-            <div css={review === undefined || review.condition === 'private' ? checkedInside : inside}></div>
+          <label css={review.condition === 'private' ? checkedLabel : label} for="condition1">Private</label>
+          <div css={review.condition === 'private' ? checkedRadioBtn : radioBtn}>
+            <div css={review.condition === 'private' ? checkedInside : inside}></div>
           </div>
         </li>
       </ul>

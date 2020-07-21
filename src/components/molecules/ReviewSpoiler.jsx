@@ -69,12 +69,12 @@ const ReviewSpoiler = ({ review, handleChange, handleChangeCheck, selectReview }
           name="spoiler"
           id="spoiler"
           defaultChecked={false}
-          checked={selectReview.spoiler}
+          checked={review.spoiler}
           // value={review.spoiler}
           onChange={handleChangeCheck('spoiler')}
           css={input}
         />
-        <span css={review === undefined || review.spoiler === false ? span : spanClicked}>
+        <span css={review.spoiler === undefined || review.spoiler === false ? span : spanClicked}>
           <img src={Warning} css={warning} />
           <p css={p}>Spoiler</p>
         </span>

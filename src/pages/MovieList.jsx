@@ -50,6 +50,8 @@ const MovieList = ({
   id,
   auth
 }) => {
+  console.log(reviews)
+  console.log(movies)
   const [searchValue, setSearchValue] = useState('');
 
   const handleChange = (e) => {
@@ -80,19 +82,32 @@ const MovieList = ({
           <div>{error}</div>
         ) : (
               movies.map((movie) => (
-                <Link
-                  to={'/movie/' + movie.imdbID}
-                  key={movie.imdbID}
-                  movieId={movie.imdbID}
-                  css={Styles.movieWrap}
-                >
-                  <div></div>
-                  <Movie
-                    movie={movie}
-                    reviews={reviews}
-                    id={id}
-                  />
-                </Link>
+                reviews.map((review) => {
+                  console.log(movie)
+                  console.log(review)
+                  if (review.id === movie.imdbID) {
+                    for (let key in review) {
+                      console.log(review[key].score)
+                      // console.log(review[1])
+                      // const score = review[key].score
+                      // console.log(score)
+                      return (
+                        <Link
+                          to={'/movie/' + movie.imdbID}
+                          key={movie.imdbID}
+                          movieId={movie.imdbID}
+                          css={Styles.movieWrap}
+                        >
+                          <Movie
+                            movie={movie}
+                            // score={score}
+                            id={id}
+                          />
+                        </Link>
+                      )
+                    }
+                  }
+                })
               ))
             )}
       </div>

@@ -5,6 +5,7 @@ import MovieInfo from '../components/organisms/MovieInfo';
 const MovieDetails = ({
   movieDetail,
   id,
+  auth,
   fetchPlot,
   reviews,
   viewCounter,
@@ -14,6 +15,52 @@ const MovieDetails = ({
   viewCount,
   clipCount
 }) => {
+
+  const userId = auth.uid
+  console.log(userId)
+
+  const findOwnReview = () => {
+    reviews && reviews.map((review) => {
+      console.log(review)
+      if (review.id === id) {
+        let movieReviews = review
+        console.log(movieReviews)
+        for (let key in movieReviews) {
+          console.log(movieReviews)
+          console.log(key)
+          if (key === userId) {
+            console.log(key)
+            return true
+          }
+        }
+      }
+      return false
+    })
+  }
+  console.log(findOwnReview())
+  const ownReview = findOwnReview()
+  console.log(ownReview)
+
+  const findQwnViewStatus = () => {
+    for (let key in viewCount) {
+      if (key === userId) {
+        console.log(viewCount[key])
+        return viewCount[key]
+      }
+    }
+  }
+
+  const findQwnClipStatus = () => {
+    for (let key in clipCount) {
+      if (key === userId) {
+        console.log(clipCount[key])
+        return clipCount[key]
+      }
+    }
+  }
+  console.log(findQwnClipStatus())
+  const ownViewStatus = findQwnViewStatus()
+  const ownClipStatus = findQwnClipStatus()
 
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
@@ -81,7 +128,6 @@ const MovieDetails = ({
 
   const isFirstRender = useRef(false);
 
-
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -102,8 +148,10 @@ const MovieDetails = ({
         totalClipCount={totalClipCount}
         id={id}
         movieDetail={movieDetail}
+        ownViewStatus={ownViewStatus}
+        ownClipStatus={ownClipStatus}
       />
-      <ScoreReviews reviews={reviews} id={id} />
+      <ScoreReviews reviews={reviews} id={id} viewCount={viewCount} />
     </div>
   );
 };

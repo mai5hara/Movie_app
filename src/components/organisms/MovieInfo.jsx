@@ -15,10 +15,15 @@ const Styles = {
   image: css`
     width: 300px;
   `,
+  imageWrap: css`
+    display: flex;
+  `,
 }
 
 const DetailWrap = styled.div`
   margin-left: 3rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const DetailItem = styled.div`
@@ -47,6 +52,8 @@ const MovieInfo = ({
   clipHandleClick,
   totalViewCount,
   totalClipCount,
+  ownViewStatus,
+  ownClipStatus,
   id,
   auth
 }) => {
@@ -56,7 +63,7 @@ const MovieInfo = ({
       <h2>{movieDetail.Title}</h2>
       <p>★★★★★ 5.0</p>
       <div css={Styles.detailWrap}>
-        <div>
+        <div css={Styles.imageWrap}>
           <img
             width="200"
             alt={`The movie title ${movieDetail.Title}`}
@@ -83,7 +90,8 @@ const MovieInfo = ({
             id={id}
             totalViewCount={totalViewCount}
             totalClipCount={totalClipCount}
-          // clipToggle={clipToggle}
+            ownViewStatus={ownViewStatus}
+            ownClipStatus={ownClipStatus}
           />
         </DetailWrap>
       </div>

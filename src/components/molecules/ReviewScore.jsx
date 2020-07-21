@@ -110,7 +110,7 @@ const ReviewScore = ({ review, handleChange, type, id, selectReview }) => {
         min="0"
         max="100"
         // value={review.score}
-        defaultValue={selectReview.score}
+        defaultValue={review.score}
       />
     </div>
   )

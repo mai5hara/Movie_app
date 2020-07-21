@@ -1,18 +1,25 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/core'
+import { jsx, css } from '@emotion/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const Styles = {
-  input: css`
-    border-radius: 30px;
-    height: 2.6rem;
-    width: 60%;
-    border-style: none;
-    padding: 0 1rem;
-  `,
-}
+export const searchBar = css({
+  borderRadius: '30px',
+  height: '2.6rem',
+  width: '60%',
+  borderStyle: 'none',
+  padding: '0 1rem',
+  outline: 'none',
+})
 
-const SearchBar = ({ handleChange }) => {
+const SearchBar = ({ handleChange, inputStyle }) => {
+
+  const Styles = {
+    input: css`
+      ${inputStyle}
+    `,
+  }
 
   return (
     <input

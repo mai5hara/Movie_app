@@ -6,11 +6,13 @@ import styled from '@emotion/styled';
 
 const Lists = styled.li`
     margin-left: 1rem;
+    cursor: pointer;
 `;
 
 const Styles = {
     linkto: css`
         text-decoration: none;
+        color: #fff;
     `,
     navlink: css`
         margin: 0;
