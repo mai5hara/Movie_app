@@ -5,11 +5,15 @@ export const SEARCH_MOVIES_FAILURE = 'SEARCH_MOVIES_FAILURE';
 export const SEARCH_PLOT_SUCCESS = 'SEARCH_PLOT_SUCCESS';
 export const SEARCH_PLOT_FAILURE = 'SEARCH_PLOT_FAILURE';
 export const CREATE_REVIEW = 'CREATE_REVIEW';
+export const GET_OWNREVIEW = 'GET_OWNREVIEW';
 export const GET_REVIEW = 'GET_REVIEW';
 export const COUNT_VIEWNUMBER = 'COUNT_VIEWNUMBER';
 export const COUNT_CLIPNUMBER = 'COUNT_CLIPNUMBER';
 export const GET_VIEWCOUNT = 'GET_VIEWCOUNT';
-export const GET_CLIPCOUNT = 'GET_CLIPCOUNT';
+export const GET_OWNCLIPCOUNT = 'GET_OWNCLIPCOUNT';
+export const GET_TOTALCLIPCOUNT = 'GET_TOTALCLIPCOUNT';
+export const GET_OWNVIEWCOUNT = 'GET_OWNVIEWCOUNT';
+export const GET_TOTALVIEWCOUNT = 'GET_TOTALVIEWCOUNT';
 
 export const searchMovieRequest = () => {
   return {
@@ -66,29 +70,49 @@ export const setPostReview = (review) => {
   };
 };
 
-export const setGetReview = (review) => {
+export const setOwnReview = (review) => {
+  return {
+    type: GET_OWNREVIEW,
+    payload: review
+  }
+}
+
+export const setReview = (review) => {
   return {
     type: GET_REVIEW,
     payload: review
   }
 }
 
-export const setGetViewCount = (totalCount) => {
+export const setOwnViewCount = (ownCount) => {
   return {
-    type: GET_VIEWCOUNT,
+    type: GET_OWNVIEWCOUNT,
+    payload: ownCount
+  }
+}
+
+export const setTotalViewCount = (totalCount) => {
+  return {
+    type: GET_TOTALVIEWCOUNT,
     payload: totalCount
   }
 }
 
-export const setGetClipCount = (totalCount) => {
+export const setOwnClipCount = (ownCount) => {
   return {
-    type: GET_CLIPCOUNT,
+    type: GET_OWNCLIPCOUNT,
+    payload: ownCount
+  }
+}
+
+export const setTotalClipCount = (totalCount) => {
+  return {
+    type: GET_TOTALCLIPCOUNT,
     payload: totalCount
   }
 }
 
 export const postReview = (reviews) => (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(reviews);
   const firestore = getFirestore();
   const profile = getState().firebase.profile;
   const authorId = getState().firebase.auth.uid;
@@ -123,21 +147,22 @@ export const postReview = (reviews) => (dispatch, getState, { getFirebase, getFi
 };
 
 export const getReview = (movieId) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(movieId)
   const firestore = getFirestore();
   const authorId = getState().firebase.auth.uid;
-  console.log(authorId)
+
   try {
     const reviewRef = firestore.collection('reviews').doc(movieId);
     const reviewDoc = await reviewRef.get();
 
     if (reviewDoc.exists) {
-      dispatch(setGetReview(reviewDoc.data()[authorId]))
+      dispatch(setOwnReview(reviewDoc.data()[authorId]))
+      dispatch(setReview(reviewDoc.data()))
 
       return reviewDoc.data()[authorId]
     } else {
       console.log('No such document!')
-      dispatch(setGetReview({}))
+      dispatch(setOwnReview({}))
+      dispatch(setReview({}))
     }
   } catch (error) {
     console.log(error)
@@ -146,17 +171,19 @@ export const getReview = (movieId) => async (dispatch, getState, { getFirebase, 
 
 export const getViewCount = (movieId) => async (dispatch, getState, { getFirebase, getFirestore }) => {
   const firestore = getFirestore();
-  console.log(movieId)
+  const authorId = getState().firebase.auth.uid;
 
   try {
     const reviewRef = firestore.collection('viewCounter').doc(movieId);
     const reviewDoc = await reviewRef.get();
 
     if (reviewDoc.exists) {
-      dispatch(setGetViewCount(reviewDoc.data()))
+      dispatch(setOwnViewCount(reviewDoc.data()[authorId]))
+      dispatch(setTotalViewCount(reviewDoc.data()))
     } else {
       console.log('No such document!')
-      dispatch(setGetViewCount(undefined))
+      dispatch(setOwnViewCount(undefined))
+      dispatch(setTotalViewCount(undefined))
     }
   } catch (error) {
     console.log(error)
@@ -165,17 +192,19 @@ export const getViewCount = (movieId) => async (dispatch, getState, { getFirebas
 
 export const getClipCount = (movieId) => async (dispatch, getState, { getFirebase, getFirestore }) => {
   const firestore = getFirestore();
-  console.log('clipcount')
+  const authorId = getState().firebase.auth.uid;
 
   try {
     const reviewRef = firestore.collection('clipCounter').doc(movieId);
     const reviewDoc = await reviewRef.get();
 
     if (reviewDoc.exists) {
-      dispatch(setGetClipCount(reviewDoc.data()))
+      dispatch(setOwnClipCount(reviewDoc.data()[authorId]))
+      dispatch(setTotalClipCount(reviewDoc.data()))
     } else {
       console.log('No such document!')
-      dispatch(setGetClipCount(undefined))
+      dispatch(setOwnClipCount(undefined))
+      dispatch(setTotalClipCount(undefined))
     }
   } catch (error) {
     console.log(error)
@@ -183,7 +212,6 @@ export const getClipCount = (movieId) => async (dispatch, getState, { getFirebas
 }
 
 export const clipCounter = (clipCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(clipCount)
   try {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
@@ -207,7 +235,6 @@ export const clipCounter = (clipCount) => async (dispatch, getState, { getFireba
 };
 
 export const viewCounter = (viewCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(viewCount)
   try {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;

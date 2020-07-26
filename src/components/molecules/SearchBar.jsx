@@ -2,22 +2,13 @@
 
 import { jsx, css } from '@emotion/core'
 import BtnStyle from '../atoms/BtnStyle';
-import SearchInput, { searchBar } from '../atoms/SearchInput';
-
-// const Styles = {
-//   btn: css`
-//   ${btnStyle}
-//   `
-//   input: css`
-//     border-radius: 10px;
-//   `,
-// }
+import SearchInput from '../atoms/SearchInput';
 
 const SearchBar = ({ handleChange }) => {
 
   return (
     <div>
-      <SearchInput inputStyle={searchBar} handleChange={handleChange} />
+      <SearchInput style="inputDefault" handleChange={handleChange} />
       <BtnStyle btnText="Search" />
     </div>
   )

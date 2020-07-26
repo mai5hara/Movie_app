@@ -5,11 +5,14 @@ import {
   SEARCH_PLOT_SUCCESS,
   SEARCH_PLOT_FAILURE,
   CREATE_REVIEW,
+  GET_OWNREVIEW,
   GET_REVIEW,
   COUNT_VIEWNUMBER,
   COUNT_CLIPNUMBER,
-  GET_VIEWCOUNT,
-  GET_CLIPCOUNT,
+  GET_OWNCLIPCOUNT,
+  GET_TOTALCLIPCOUNT,
+  GET_OWNVIEWCOUNT,
+  GET_TOTALVIEWCOUNT,
 } from '../actions/movieActions';
 
 const initState = {
@@ -44,7 +47,6 @@ const movieReducer = (state = initState, action) => {
       };
     case SEARCH_PLOT_SUCCESS:
       const movieDetail = action.payload;
-      console.log(movieDetail);
       return {
         ...state,
         loading: false,
@@ -62,23 +64,41 @@ const movieReducer = (state = initState, action) => {
         ...state,
         reviews,
       };
+    case GET_OWNREVIEW:
+      const ownReview = action.payload
+      return {
+        ...state,
+        ownReview
+      }
     case GET_REVIEW:
-      const review = action.payload.review
+      const review = action.payload
       return {
         ...state,
         review
       }
-    case GET_VIEWCOUNT:
-      const totalViewCount = action.payload
+    case GET_OWNCLIPCOUNT:
+      const ownClipCount = action.payload
       return {
         ...state,
-        totalViewCount
+        ownClipCount
       }
-    case GET_CLIPCOUNT:
+    case GET_TOTALCLIPCOUNT:
       const totalClipCount = action.payload
       return {
         ...state,
         totalClipCount
+      }
+    case GET_OWNVIEWCOUNT:
+      const ownViewCount = action.payload
+      return {
+        ...state,
+        ownViewCount
+      }
+    case GET_TOTALVIEWCOUNT:
+      const totalViewCount = action.payload
+      return {
+        ...state,
+        totalViewCount
       }
     case COUNT_VIEWNUMBER:
       const viewCount = action.payload.viewCount

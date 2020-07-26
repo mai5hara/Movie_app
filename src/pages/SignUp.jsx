@@ -1,12 +1,10 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core'
-import React from 'react';
 import BtnStyle from '../components/atoms/BtnStyle';
 import SignStyle from '../components/molecules/SignStyle';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { signInStyle } from '../components/atoms/BtnStyle';
 import * as Yup from 'yup';
 
 const signWrap = css({
@@ -85,7 +83,6 @@ const SignUp = ({ auth, signUp }) => {
             >
                 {props => {
                     const { handleChange, errors, touched, isSubmitting } = props;
-                    console.log(props)
                     return (
                         <div css={signRight}>
                             <div>
@@ -135,7 +132,7 @@ const SignUp = ({ auth, signUp }) => {
                                         touched={touched}
                                     />
                                     {errors.confirmpassword && touched.confirmpassword && (<div css={error}>{errors.confirmpassword}</div>)}
-                                    <BtnStyle btnText="Sign Up" type="submit" submit={isSubmitting} btnStyle={signInStyle} />
+                                    <BtnStyle btnText="Sign Up" type="submit" submit={isSubmitting} style="signDefault" />
                                 </Form>
                             </div>
                         </div>

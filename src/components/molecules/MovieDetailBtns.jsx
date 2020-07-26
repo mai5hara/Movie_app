@@ -1,7 +1,6 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core'
-import { movieDetailStyle, viewLinkBtn, movieDetailClickedStyle } from '../atoms/BtnStyle';
 import BtnStyle from '../atoms/BtnStyle'
 import { Link } from 'react-router-dom';
 
@@ -19,30 +18,29 @@ const Styles = {
 const MovieDetailBtns = ({
   viewHandleClick,
   clipHandleClick,
-  totalViewCount,
-  totalClipCount,
-  ownViewStatus,
-  ownClipStatus,
-  id }) => {
+  viewClipCountStatus,
+  id,
+  ownReview
+}) => {
 
   return (
     <div css={Styles.btnWrap}>
       <BtnStyle
-        btnText="View"
+        btnText={`View ${viewClipCountStatus.showTotalViewCount}`}
         id="viewCount"
-        btnCount={totalViewCount}
-        btnFunc={viewHandleClick}
-        btnStyle={ownViewStatus === true ? movieDetailClickedStyle : movieDetailStyle}
+        onClick={viewHandleClick}
+        style="countDefault"
+        active={viewClipCountStatus.ownViewCount}
       />
       <BtnStyle
-        btnText="Clip"
+        btnText={`Clip ${viewClipCountStatus.showTotalClipCount}`}
         id="clipCount"
-        btnCount={totalClipCount}
-        btnFunc={clipHandleClick}
-        btnStyle={ownClipStatus === true ? movieDetailClickedStyle : movieDetailStyle}
+        onClick={clipHandleClick}
+        style="countDefault"
+        active={viewClipCountStatus.ownClipCount}
       />
       <Link to={'/' + id + '/review'} key={id} css={Styles.linkBtn}>
-        <BtnStyle btnText="Review" btnStyle={viewLinkBtn} />
+        <BtnStyle btnText="Review" style="reviewDefault" active={ownReview} />
       </Link>
     </div>
   )

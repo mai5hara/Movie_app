@@ -47,15 +47,12 @@ const Detailp = styled.p`
 
 const MovieInfo = ({
   movieDetail,
-  clipToggle,
   viewHandleClick,
   clipHandleClick,
   totalViewCount,
-  totalClipCount,
-  ownViewStatus,
-  ownClipStatus,
+  viewClipCountStatus,
   id,
-  auth
+  ownReview
 }) => {
 
   return (
@@ -89,9 +86,8 @@ const MovieInfo = ({
             clipHandleClick={clipHandleClick}
             id={id}
             totalViewCount={totalViewCount}
-            totalClipCount={totalClipCount}
-            ownViewStatus={ownViewStatus}
-            ownClipStatus={ownClipStatus}
+            viewClipCountStatus={viewClipCountStatus}
+            ownReview={ownReview}
           />
         </DetailWrap>
       </div>

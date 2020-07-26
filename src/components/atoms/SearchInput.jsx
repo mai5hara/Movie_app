@@ -4,7 +4,7 @@ import { jsx, css } from '@emotion/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-export const searchBar = css({
+const searchBar = css({
   borderRadius: '30px',
   height: '2.6rem',
   width: '60%',
@@ -13,20 +13,20 @@ export const searchBar = css({
   outline: 'none',
 })
 
-const SearchBar = ({ handleChange, inputStyle }) => {
+const map = {
+  inputDefault: searchBar
+}
 
-  const Styles = {
-    input: css`
-      ${inputStyle}
-    `,
-  }
+const SearchBar = ({ handleChange, style }) => {
+
+  const inputStyle = map[style]
 
   return (
     <input
       type="text"
       placeholder="search with movie title"
       onChange={handleChange}
-      css={Styles.input}
+      css={inputStyle}
     />
   )
 }

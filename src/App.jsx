@@ -14,7 +14,6 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        {/* <div className="App"> */}
         <Navbar />
         <Switch>
           <Route exact path="/" component={MovieList} />
@@ -24,7 +23,6 @@ class App extends Component {
           <Route path="/:id/review" component={Review} />
           <Route path="/mypage" component={Mypage} />
         </Switch>
-        {/* </div> */}
       </BrowserRouter>
     );
   }

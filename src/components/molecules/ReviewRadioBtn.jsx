@@ -1,6 +1,7 @@
 /** @jsx jsx */
+
 import { jsx, css } from '@emotion/core';
-import styled from '@emotion/styled';
+import RadioBtnStyle from '../atoms/RadioBtnStyle';
 
 const btnWrap = css({
   display: 'block',
@@ -9,7 +10,7 @@ const btnWrap = css({
   width: '500px',
 })
 
-const ul = css({
+const btnList = css({
   listStyle: 'none',
   margin: 0,
   padding: 0,
@@ -17,126 +18,33 @@ const ul = css({
   display: 'flex'
 })
 
-const list = css({
-  display: 'block',
-  position: 'relative',
-  color: '#d3d3d3',
-  height: '100px',
-  width: '35%',
-  float: 'left',
-  // radioBtn: {
-  '&:hover .css-ycxl5w-ReviewRadioBtn': {
-    border: '5px solid #ffc0cb'
-    // }
-  }
-
-})
-
-const input = css({
-  position: 'absolute',
-  visibility: 'hidden',
-})
-
-const label = css({
-  display: 'block',
-  position: 'relative',
-  padding: '29px 25px 25px 54px',
-  zIndex: 9,
-  margin: '10px auto',
-  height: '30px',
-  cursor: 'pointer',
-  transition: 'all 0.25s linear',
-  '&:hover': {
-    color: '#ffc0cb',
-  },
-})
-
-const radioBtn = css({
-  display: 'block',
-  position: 'absolute',
-  border: '5px solid #d3d3d3',
-  borderRadius: '100%',
-  height: '23px',
-  width: '25px',
-  top: '30px',
-  zIndex: 5,
-  transition: 'border 0.25s linear',
-})
-
-const inside = css({
-  width: '15px',
-  height: '15px',
-  background: '#d3d3d3',
-  display: 'none',
-  position: 'absolute',
-  borderRadius: '100%',
-  width: '15px',
-  top: '4px',
-  left: '5px',
-  margin: 'auto',
-  transition: 'background 0.25s linear',
-  WebkitTransition: 'background 0.25s linear',
-
-})
-
-const checkedInside = css(
-  inside, {
-  background: '#c71585',
-  display: 'block',
-})
-
-const checkedRadioBtn = css(
-  radioBtn, {
-  border: '5px solid #c71585',
-})
-
-const checkedList = css(
-  list, {
-  color: '#c71585',
-})
-
-const checkedLabel = css(
-  label, {
-  '&:hover': {
-    color: '#c71585'
-  }
-})
-
-const ReviewRadioBtn = ({ review, handleChange, handleChangeRadio, selectReview }) => {
-  console.log(review.condition)
-  console.log(selectReview.condition)
+const ReviewRadioBtn = ({ review, handleChange }) => {
 
   return (
     <div css={btnWrap}>
-      <ul css={ul}>
-        <li css={review.condition === undefined || review.condition === 'public' ? checkedList : list}>
-          <input
-            type="radio"
-            name="radio"
-            id="condition"
-            defaultChecked={review.condition === 'public'}
-            onChange={handleChange('condition')}
-            css={input}
-          />
-          <label css={review.condition === undefined || review.condition === 'public' ? checkedLabel : label} for="condition">Public</label>
-          <div css={review.condition === undefined || review.condition === 'public' ? checkedRadioBtn : radioBtn} >
-            <div css={review.condition === undefined || review.condition === 'public' ? checkedInside : inside}></div>
-          </div>
-        </li>
-        <li css={review.condition === 'private' ? checkedList : list}>
-          <input
-            type="radio"
-            name="radio"
-            id="condition1"
-            defaultChecked={review.condition === 'private'}
-            onChange={handleChange('condition')}
-            css={input}
-          />
-          <label css={review.condition === 'private' ? checkedLabel : label} for="condition1">Private</label>
-          <div css={review.condition === 'private' ? checkedRadioBtn : radioBtn}>
-            <div css={review.condition === 'private' ? checkedInside : inside}></div>
-          </div>
-        </li>
+      <ul css={btnList}>
+        <RadioBtnStyle
+          type="radio"
+          id="condition"
+          label="Public"
+          idNum="condition"
+          value="public"
+          review={review}
+          defaultChecked={review.condition === undefined || review.condition === "public"}
+          onChange={handleChange('condition')}
+          active={review.condition === "public"}
+        />
+        <RadioBtnStyle
+          type="radio"
+          id="condition1"
+          label="Private"
+          idNum="condition1"
+          value="private"
+          review={review}
+          defaultChecked={review.condition === "private"}
+          onChange={handleChange('condition')}
+          active={review.condition === "private"}
+        />
       </ul>
     </div >
   )

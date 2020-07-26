@@ -8,7 +8,7 @@ const inputField = css({
   marginBottom: '0.7rem'
 })
 
-const input = css({
+const fielsStyle = css({
   height: '2.1rem',
   width: '25rem',
   borderRadius: '30px',
@@ -18,7 +18,7 @@ const input = css({
   outline: 'none'
 })
 
-const p = css({
+const title = css({
   fontSize: '1rem',
   marginBottom: '0.6rem',
   marginLeft: '0.6rem',
@@ -28,14 +28,14 @@ const SignStyle = ({ signTitle, handleChange, errors, touched, name, type, id, p
 
   return (
     <div css={inputField}>
-      <p css={p}>{signTitle}</p>
+      <p css={title}>{signTitle}</p>
       <Field
         name={name}
         type={type}
         id={id}
         placeholder={placeholder}
         onChange={handleChange}
-        css={input}
+        css={fielsStyle}
       />
     </div>
   )

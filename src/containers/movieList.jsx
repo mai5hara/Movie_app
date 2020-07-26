@@ -1,16 +1,14 @@
 import { connect } from 'react-redux';
 import { fetchMovies, viewCounter } from '../store/actions/movieActions';
 import movieList from '../pages/MovieList';
-import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
 
   return {
     error: state.movie.error,
     movies: state.movie.movies,
     loading: state.movie.loading,
-    reviews: state.firestore.ordered.reviews,
     auth: state.firebase.auth
   }
 }
@@ -23,6 +21,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{ collection: 'reviews' }, { collection: 'viewCounter' }]))
+  connect(mapStateToProps, mapDispatchToProps))
   (movieList);

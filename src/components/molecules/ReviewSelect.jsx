@@ -11,7 +11,6 @@ const selectWrap = css({
   overflow: 'hidden',
   width: '40%',
   height: '36px',
-  // margin: '2rem auto',
   textAlign: 'center',
   borderRadius: '5px',
   border: '1px solid #777777',
@@ -31,9 +30,8 @@ const dropDown = css({
   borderTop: '6px solid #777777',
 })
 
-const select = css({
+const recordSelect = css({
   width: '100%',
-  // padding: '10px 38px 10px 10px',
   lineHeight: '40px',
   color: '#777777',
   cursor: 'pointer',
@@ -44,7 +42,7 @@ const select = css({
   appearance: 'none',
 })
 
-const label = css({
+const calenderLabel = css({
   position: 'relative',
   display: 'inline-block',
   width: '200px',
@@ -88,13 +86,10 @@ const dateInput = css({
 
 const calendar = css({
   position: 'absolute',
-  // content: '',
   top: 0,
-  // right: '-43px',
   width: '65%',
   marginLeft: '0.45rem',
   height: '36px',
-  // background: 'blue',
   borderRadius: '5px',
   backgroundImage: `url(${calendarImg})`,
   backgroundSize: 'contain',
@@ -104,7 +99,6 @@ const calendar = css({
 
 const imageWrap = css({
   position: 'absolute',
-  // content: '',
   top: 0,
   right: '-43px',
   width: '36px',
@@ -113,16 +107,13 @@ const imageWrap = css({
   borderRadius: '5px',
 })
 
-const ReviewSelect = ({ review, handleChange, handleChangeCheck, selectReview }) => {
-  console.log(selectReview.record)
-  console.log(review)
+const ReviewSelect = ({ review, handleChange }) => {
 
   return (
     <div css={conditionsWrap}>
-      <label css={label}>
+      <label css={calenderLabel}>
         <div css={imageWrap}><span css={calendar}></span></div>
         <input onChange={handleChange('date')} id="date" type="date" css={dateInput} defaultValue={review.date} />
-        {/* <input onChange={handleChange('date')} id="date" type="date" css={dateInput} /> */}
 
       </label>
       <div css={selectWrap}>
@@ -134,7 +125,7 @@ const ReviewSelect = ({ review, handleChange, handleChangeCheck, selectReview })
           defaultValue={review.record}
           value={review.record}
           onChange={handleChange('record')}
-          css={select}
+          css={recordSelect}
         >
           <option value="-----">--- Select ---</option>
           <option value="theater">Theater</option>

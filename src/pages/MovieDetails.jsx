@@ -7,60 +7,20 @@ const MovieDetails = ({
   id,
   auth,
   fetchPlot,
-  reviews,
   viewCounter,
   clipCounter,
   getViewCount,
   getClipCount,
-  viewCount,
-  clipCount
+  ownClipCount,
+  ownViewCount,
+  totalClipCount,
+  totalViewCount,
+  getReview,
+  ownReview,
+  review
 }) => {
 
   const userId = auth.uid
-  console.log(userId)
-
-  const findOwnReview = () => {
-    reviews && reviews.map((review) => {
-      console.log(review)
-      if (review.id === id) {
-        let movieReviews = review
-        console.log(movieReviews)
-        for (let key in movieReviews) {
-          console.log(movieReviews)
-          console.log(key)
-          if (key === userId) {
-            console.log(key)
-            return true
-          }
-        }
-      }
-      return false
-    })
-  }
-  console.log(findOwnReview())
-  const ownReview = findOwnReview()
-  console.log(ownReview)
-
-  const findQwnViewStatus = () => {
-    for (let key in viewCount) {
-      if (key === userId) {
-        console.log(viewCount[key])
-        return viewCount[key]
-      }
-    }
-  }
-
-  const findQwnClipStatus = () => {
-    for (let key in clipCount) {
-      if (key === userId) {
-        console.log(clipCount[key])
-        return clipCount[key]
-      }
-    }
-  }
-  console.log(findQwnClipStatus())
-  const ownViewStatus = findQwnViewStatus()
-  const ownClipStatus = findQwnClipStatus()
 
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
@@ -73,33 +33,34 @@ const MovieDetails = ({
   });
 
   let totalView = () => {
-    let totalViewCount = 0;
+    let showTotalViewCount = 0;
 
-    if (viewCount === undefined) {
-      totalViewCount = 0;
+    if (totalViewCount === undefined) {
+      showTotalViewCount = 0;
     } else {
-      viewCount && Object.values(viewCount).forEach(count => count === true ? totalViewCount++ : null)
+      totalViewCount && Object.values(totalViewCount).forEach(
+        count => count === true ? showTotalViewCount++ : null)
     }
-    return totalViewCount
+    return showTotalViewCount
   };
 
-  const totalViewCount = totalView();
+  const showTotalViewCount = totalView();
 
   let totalClip = () => {
-    let totalClipCount = 0;
+    let showTotalClipCount = 0;
 
-    if (clipCount === undefined) {
-      totalClipCount = 0;
+    if (totalClipCount === undefined) {
+      showTotalClipCount = 0;
     } else {
-      clipCount && Object.values(clipCount).forEach(count => count === true ? totalClipCount++ : null)
+      totalClipCount && Object.values(totalClipCount).forEach(
+        count => count === true ? showTotalClipCount++ : null)
     }
-    return totalClipCount
+    return showTotalClipCount
   };
 
-  const totalClipCount = totalClip();
+  const showTotalClipCount = totalClip();
 
   const viewHandleClick = (e) => {
-    console.log('Clicked!');
     e.preventDefault();
     setViewToggle({
       ...viewToggle,
@@ -109,7 +70,6 @@ const MovieDetails = ({
   };
 
   const clipHandleClick = (e) => {
-    console.log('Clicked!');
     e.preventDefault();
     setClipToggle({
       ...clipToggle,
@@ -121,9 +81,9 @@ const MovieDetails = ({
   useEffect(() => {
     isFirstRender.current = true;
     fetchPlot(id);
+    getReview(id);
     getViewCount(id);
     getClipCount(id);
-    console.log('loaded!');
   }, []);
 
   const isFirstRender = useRef(false);
@@ -139,19 +99,25 @@ const MovieDetails = ({
     }
   }, [viewToggle, clipToggle]);
 
+  const viewClipCountStatus = {
+    showTotalClipCount,
+    showTotalViewCount,
+    ownViewCount,
+    ownClipCount
+  }
+
   return (
     <div>
       <MovieInfo
         viewHandleClick={viewHandleClick}
         clipHandleClick={clipHandleClick}
         totalViewCount={totalViewCount}
-        totalClipCount={totalClipCount}
         id={id}
         movieDetail={movieDetail}
-        ownViewStatus={ownViewStatus}
-        ownClipStatus={ownClipStatus}
+        viewClipCountStatus={viewClipCountStatus}
+        ownReview={ownReview}
       />
-      <ScoreReviews reviews={reviews} id={id} viewCount={viewCount} />
+      <ScoreReviews id={id} review={review} />
     </div>
   );
 };

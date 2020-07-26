@@ -1,12 +1,10 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core'
-import React, { useState } from 'react';
 import BtnStyle from '../components/atoms/BtnStyle';
 import SignStyle from '../components/molecules/SignStyle';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { signInStyle } from '../components/atoms/BtnStyle';
 import * as Yup from 'yup';
 
 const signWrap = css({
@@ -49,7 +47,6 @@ const error = css({
 const SignIn = ({ auth, signIn }) => {
 
   const handleSubmit = (values) => {
-    console.log(values)
     signIn(values);
   };
 
@@ -62,7 +59,6 @@ const SignIn = ({ auth, signIn }) => {
   })
 
   if (auth.uid) return <Redirect to="/" />;
-  console.log(auth)
 
   return (
     <div css={signWrap}>
@@ -78,9 +74,7 @@ const SignIn = ({ auth, signIn }) => {
         validationSchema={validationSchema}
       >
         {props => {
-          console.log(props)
           const { handleChange, errors, touched, isSubmitting } = props;
-          console.log(handleChange)
           return (
             <div css={signRight}>
               <div>
@@ -108,7 +102,7 @@ const SignIn = ({ auth, signIn }) => {
                     touched={touched}
                   />
                   {errors.password && touched.password && (<div css={error}>{errors.password}</div>)}
-                  <BtnStyle btnText="Sign In" type="submit" submit={isSubmitting} btnStyle={signInStyle} />
+                  <BtnStyle btnText="Sign In" type="submit" submit={isSubmitting} style="signDefault" />
                 </Form>
               </div>
             </div>

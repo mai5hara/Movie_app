@@ -2,14 +2,11 @@ import { connect } from 'react-redux';
 import Review from '../pages/Review';
 import { postReview } from '../store/actions/movieActions';
 import { getReview } from '../store/actions/movieActions';
-import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 const mapStateToProps = (state) => {
-  console.log(state.movie)
   return {
     auth: state.firebase.auth,
-    reviews: state.firestore.ordered.reviews,
     selectReview: state.movie.review || {},
   }
 }
@@ -21,9 +18,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Review);
-
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{ collection: 'reviews' }])
+  connect(mapStateToProps, mapDispatchToProps)
 )(Review);

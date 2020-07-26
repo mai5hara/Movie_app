@@ -3,19 +3,19 @@
 import { jsx, css } from '@emotion/core'
 import Warning from '../../assets/images/warning.png';
 
-const checkboxWrap = css({
+const checkboxContainer = css({
   display: 'flex',
   marginTop: '0.4rem'
 })
 
-const label = css({
+const checkboxWrap = css({
   display: 'flex',
   position: 'relative',
   width: '70px',
   height: '70px'
 })
 
-const input = css({
+const checkBoxField = css({
   WebkitAppearance: 'none',
   position: 'absolute',
   width: '100%',
@@ -23,7 +23,7 @@ const input = css({
   padding: 0
 })
 
-const span = css({
+const btnWrap = css({
   zIndex: 1,
   width: '100%',
   background: '#d3d3d3',
@@ -39,8 +39,8 @@ const span = css({
   }
 })
 
-const spanClicked = css(
-  span, {
+const btnWrapClicked = css(
+  btnWrap, {
   background: '#ff6347',
   color: '#ffffff',
   '&:hover': {
@@ -53,30 +53,28 @@ const warning = css({
   width: '30px',
 })
 
-const p = css({
+const btnText = css({
   margin: '0.2rem 0 0 0',
   fontSize: '0.9rem',
 })
 
-const ReviewSpoiler = ({ review, handleChange, handleChangeCheck, selectReview }) => {
-  console.log(review)
-  console.log(selectReview)
+const ReviewSpoiler = ({ review, handleChangeCheck }) => {
+
   return (
-    <div css={checkboxWrap}>
-      <label css={label}>
+    <div css={checkboxContainer}>
+      <label css={checkboxWrap}>
         <input
           type="checkbox"
           name="spoiler"
           id="spoiler"
           defaultChecked={false}
           checked={review.spoiler}
-          // value={review.spoiler}
           onChange={handleChangeCheck('spoiler')}
-          css={input}
+          css={checkBoxField}
         />
-        <span css={review.spoiler === undefined || review.spoiler === false ? span : spanClicked}>
+        <span css={review.spoiler === undefined || review.spoiler === false ? btnWrap : btnWrapClicked}>
           <img src={Warning} css={warning} />
-          <p css={p}>Spoiler</p>
+          <p css={btnText}>Spoiler</p>
         </span>
       </label>
     </div >

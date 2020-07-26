@@ -29,10 +29,8 @@ const Navbar = ({ auth, profile, signOut, signIn, signUp }) => {
   const links = auth.uid ? <SignedInLinks signOut={signOut} profile={profile} /> : <SignedOutLinks signIn={signIn} signUp={signUp} auth={auth} />;
   return (
     <nav css={Styles.nav}>
-      {/* <div css={Styles.navWrap}> */}
       <Link to="/" css={Styles.logo}>Movie Diary</Link>
       {auth.isLoaded && links}
-      {/* </div> */}
     </nav>
   );
 };
