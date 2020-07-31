@@ -59,7 +59,6 @@ const btnText = css({
 })
 
 const ReviewSpoiler = ({ review, handleChangeCheck }) => {
-
   return (
     <div css={checkboxContainer}>
       <label css={checkboxWrap}>
@@ -72,7 +71,7 @@ const ReviewSpoiler = ({ review, handleChangeCheck }) => {
           onChange={handleChangeCheck('spoiler')}
           css={checkBoxField}
         />
-        <span css={review.spoiler === undefined || review.spoiler === false ? btnWrap : btnWrapClicked}>
+        <span css={review.spoiler === '' || review.spoiler ? btnWrapClicked : btnWrap}>
           <img src={Warning} css={warning} />
           <p css={btnText}>Spoiler</p>
         </span>

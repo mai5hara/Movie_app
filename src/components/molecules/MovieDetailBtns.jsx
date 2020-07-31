@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core'
-import BtnStyle from '../atoms/BtnStyle'
+import Button from '../atoms/Button'
 import { Link } from 'react-router-dom';
 
 const Styles = {
@@ -25,22 +25,20 @@ const MovieDetailBtns = ({
 
   return (
     <div css={Styles.btnWrap}>
-      <BtnStyle
-        btnText={`View ${viewClipCountStatus.showTotalViewCount}`}
+      <Button
+        text={`View ${viewClipCountStatus.showTotalViewCount}`}
         id="viewCount"
         onClick={viewHandleClick}
-        style="countDefault"
-        active={viewClipCountStatus.ownViewCount}
+        style={viewClipCountStatus.ownViewCount ? 'countActive' : 'countDefault'}
       />
-      <BtnStyle
-        btnText={`Clip ${viewClipCountStatus.showTotalClipCount}`}
+      <Button
+        text={`Clip ${viewClipCountStatus.showTotalClipCount}`}
         id="clipCount"
         onClick={clipHandleClick}
-        style="countDefault"
-        active={viewClipCountStatus.ownClipCount}
+        style={viewClipCountStatus.ownClipCount ? 'countActive' : 'countDefault'}
       />
       <Link to={'/' + id + '/review'} key={id} css={Styles.linkBtn}>
-        <BtnStyle btnText="Review" style="reviewDefault" active={ownReview} />
+        <Button text="Review" style={ownReview === undefined ? 'reviewDefault' : 'activeReviewBtn'} />
       </Link>
     </div>
   )

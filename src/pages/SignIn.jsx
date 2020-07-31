@@ -1,8 +1,8 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core'
-import BtnStyle from '../components/atoms/BtnStyle';
-import SignStyle from '../components/molecules/SignStyle';
+import Button from '../components/atoms/Button';
+import SignForm from '../components/molecules/SignForm';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -80,7 +80,7 @@ const SignIn = ({ auth, signIn }) => {
               <div>
                 <p css={subTitle}>Sign In</p>
                 <Form>
-                  <SignStyle
+                  <SignForm
                     signTitle="Email"
                     name="email"
                     type="email"
@@ -91,7 +91,7 @@ const SignIn = ({ auth, signIn }) => {
                     touched={touched}
                   />
                   {errors.email && touched.email && (<div css={error}>{errors.email}</div>)}
-                  <SignStyle
+                  <SignForm
                     signTitle="Password"
                     name="password"
                     type="password"
@@ -102,7 +102,7 @@ const SignIn = ({ auth, signIn }) => {
                     touched={touched}
                   />
                   {errors.password && touched.password && (<div css={error}>{errors.password}</div>)}
-                  <BtnStyle btnText="Sign In" type="submit" submit={isSubmitting} style="signDefault" />
+                  <Button btnText="Sign In" type="submit" submit={isSubmitting} style="signDefault" />
                 </Form>
               </div>
             </div>

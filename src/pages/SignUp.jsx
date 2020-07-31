@@ -1,8 +1,8 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core'
-import BtnStyle from '../components/atoms/BtnStyle';
-import SignStyle from '../components/molecules/SignStyle';
+import Button from '../components/atoms/Button';
+import SignForm from '../components/molecules/SignForm';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -88,7 +88,7 @@ const SignUp = ({ auth, signUp }) => {
                             <div>
                                 <p css={subTitle}>Sign Up</p>
                                 <Form>
-                                    <SignStyle
+                                    <SignForm
                                         signTitle="Name"
                                         name="name"
                                         type="text"
@@ -99,7 +99,7 @@ const SignUp = ({ auth, signUp }) => {
                                         touched={touched}
                                     />
                                     {errors.name && touched.name && (<div css={error}>{errors.name}</div>)}
-                                    <SignStyle
+                                    <SignForm
                                         signTitle="Email"
                                         name="email"
                                         type="email"
@@ -110,7 +110,7 @@ const SignUp = ({ auth, signUp }) => {
                                         touched={touched}
                                     />
                                     {errors.email && touched.email && (<div css={error}>{errors.email}</div>)}
-                                    <SignStyle
+                                    <SignForm
                                         signTitle="Password"
                                         name="password"
                                         type="password"
@@ -121,7 +121,7 @@ const SignUp = ({ auth, signUp }) => {
                                         touched={touched}
                                     />
                                     {errors.password && touched.password && (<div css={error}>{errors.password}</div>)}
-                                    <SignStyle
+                                    <SignForm
                                         signTitle="Confirm Password"
                                         name="confirmpassword"
                                         type="password"
@@ -132,7 +132,7 @@ const SignUp = ({ auth, signUp }) => {
                                         touched={touched}
                                     />
                                     {errors.confirmpassword && touched.confirmpassword && (<div css={error}>{errors.confirmpassword}</div>)}
-                                    <BtnStyle btnText="Sign Up" type="submit" submit={isSubmitting} style="signDefault" />
+                                    <Button btnText="Sign Up" type="submit" submit={isSubmitting} style="signDefault" />
                                 </Form>
                             </div>
                         </div>

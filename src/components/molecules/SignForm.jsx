@@ -24,7 +24,7 @@ const title = css({
   marginLeft: '0.6rem',
 })
 
-const SignStyle = ({ signTitle, handleChange, errors, touched, name, type, id, placeholder }) => {
+const SignForm = ({ signTitle, handleChange, errors, touched, name, type, id, placeholder }) => {
 
   return (
     <div css={inputField}>
@@ -41,4 +41,4 @@ const SignStyle = ({ signTitle, handleChange, errors, touched, name, type, id, p
   )
 };
 
-export default SignStyle;
+export default SignForm;

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core'
-import BtnStyle from '../atoms/BtnStyle'
+import Button from '../atoms/Button'
 
 const Styles = {
   btnWrap: css`
@@ -21,9 +21,8 @@ const MovieListBtns = ({
 
   return (
     <div css={Styles.btnWrap}>
-      <BtnStyle btnText="View" btnCount={totalViewCount} onClick={viewHandleClick} id="viewCount" />
-      <BtnStyle btnText="Clip" btnCount={totalClipCount} onClick={clipHandleClick} id="clipCount" />
-      {/* <BtnStyle btnText="Score" btnStyle={movieListStyle} /> */}
+      <Button text="View" count={totalViewCount} onClick={viewHandleClick} id="viewCount" />
+      <Button text="Clip" count={totalClipCount} onClick={clipHandleClick} id="clipCount" />
     </div>
   )
 };

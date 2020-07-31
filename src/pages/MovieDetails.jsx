@@ -24,41 +24,24 @@ const MovieDetails = ({
 
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
-    isToggle: false,
+    isToggle: true,
   });
 
   const [clipToggle, setClipToggle] = useState({
     movieId: id,
-    isToggle: false,
+    isToggle: true,
   });
 
-  let totalView = () => {
-    let showTotalViewCount = 0;
-
-    if (totalViewCount === undefined) {
-      showTotalViewCount = 0;
-    } else {
-      totalViewCount && Object.values(totalViewCount).forEach(
-        count => count === true ? showTotalViewCount++ : null)
+  const counter = (count) => {
+    if (!count) {
+      return 0
     }
-    return showTotalViewCount
-  };
+    const res = Object.values(count).filter(value => value)
+    return res.length
+  }
 
-  const showTotalViewCount = totalView();
-
-  let totalClip = () => {
-    let showTotalClipCount = 0;
-
-    if (totalClipCount === undefined) {
-      showTotalClipCount = 0;
-    } else {
-      totalClipCount && Object.values(totalClipCount).forEach(
-        count => count === true ? showTotalClipCount++ : null)
-    }
-    return showTotalClipCount
-  };
-
-  const showTotalClipCount = totalClip();
+  const showTotalViewCount = counter(totalViewCount)
+  const showTotalClipCount = counter(totalClipCount)
 
   const viewHandleClick = (e) => {
     e.preventDefault();
@@ -67,6 +50,7 @@ const MovieDetails = ({
       isToggle: !viewToggle.isToggle,
     });
     viewCounter(viewToggle);
+    getViewCount(id);
   };
 
   const clipHandleClick = (e) => {
@@ -75,29 +59,16 @@ const MovieDetails = ({
       ...clipToggle,
       isToggle: !clipToggle.isToggle,
     });
-    clipCounter(viewToggle);
+    clipCounter(clipToggle);
+    getClipCount(id);
   };
 
   useEffect(() => {
-    isFirstRender.current = true;
     fetchPlot(id);
     getReview(id);
     getViewCount(id);
     getClipCount(id);
   }, []);
-
-  const isFirstRender = useRef(false);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-    } else {
-      getViewCount(id);
-      getClipCount(id);
-      viewCounter(viewToggle);
-      clipCounter(clipToggle);
-    }
-  }, [viewToggle, clipToggle]);
 
   const viewClipCountStatus = {
     showTotalClipCount,

@@ -11,7 +11,11 @@ const ReviewConditions = ({ review, handleChangeRadio, handleChange }) => {
   return (
     <div>
       <ReviewSelect review={review} handleChange={handleChange} />
-      <ReviewRadioBtn review={review} handleChange={handleChange} handleChangeRadio={handleChangeRadio} />
+      <ReviewRadioBtn
+        review={review}
+        handleChange={handleChange}
+        handleChangeRadio={handleChangeRadio}
+      />
     </div>
   )
 }

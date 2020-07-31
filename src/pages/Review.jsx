@@ -37,18 +37,12 @@ const Review = ({ match, postReview, getReview }) => {
   const [reviewDetail, dispatch] = useReducer(reducer, initialState);
 
   const handleChangeCheck = (key) => (e) => {
-    console.log(e.target.value)
-    console.log(key)
-
     e.preventDefault();
     dispatch({ type: 'UPDATE', payload: { key, value: !reviewDetail.spoiler } })
 
   };
 
   const handleChange = (key) => (e) => {
-    console.log(e.target.value)
-    console.log(key)
-
     e.preventDefault();
     dispatch({ type: 'UPDATE', payload: { key, value: e.target.value } })
   };

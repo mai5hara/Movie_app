@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core';
-import RadioBtnStyle from '../atoms/RadioBtnStyle';
+import RadioButton from '../atoms/RadioButton';
 
 const btnWrap = css({
   display: 'block',
@@ -23,7 +23,7 @@ const ReviewRadioBtn = ({ review, handleChange }) => {
   return (
     <div css={btnWrap}>
       <ul css={btnList}>
-        <RadioBtnStyle
+        <RadioButton
           type="radio"
           id="condition"
           label="Public"
@@ -32,9 +32,9 @@ const ReviewRadioBtn = ({ review, handleChange }) => {
           review={review}
           defaultChecked={review.condition === undefined || review.condition === "public"}
           onChange={handleChange('condition')}
-          active={review.condition === "public"}
+          active={review.condition === undefined || review.condition === "public"}
         />
-        <RadioBtnStyle
+        <RadioButton
           type="radio"
           id="condition1"
           label="Private"

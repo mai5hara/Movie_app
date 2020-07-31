@@ -39,8 +39,6 @@ const ReviewInputStyle = ({
   multiline
 }) => {
 
-  console.log(style)
-
   const btnStyle = map[style]
 
   return (
