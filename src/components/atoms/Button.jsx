@@ -1,10 +1,10 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/core'
+import { jsx, css } from '@emotion/core';
 
-const countBtn = css({
+let countBtn = ({ active }) => css({
   width: '30%',
-  background: '#d3d3d3',
+  background: active ? '#c71585' : '#d3d3d3',
   color: '#ffffff',
   borderStyle: 'none',
   borderRadius: '10px',
@@ -15,20 +15,12 @@ const countBtn = css({
   cursor: 'pointer',
   transition: 'background 0.15s linear',
   '&:hover': {
-    background: '#ffc0cb',
+    background: active ? '#c71585' : '#ffc0cb',
   }
 })
 
-const activeCountBtn = css(
-  countBtn, {
-  background: '#c71585',
-  '&:hover': {
-    background: '#c71585',
-  }
-})
-
-const publishBtnStyle = css(
-  countBtn, {
+const publishBtnStyle = ({ active }) => css(
+  countBtn({ active }), {
   background: '#c71585',
   width: '25%',
   '&:hover': {
@@ -36,8 +28,8 @@ const publishBtnStyle = css(
   }
 })
 
-const cancelBtnStyle = css(
-  countBtn, {
+const cancelBtnStyle = ({ active }) => css(
+  countBtn({ active }), {
   background: '#d3d3d3',
   width: '100%',
   '&:hover': {
@@ -45,17 +37,13 @@ const cancelBtnStyle = css(
   }
 })
 
-const reviewLinkBtn = css(
-  countBtn, {
+const reviewLinkBtn = ({ active }) => css(
+  countBtn(active), {
   width: '100%',
+  backgroung: active ? '#c71585' : '#d3d3d3',
 })
 
-const activeReviewBtn = css(
-  reviewLinkBtn, {
-  backgroung: '#c71585',
-})
-
-const signBtn = css({
+const signBtn = () => css({
   display: 'flex',
   padding: '0.8rem 1.8rem',
   borderRadius: '30px',
@@ -70,17 +58,15 @@ const signBtn = css({
 
 const map = {
   countDefault: countBtn,
-  countActive: activeCountBtn,
   reviewDefault: reviewLinkBtn,
-  reviewActive: activeReviewBtn,
   signDefault: signBtn,
   publishBtn: publishBtnStyle,
-  cancelBtn: cancelBtnStyle,
+  cancelBtn: cancelBtnStyle
 }
 
-const Button = ({ text, onClick, btnType, submit, id, style }) => {
+const Button = ({ text, onClick, btnType, submit, id, style, active }) => {
 
-  const btnStyle = map[style]
+  const btnStyle = map[style]({ active })
 
   return (
     <button type={btnType} id={id} onClick={onClick} disabled={submit} css={btnStyle}>

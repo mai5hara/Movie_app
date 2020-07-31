@@ -23,22 +23,28 @@ const MovieDetailBtns = ({
   ownReview
 }) => {
 
+  console.log(viewClipCountStatus.ownViewCount)
+  console.log(viewClipCountStatus.ownClipCount)
+  console.log(ownReview)
+
   return (
     <div css={Styles.btnWrap}>
       <Button
         text={`View ${viewClipCountStatus.showTotalViewCount}`}
         id="viewCount"
         onClick={viewHandleClick}
-        style={viewClipCountStatus.ownViewCount ? 'countActive' : 'countDefault'}
+        style="countDefault"
+        active={viewClipCountStatus.ownViewCount === undefined || !viewClipCountStatus.ownViewCount ? false : true}
       />
       <Button
         text={`Clip ${viewClipCountStatus.showTotalClipCount}`}
         id="clipCount"
         onClick={clipHandleClick}
-        style={viewClipCountStatus.ownClipCount ? 'countActive' : 'countDefault'}
+        style="countDefault"
+        active={viewClipCountStatus.ownClipCount === undefined || !viewClipCountStatus.ownClipCount ? false : true}
       />
       <Link to={'/' + id + '/review'} key={id} css={Styles.linkBtn}>
-        <Button text="Review" style={ownReview === undefined ? 'reviewDefault' : 'activeReviewBtn'} />
+        <Button text="Review" style="reviewDefault" active={ownReview === undefined || !ownReview ? false : true} />
       </Link>
     </div>
   )
