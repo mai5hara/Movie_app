@@ -2,10 +2,10 @@
 
 import { jsx, css } from '@emotion/core';
 
-const btnWrap = css({
+const btnWrap = ({ active }) => css({
   display: 'block',
   position: 'relative',
-  color: '#d3d3d3',
+  color: active ? '#c71585' : '#d3d3d3',
   height: '100px',
   width: '35%',
   float: 'left',
@@ -14,17 +14,12 @@ const btnWrap = css({
   }
 })
 
-const activeBtnWrap = css(
-  btnWrap, {
-  color: '#c71585'
-})
-
 const inputFielt = css({
   position: 'absolute',
   visibility: 'hidden',
 })
 
-const labelText = css({
+const labelText = ({ active }) => css({
   display: 'block',
   position: 'relative',
   padding: '29px 25px 25px 54px',
@@ -34,21 +29,14 @@ const labelText = css({
   cursor: 'pointer',
   transition: 'all 0.25s linear',
   '&:hover': {
-    color: '#ffc0cb',
+    color: active ? '#c71585' : '#ffc0cb',
   },
 })
 
-const activeLabelText = css(
-  labelText, {
-  '&:hover': {
-    color: '#c71585',
-  }
-})
-
-const radioBtn = css({
+const radioBtn = ({ active }) => css({
   display: 'block',
   position: 'absolute',
-  border: '5px solid #d3d3d3',
+  border: `5px solid ${active ? '#c71585' : '#d3d3d3'}`,
   borderRadius: '100%',
   height: '23px',
   width: '25px',
@@ -57,16 +45,11 @@ const radioBtn = css({
   transition: 'border 0.25s linear',
 })
 
-const activeRadioBtn = css(
-  radioBtn, {
-  border: '5px solid #c71585'
-})
-
-const inside = css({
+const inside = ({ active }) => css({
   width: '15px',
   height: '15px',
-  background: '#d3d3d3',
-  display: 'none',
+  background: active ? '#c71585' : '#d3d3d3',
+  display: active ? 'block' : 'none',
   position: 'absolute',
   borderRadius: '100%',
   width: '15px',
@@ -77,30 +60,31 @@ const inside = css({
   WebkitTransition: 'background 0.25s linear',
 })
 
-const activeInside = css(
-  inside, {
-  background: '#c71585',
-  display: 'block'
-})
+const RadioButton = ({ defaultChecked, onClick, type, id, label, idNum, active, value }) => {
 
-const RadioButton = ({ defaultChecked, onChange, type, id, label, idNum, active, value }) => {
+  const radioBtnWrap = btnWrap({ active })
+  const radiolabelText = labelText({ active })
+  const radioBtnBorder = radioBtn({ active })
+  const radioBtninside = inside({ active })
 
   return (
-    <li css={active ? activeBtnWrap : btnWrap}>
+    <li css={radioBtnWrap}>
       <input
         type={type}
         value={value}
         id={id}
-        defaultChecked={defaultChecked}
-        onChange={onChange}
+        checked={defaultChecked}
+        onClick={onClick}
         css={inputFielt}
       />
-      <label css={active ? activeLabelText : labelText} for={idNum}>{label}</label>
-      <div css={active ? activeRadioBtn : radioBtn} >
-        <div css={active ? activeInside : inside}></div>
+      <label css={radiolabelText} for={idNum}>{label}</label>
+      <div css={radioBtnBorder} >
+        <div css={radioBtninside}></div>
       </div>
     </li>
   )
+
+
 }
 
 export default RadioButton;

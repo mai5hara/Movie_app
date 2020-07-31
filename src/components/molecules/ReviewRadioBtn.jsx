@@ -31,8 +31,8 @@ const ReviewRadioBtn = ({ review, handleChange }) => {
           value="public"
           review={review}
           defaultChecked={review.condition === undefined || review.condition === "public"}
-          onChange={handleChange('condition')}
-          active={review.condition === undefined || review.condition === "public"}
+          onClick={handleChange('condition')}
+          active={review.condition === "public"}
         />
         <RadioButton
           type="radio"
@@ -42,7 +42,7 @@ const ReviewRadioBtn = ({ review, handleChange }) => {
           value="private"
           review={review}
           defaultChecked={review.condition === "private"}
-          onChange={handleChange('condition')}
+          onClick={handleChange('condition')}
           active={review.condition === "private"}
         />
       </ul>
