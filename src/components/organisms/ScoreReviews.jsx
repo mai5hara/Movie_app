@@ -10,12 +10,24 @@ const Styles = {
   `,
 }
 
-const ScoreReviews = ({ review }) => {
+const ScoreReviews = ({ review, userId, movieId, getSelectReview, getLikeCount, ownLikeCount, totalLikeCount, history }) => {
+  console.log(review)
   return (
     <div css={Styles.scoreWrap}>
       <h2>Score ・ Review</h2>
       {review && Object.values(review).map((review) => {
-        return <ShowReview key={review.movieid} review={review} />;
+        return (
+          <ShowReview
+            key={review.authorId}
+            review={review}
+            userId={userId}
+            ownLikeCount={ownLikeCount}
+            totalLikeCount={totalLikeCount}
+            movieId={movieId}
+            getSelectReview={getSelectReview}
+            getLikeCount={getLikeCount}
+            history={history}
+          />)
       })}
     </div>
   )

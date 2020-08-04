@@ -7,12 +7,18 @@ import {
   CREATE_REVIEW,
   GET_OWNREVIEW,
   GET_REVIEW,
+  GET_SELECTREVIEW,
   COUNT_VIEWNUMBER,
   COUNT_CLIPNUMBER,
   GET_OWNCLIPCOUNT,
   GET_TOTALCLIPCOUNT,
   GET_OWNVIEWCOUNT,
   GET_TOTALVIEWCOUNT,
+  GET_OWNLIKECOUNT,
+  GET_LIKECOUNT,
+  COUNT_LIKENUMBER,
+  CREATE_COMMENT
+
 } from '../actions/movieActions';
 
 const initState = {
@@ -64,6 +70,12 @@ const movieReducer = (state = initState, action) => {
         ...state,
         reviews,
       };
+    case CREATE_COMMENT:
+      const comments = action.payload.comment
+      return {
+        ...state,
+        comments
+      }
     case GET_OWNREVIEW:
       const ownReview = action.payload
       return {
@@ -75,6 +87,12 @@ const movieReducer = (state = initState, action) => {
       return {
         ...state,
         review
+      }
+    case GET_SELECTREVIEW:
+      const selectReview = action.payload
+      return {
+        ...state,
+        selectReview
       }
     case GET_OWNCLIPCOUNT:
       const ownClipCount = action.payload
@@ -100,6 +118,18 @@ const movieReducer = (state = initState, action) => {
         ...state,
         totalViewCount
       }
+    case GET_OWNLIKECOUNT:
+      const ownLikeCount = action.payload
+      return {
+        ...state,
+        ownLikeCount
+      }
+    case GET_LIKECOUNT:
+      const totalLikeCount = action.payload
+      return {
+        ...state,
+        totalLikeCount
+      }
     case COUNT_VIEWNUMBER:
       const viewCount = action.payload.viewCount
       return {
@@ -111,6 +141,12 @@ const movieReducer = (state = initState, action) => {
       return {
         ...state,
         clipCount,
+      };
+    case COUNT_LIKENUMBER:
+      const likeCount = action.payload.likeCount
+      return {
+        ...state,
+        likeCount,
       };
     default:
       return state;
