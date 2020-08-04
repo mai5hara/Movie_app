@@ -35,22 +35,6 @@ const Styles = {
 const DEFAULT_PLACEHOLDER_IMAGE = 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg';
 
 const Movie = ({ movie, getClipCount, getViewCount, totalViewCount, totalClipCount }) => {
-    // console.log('totalViewCount', totalViewCount)
-    // console.log('totalClipCount', totalClipCount)
-    console.log(movie.imdbID)
-    const id = movie.imdbID
-
-    // const counter = (count) => {
-    //     if (!count) {
-    //         return 0
-    //     }
-    //     const res = Object.values(count).filter(value => value)
-    //     return res.length
-    // }
-
-    // const showTotalViewCount = counter(totalViewCount)
-    // const showTotalClipCount = counter(totalClipCount)
-
 
     const poster = movie.poster === "N/A" ? DEFAULT_PLACEHOLDER_IMAGE : movie.Poster;
 

@@ -11,7 +11,6 @@ const Styles = {
 }
 
 const ScoreReviews = ({ review, userId, movieId, getSelectReview, getLikeCount, ownLikeCount, totalLikeCount, history }) => {
-  console.log(review)
   return (
     <div css={Styles.scoreWrap}>
       <h2>Score ・ Review</h2>

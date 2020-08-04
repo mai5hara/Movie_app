@@ -57,8 +57,7 @@ const likeColor = ({ ownLikeCount }) => css({
 })
 
 const Comment = ({ likeCounter, selectReview, id, ownLikeCount, getLikeCount, postComment }) => {
-  console.log(selectReview)
-  console.log(ownLikeCount)
+
   const likeBtnColor = likeColor({ ownLikeCount })
 
   const auth = selectReview.authorId
@@ -78,7 +77,6 @@ const Comment = ({ likeCounter, selectReview, id, ownLikeCount, getLikeCount, po
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e.target.value)
     setComment({
       ...comment,
       comment: e.target.value

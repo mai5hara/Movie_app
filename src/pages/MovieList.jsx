@@ -49,15 +49,12 @@ const MovieList = ({
   movies,
   loading,
   fetchMovies,
-  id,
   totalClipCount,
   totalViewCount,
-  getReview,
   getViewCount,
   getClipCount,
 }) => {
 
-  console.log(movies)
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -67,7 +64,6 @@ const MovieList = ({
 
   const callSearchFunction = (e) => {
     e.preventDefault();
-    console.log(searchValue)
     fetchMovies(searchValue);
     setSearchValue('');
   };
@@ -90,7 +86,6 @@ const MovieList = ({
           <div>{error}</div>
         ) : (
               movies.map((movie) => (
-                console.log(movie),
                 < Link
                   to={`/${movie.imdbID}`}
                   key={movie.imdbID}

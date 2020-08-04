@@ -54,8 +54,7 @@ const linkToReview = css({
   color: '#222222'
 })
 
-const ShowReview = ({ review, movieId, getSelectReview, getLikeCount, totalLikeCount, history }) => {
-  console.log(history)
+const ShowReview = ({ review, movieId, getSelectReview, getLikeCount, totalLikeCount }) => {
 
   const counter = (count) => {
     if (!count) {
@@ -66,7 +65,6 @@ const ShowReview = ({ review, movieId, getSelectReview, getLikeCount, totalLikeC
   }
 
   const showTotalLikeCount = counter(totalLikeCount)
-  console.log(showTotalLikeCount)
 
   const handleClick = () => {
     history.push(`/${movieId}/${review.authorName}`)

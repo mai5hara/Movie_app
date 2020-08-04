@@ -7,10 +7,8 @@ import Comment from '../pages/Comment';
 import { compose } from 'redux';
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
   return {
     id: ownProps.match.params.id,
-    // ownReview: state.movie.ownReview,
     selectReview: state.movie.selectReview,
     ownLikeCount: state.movie.ownLikeCount,
   };

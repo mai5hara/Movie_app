@@ -220,12 +220,10 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
 }
 
 export const getSelectReview = (review) => (dispatch) => {
-  console.log(review)
   dispatch(setSelectReview(review))
 }
 
 export const likeCounter = (likeCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(likeCount)
   try {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
@@ -253,7 +251,6 @@ export const likeCounter = (likeCount) => async (dispatch, getState, { getFireba
 };
 
 export const getLikeCount = (review) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(review)
   const firestore = getFirestore();
   const authorId = getState().firebase.auth.uid;
   const reviewAuth = review.authorId
@@ -263,7 +260,6 @@ export const getLikeCount = (review) => async (dispatch, getState, { getFirebase
     const reviewDoc = await reviewRef.get();
 
     if (reviewDoc.exists) {
-      console.log(reviewDoc.data())
       dispatch(setOwnLikeCount(reviewDoc.data()[reviewAuth][authorId]))
       dispatch(setLikeCount(reviewDoc.data()[reviewAuth]))
     } else {
@@ -323,7 +319,6 @@ export const getViewCount = (movieId) => async (dispatch, getState, { getFirebas
 }
 
 export const getClipCount = (movieId) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(movieId)
   const firestore = getFirestore();
   const authorId = getState().firebase.auth.uid;
 

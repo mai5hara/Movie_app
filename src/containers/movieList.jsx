@@ -4,7 +4,6 @@ import movieList from '../pages/MovieList';
 import { compose } from 'redux';
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     error: state.movie.error,
     movies: state.movie.movies,
