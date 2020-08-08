@@ -21,6 +21,7 @@ const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
+    process.env.NODE_ENV === 'development' && window.devToolsExtension ? window.devToolsExtension() : f => f,
     reduxFirestore(firebase, fbConfig)
   )
 );

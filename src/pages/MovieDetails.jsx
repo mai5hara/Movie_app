@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import ScoreReviews from '../components/organisms/ScoreReviews';
 import MovieInfo from '../components/organisms/MovieInfo';
 
@@ -17,10 +17,12 @@ const MovieDetails = ({
   totalViewCount,
   getReview,
   ownReview,
-  review
+  review,
+  getSelectReview,
+  getLikeCount,
+  ownLikeCount,
+  totalLikeCount,
 }) => {
-
-  const userId = auth.uid
 
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
@@ -68,6 +70,7 @@ const MovieDetails = ({
     getReview(id);
     getViewCount(id);
     getClipCount(id);
+    getLikeCount(review);
   }, []);
 
   const viewClipCountStatus = {
@@ -88,7 +91,16 @@ const MovieDetails = ({
         viewClipCountStatus={viewClipCountStatus}
         ownReview={ownReview}
       />
-      <ScoreReviews id={id} review={review} />
+      <ScoreReviews
+        key={id}
+        movieId={id}
+        review={review}
+        userId={auth}
+        ownLikeCount={ownLikeCount}
+        totalLikeCount={totalLikeCount}
+        getSelectReview={getSelectReview}
+        getLikeCount={getLikeCount}
+      />
     </div>
   );
 };

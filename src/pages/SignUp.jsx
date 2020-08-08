@@ -132,7 +132,7 @@ const SignUp = ({ auth, signUp }) => {
                                         touched={touched}
                                     />
                                     {errors.confirmpassword && touched.confirmpassword && (<div css={error}>{errors.confirmpassword}</div>)}
-                                    <Button btnText="Sign Up" type="submit" submit={isSubmitting} style="signDefault" />
+                                    <Button text="Sign Up" type="submit" submit={isSubmitting} style="signDefault" />
                                 </Form>
                             </div>
                         </div>

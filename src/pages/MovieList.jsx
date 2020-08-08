@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { jsx, css } from '@emotion/core'
 import SearchBar from '../components/molecules/SearchBar';
 import Movie from '../components/organisms/Movie';
@@ -32,7 +32,10 @@ const Styles = {
     flex-wrap: wrap;
   `,
   movieWrap: css`
-    width: 25%;
+    width: 23%;
+    display: flex;
+    align-items: flex-end;
+    margin: 0 0.4rem;
     text-decoration: none;
     color: #777777;
     &:hove {
@@ -46,8 +49,12 @@ const MovieList = ({
   movies,
   loading,
   fetchMovies,
-  id,
+  totalClipCount,
+  totalViewCount,
+  getViewCount,
+  getClipCount,
 }) => {
+
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -79,21 +86,23 @@ const MovieList = ({
           <div>{error}</div>
         ) : (
               movies.map((movie) => (
-                <Link
-                  to={'/movie/' + movie.imdbID}
+                < Link
+                  to={`/${movie.imdbID}`}
                   key={movie.imdbID}
-                  movieId={movie.imdbID}
                   css={Styles.movieWrap}
                 >
                   <Movie
                     movie={movie}
-                    id={id}
+                    getViewCount={getViewCount}
+                    getClipCount={getClipCount}
+                    totalClipCount={totalClipCount}
+                    totalViewCount={totalViewCount}
                   />
                 </Link>
               ))
             )}
       </div>
-    </div>
+    </div >
   );
 };
 

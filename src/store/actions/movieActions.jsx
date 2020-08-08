@@ -7,6 +7,7 @@ export const SEARCH_PLOT_FAILURE = 'SEARCH_PLOT_FAILURE';
 export const CREATE_REVIEW = 'CREATE_REVIEW';
 export const GET_OWNREVIEW = 'GET_OWNREVIEW';
 export const GET_REVIEW = 'GET_REVIEW';
+export const GET_SELECTREVIEW = 'GET_SELECTREVIEW';
 export const COUNT_VIEWNUMBER = 'COUNT_VIEWNUMBER';
 export const COUNT_CLIPNUMBER = 'COUNT_CLIPNUMBER';
 export const GET_VIEWCOUNT = 'GET_VIEWCOUNT';
@@ -14,6 +15,10 @@ export const GET_OWNCLIPCOUNT = 'GET_OWNCLIPCOUNT';
 export const GET_TOTALCLIPCOUNT = 'GET_TOTALCLIPCOUNT';
 export const GET_OWNVIEWCOUNT = 'GET_OWNVIEWCOUNT';
 export const GET_TOTALVIEWCOUNT = 'GET_TOTALVIEWCOUNT';
+export const GET_OWNLIKECOUNT = 'GET_OWNLIKECOUNT';
+export const GET_LIKECOUNT = 'GET_LIKECOUNT';
+export const COUNT_LIKENUMBER = 'COUNT_LIKENUMBER';
+export const CREATE_COMMENT = 'CREATE_COMMENT';
 
 export const searchMovieRequest = () => {
   return {
@@ -63,12 +68,26 @@ export const setClipCounter = (clipCount) => {
   };
 };
 
+export const setLikeCounter = (likeCount) => {
+  return {
+    type: COUNT_LIKENUMBER,
+    payload: { likeCount }
+  };
+};
+
 export const setPostReview = (review) => {
   return {
     type: CREATE_REVIEW,
     payload: { review }
   };
 };
+
+export const setPostComment = (comment) => {
+  return {
+    type: CREATE_COMMENT,
+    payload: { comment }
+  }
+}
 
 export const setOwnReview = (review) => {
   return {
@@ -80,6 +99,13 @@ export const setOwnReview = (review) => {
 export const setReview = (review) => {
   return {
     type: GET_REVIEW,
+    payload: review
+  }
+}
+
+export const setSelectReview = (review) => {
+  return {
+    type: GET_SELECTREVIEW,
     payload: review
   }
 }
@@ -102,6 +128,20 @@ export const setOwnClipCount = (ownCount) => {
   return {
     type: GET_OWNCLIPCOUNT,
     payload: ownCount
+  }
+}
+
+export const setOwnLikeCount = (likeCount) => {
+  return {
+    type: GET_OWNLIKECOUNT,
+    payload: likeCount
+  }
+}
+
+export const setLikeCount = (likeCount) => {
+  return {
+    type: GET_LIKECOUNT,
+    payload: likeCount
   }
 }
 
@@ -146,6 +186,93 @@ export const postReview = (reviews) => (dispatch, getState, { getFirebase, getFi
   }
 };
 
+export const postComment = (comment) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  try {
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+    const batch = firestore.batch();
+    const userRef = firestore.collection('users').doc(authorId);
+    const reviewCommentRef = firestore.collection('reviewComment').doc(comment.movieId);
+
+    await batch.set((userRef), {
+      reviewComment: {
+        [comment.movieId]: {
+          [comment.auth]: {
+            comment: comment.comment,
+            isToggle: comment.isToggle
+          }
+        }
+      }
+    }, { merge: true });
+    await batch.set((reviewCommentRef), {
+      [comment.auth]: {
+        [authorId]: {
+          comment: comment.comment,
+          isToggle: comment.isToggle
+        }
+      }
+    }, { merge: true });
+    await batch.commit().then(console.log('done'));
+    return dispatch(setPostComment(comment))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getSelectReview = (review) => (dispatch) => {
+  dispatch(setSelectReview(review))
+}
+
+export const likeCounter = (likeCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  try {
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+    const batch = firestore.batch();
+    const userRef = firestore.collection('users').doc(authorId);
+    const likeCountRef = firestore.collection('likeCounter').doc(likeCount.movieId);
+
+    await batch.set((userRef), {
+      likeCount: {
+        [likeCount.movieId]: {
+          [likeCount.auth]: likeCount.isToggle
+        }
+      }
+    }, { merge: true });
+    await batch.set((likeCountRef), {
+      [likeCount.auth]: {
+        [authorId]: likeCount.isToggle
+      }
+    }, { merge: true });
+    await batch.commit().then(console.log('done'));
+    return dispatch(setLikeCounter(likeCount))
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+export const getLikeCount = (review) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  const firestore = getFirestore();
+  const authorId = getState().firebase.auth.uid;
+  const reviewAuth = review.authorId
+
+  try {
+    const reviewRef = firestore.collection('likeCounter').doc(review.movieId);
+    const reviewDoc = await reviewRef.get();
+
+    if (reviewDoc.exists) {
+      dispatch(setOwnLikeCount(reviewDoc.data()[reviewAuth][authorId]))
+      dispatch(setLikeCount(reviewDoc.data()[reviewAuth]))
+    } else {
+      console.log('No such document!')
+      dispatch(setOwnLikeCount(undefined))
+      dispatch(setLikeCount(undefined))
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const getReview = (movieId) => async (dispatch, getState, { getFirebase, getFirestore }) => {
   const firestore = getFirestore();
   const authorId = getState().firebase.auth.uid;
@@ -161,7 +288,7 @@ export const getReview = (movieId) => async (dispatch, getState, { getFirebase, 
       return reviewDoc.data()[authorId]
     } else {
       console.log('No such document!')
-      dispatch(setOwnReview(null))
+      dispatch(setOwnReview(undefined))
       dispatch(setReview({}))
     }
   } catch (error) {
@@ -170,6 +297,7 @@ export const getReview = (movieId) => async (dispatch, getState, { getFirebase, 
 };
 
 export const getViewCount = (movieId) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(movieId)
   const firestore = getFirestore();
   const authorId = getState().firebase.auth.uid;
 

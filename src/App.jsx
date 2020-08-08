@@ -6,7 +6,8 @@ import SignIn from './containers/signIn';
 import SignUp from './containers/signUp';
 import MovieDetails from './containers/movieDetaile';
 import Review from './containers/review';
-import Mypage from './pages/Mypage'
+import Mypage from './pages/Mypage';
+import Comment from './containers/comment';
 
 import './App.css';
 
@@ -17,7 +18,8 @@ class App extends Component {
         <Navbar />
         <Switch>
           <Route exact path="/" component={MovieList} />
-          <Route path="/movie/:id" component={MovieDetails} />
+          <Route exact path="/:id" component={MovieDetails} />
+          <Route path="/:id/:userId" component={Comment} />
           <Route path="/signup" component={SignUp} />
           <Route path="/signin" component={SignIn} />
           <Route path="/:id/review" component={Review} />

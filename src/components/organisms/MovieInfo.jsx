@@ -52,7 +52,7 @@ const MovieInfo = ({
   totalViewCount,
   viewClipCountStatus,
   id,
-  ownReview
+  ownReview,
 }) => {
 
   return (
