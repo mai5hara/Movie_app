@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { jsx, css } from '@emotion/core'
 import SearchBar from '../components/molecules/SearchBar';
 import Movie from '../components/organisms/Movie';
@@ -46,12 +46,10 @@ const MovieList = ({
   movies,
   loading,
   fetchMovies,
-  reviews,
   id,
-  auth
 }) => {
+
   const [searchValue, setSearchValue] = useState('');
-  console.log(searchValue);
 
   const handleChange = (e) => {
     setSearchValue(e.target.value);
@@ -87,10 +85,8 @@ const MovieList = ({
                   movieId={movie.imdbID}
                   css={Styles.movieWrap}
                 >
-                  <div></div>
                   <Movie
                     movie={movie}
-                    reviews={reviews}
                     id={id}
                   />
                 </Link>

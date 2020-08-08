@@ -5,17 +5,26 @@ import {
   SEARCH_PLOT_SUCCESS,
   SEARCH_PLOT_FAILURE,
   CREATE_REVIEW,
-  COUNT_VIEWNUMBER
+  GET_OWNREVIEW,
+  GET_REVIEW,
+  COUNT_VIEWNUMBER,
+  COUNT_CLIPNUMBER,
+  GET_OWNCLIPCOUNT,
+  GET_TOTALCLIPCOUNT,
+  GET_OWNVIEWCOUNT,
+  GET_TOTALVIEWCOUNT,
 } from '../actions/movieActions';
 
 const initState = {
   loading: false,
   movies: [],
+  review: {},
   error: null,
   movieDetail: [],
 };
 
 const movieReducer = (state = initState, action) => {
+
   switch (action.type) {
     case SEARCH_MOVIES_REQUEST:
       return {
@@ -24,13 +33,11 @@ const movieReducer = (state = initState, action) => {
         error: null,
       };
     case SEARCH_MOVIES_SECCESS:
-      console.log(action);
       const movies = action.payload.movies;
-      console.log(movies);
       return {
         ...state,
         loading: false,
-        movies: movies,
+        movies,
       };
     case SEARCH_MOVIES_FAILURE:
       return {
@@ -40,11 +47,10 @@ const movieReducer = (state = initState, action) => {
       };
     case SEARCH_PLOT_SUCCESS:
       const movieDetail = action.payload;
-      console.log(movieDetail);
       return {
         ...state,
         loading: false,
-        movieDetail: movieDetail,
+        movieDetail,
       };
     case SEARCH_PLOT_FAILURE:
       return {
@@ -53,14 +59,58 @@ const movieReducer = (state = initState, action) => {
         error: action.error,
       };
     case CREATE_REVIEW:
+      const reviews = action.payload.review
       return {
         ...state,
-        review: action.review,
+        reviews,
       };
-    case COUNT_VIEWNUMBER:
+    case GET_OWNREVIEW:
+      const ownReview = action.payload
       return {
         ...state,
-        viewCount: action.viewToggle,
+        ownReview
+      }
+    case GET_REVIEW:
+      const review = action.payload
+      return {
+        ...state,
+        review
+      }
+    case GET_OWNCLIPCOUNT:
+      const ownClipCount = action.payload
+      return {
+        ...state,
+        ownClipCount
+      }
+    case GET_TOTALCLIPCOUNT:
+      const totalClipCount = action.payload
+      return {
+        ...state,
+        totalClipCount
+      }
+    case GET_OWNVIEWCOUNT:
+      const ownViewCount = action.payload
+      return {
+        ...state,
+        ownViewCount
+      }
+    case GET_TOTALVIEWCOUNT:
+      const totalViewCount = action.payload
+      return {
+        ...state,
+        totalViewCount
+      }
+    case COUNT_VIEWNUMBER:
+      const viewCount = action.payload.viewCount
+      return {
+        ...state,
+        viewCount,
+      };
+    case COUNT_CLIPNUMBER:
+      const clipCount = action.payload.clipCount
+      return {
+        ...state,
+        clipCount,
       };
     default:
       return state;

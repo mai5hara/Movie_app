@@ -4,33 +4,10 @@ import { jsx, css } from '@emotion/core'
 
 const height = "10px";
 const thumbHeight = 20;
-const trackHeight = "10px";
 
 // colours
-const upperColor = "#edf5f9";
 const lowerColor = "#c71585";
 const thumbColor = "#ffc0cb";
-const thumbHoverColor = "#ccc";
-const upperBackground = `linear-gradient(to bottom, ${upperColor}, ${upperColor}) 100% 50% / 100% ${trackHeight} no-repeat transparent`;
-const lowerBackground = `linear-gradient(to bottom, ${lowerColor}, ${lowerColor}) 100% 50% / 100% ${trackHeight} no-repeat transparent`;
-
-// const makeLongShadow = (color, size) => {
-//   let i = 18;
-//   let shadow = `${i}px 0 0 ${size} ${color}`;
-
-//   for (; i < 706; i++) {
-//     shadow = `${shadow}, ${1}px 0 0 ${size} ${color}`;
-//   }
-//   return shadow
-// }
-
-const tangeSlider = () => {
-
-}
-
-const rangeSlider = css({
-  width: '100%'
-})
 
 const rangeSliderRange = css({
   WebkitAppearance: 'none',
@@ -83,12 +60,21 @@ const rangeSliderValue = css({
   color: lowerColor,
 })
 
-const ReviewScore = ({ review, inputFunc, type, id }) => {
+const ReviewScore = ({ review, handleChange, type, id }) => {
+
   return (
     <div>
       <p>Score</p>
-      <p css={rangeSliderValue}>{review.score}</p>
-      <input css={rangeSliderRange} onChange={inputFunc} type={type} id={id} min="0" max="100" value={review.score} />
+      <p css={rangeSliderValue}>{review.score || 0}</p>
+      <input
+        css={rangeSliderRange}
+        onChange={handleChange('score')}
+        type={type}
+        id={id}
+        min="0"
+        max="100"
+        defaultValue={review.score}
+      />
     </div>
   )
 }

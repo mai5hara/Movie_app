@@ -1,23 +1,15 @@
 /** @jsx jsx */
 
-import React from 'react';
 import { jsx, css } from '@emotion/core'
-import BtnStyle from '../atoms/BtnStyle';
+import Button from '../atoms/Button';
 import SearchInput from '../atoms/SearchInput';
 
-const Styles = {
-  input: css`
-    border-radius: 10px;
-  `,
-}
-
 const SearchBar = ({ handleChange }) => {
-  const searchBtnText = 'Search';
 
   return (
     <div>
-      <SearchInput handleChange={handleChange} css={Styles.input} />
-      <BtnStyle btnText={searchBtnText} />
+      <SearchInput style="inputDefault" handleChange={handleChange} />
+      <Button btnText="Search" />
     </div>
   )
 }

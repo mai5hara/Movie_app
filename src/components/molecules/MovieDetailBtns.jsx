@@ -1,50 +1,50 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core'
-import React from 'react';
-import BtnStyle from '../atoms/BtnStyle'
+import Button from '../atoms/Button'
 import { Link } from 'react-router-dom';
 
 const Styles = {
   btnWrap: css`
     display: flex;
     justify-content: space-between;
+    margin-top: auto;
   `,
   linkBtn: css`
     width: 30%;
   `
 }
 
-const btnsStyle = css({
-  width: '30%',
-  backgroundColor: '#c71585',
-  color: '#ffffff',
-  borderStyle: 'none',
-  borderRadius: '10px',
-  height: '3rem',
-  userSelect: 'none',
-  fontSize: '1rem'
-})
-
-const viewLinkBtn = css(
-  btnsStyle, {
-  width: '100%',
-})
-
 const MovieDetailBtns = ({
   viewHandleClick,
   clipHandleClick,
-  totalView,
-  clipToggle,
-  id }) => {
-  console.log(id)
+  viewClipCountStatus,
+  id,
+  ownReview
+}) => {
+
+  console.log(viewClipCountStatus.ownViewCount)
+  console.log(viewClipCountStatus.ownClipCount)
+  console.log(ownReview)
 
   return (
     <div css={Styles.btnWrap}>
-      <BtnStyle btnText="View" btnCount={totalView} btnFunc={viewHandleClick} id="viewCount" btnStyle={btnsStyle} />
-      <BtnStyle btnText="Clip" btnFunc={clipHandleClick} id="clipCount" btnStyle={btnsStyle} />
+      <Button
+        text={`View ${viewClipCountStatus.showTotalViewCount}`}
+        id="viewCount"
+        onClick={viewHandleClick}
+        style="countDefault"
+        active={viewClipCountStatus.ownViewCount === undefined || !viewClipCountStatus.ownViewCount ? false : true}
+      />
+      <Button
+        text={`Clip ${viewClipCountStatus.showTotalClipCount}`}
+        id="clipCount"
+        onClick={clipHandleClick}
+        style="countDefault"
+        active={viewClipCountStatus.ownClipCount === undefined || !viewClipCountStatus.ownClipCount ? false : true}
+      />
       <Link to={'/' + id + '/review'} key={id} css={Styles.linkBtn}>
-        <BtnStyle btnText="Review" btnStyle={viewLinkBtn} />
+        <Button text="Review" style="reviewDefault" active={ownReview === undefined || !ownReview ? false : true} />
       </Link>
     </div>
   )
