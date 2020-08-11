@@ -56,16 +56,17 @@ const likeColor = ({ ownLikeCount }) => css({
   cursor: 'pointer',
 })
 
-const Comment = ({ likeCounter, selectReview, id, ownLikeCount, getLikeCount, postComment }) => {
+const Comment = ({ likeCounter, selectReview, id, ownLikeCount, getLikeCount, postComment, getReview, review }) => {
 
   const likeBtnColor = likeColor({ ownLikeCount })
 
   const auth = selectReview.authorId
 
   const [likeToggle, setLikeToggle] = useState({
-    auth,
-    movieId: id,
-    isToggle: false,
+    ...selectReview,
+    // auth,
+    // movieId: id,
+    likes: false,
   });
 
   const [comment, setComment] = useState({
@@ -84,13 +85,15 @@ const Comment = ({ likeCounter, selectReview, id, ownLikeCount, getLikeCount, po
   }
 
   const likeHandleClick = (e) => {
+
     e.preventDefault();
     setLikeToggle({
       ...likeToggle,
-      isToggle: !likeToggle.isToggle,
+      likes: !likeToggle.likes,
     });
     likeCounter(likeToggle);
-    getLikeCount(selectReview)
+    // getLikeCount(selectReview)
+    getReview(id)
   };
 
   const handleSubmit = () => {

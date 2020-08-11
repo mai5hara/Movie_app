@@ -22,7 +22,7 @@ class App extends Component {
           <Route path="/:id/:userId" component={Comment} />
           <Route path="/signup" component={SignUp} />
           <Route path="/signin" component={SignIn} />
-          <Route path="/:id/review" component={Review} />
+          {/* <Route path="/:id/review" component={Review} /> */}
           <Route path="/mypage" component={Mypage} />
         </Switch>
       </BrowserRouter>

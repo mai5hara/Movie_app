@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { jsx, css } from '@emotion/core'
 import SearchBar from '../components/molecules/SearchBar';
 import Movie from '../components/organisms/Movie';
-import { Link } from 'react-router-dom';
 
 const Styles = {
   home: css`
@@ -31,17 +30,7 @@ const Styles = {
     display: flex;
     flex-wrap: wrap;
   `,
-  movieWrap: css`
-    width: 23%;
-    display: flex;
-    align-items: flex-end;
-    margin: 0 0.4rem;
-    text-decoration: none;
-    color: #777777;
-    &:hove {
-      color: pink;
-    }
-  `,
+
 }
 
 const MovieList = ({
@@ -53,6 +42,8 @@ const MovieList = ({
   totalViewCount,
   getViewCount,
   getClipCount,
+  totalLikeCount,
+  getLikeCount
 }) => {
 
 
@@ -86,19 +77,14 @@ const MovieList = ({
           <div>{error}</div>
         ) : (
               movies.map((movie) => (
-                < Link
-                  to={`/${movie.imdbID}`}
-                  key={movie.imdbID}
-                  css={Styles.movieWrap}
-                >
-                  <Movie
-                    movie={movie}
-                    getViewCount={getViewCount}
-                    getClipCount={getClipCount}
-                    totalClipCount={totalClipCount}
-                    totalViewCount={totalViewCount}
-                  />
-                </Link>
+                <Movie
+                  movie={movie}
+                  getViewCount={getViewCount}
+                  getClipCount={getClipCount}
+                  totalClipCount={totalClipCount}
+                  totalViewCount={totalViewCount}
+                  getLikeCount={getLikeCount}
+                />
               ))
             )}
       </div>

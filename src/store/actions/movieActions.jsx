@@ -228,21 +228,30 @@ export const likeCounter = (likeCount) => async (dispatch, getState, { getFireba
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
     const batch = firestore.batch();
+    const commentAuthId = likeCount.authorId
     const userRef = firestore.collection('users').doc(authorId);
     const likeCountRef = firestore.collection('likeCounter').doc(likeCount.movieId);
+    const reviewsRef = firestore.collection('reviews').doc(likeCount.movieId);
 
-    await batch.set((userRef), {
-      likeCount: {
-        [likeCount.movieId]: {
-          [likeCount.auth]: likeCount.isToggle
-        }
+    // await batch.set((userRef), {
+    //   likeCount: {
+    //     [likeCount.movieId]: {
+    //       [likeCount.auth]: likeCount.isToggle
+    //     }
+    //   }
+    // }, { merge: true });
+    // await batch.set((likeCountRef), {
+    //   [likeCount.auth]: {
+    //     [authorId]: likeCount.isToggle
+    //   }
+    // }, { merge: true });
+    await batch.set((reviewsRef), {
+      [likeCount.authorId]: {
+        ...likeCount,
       }
-    }, { merge: true });
-    await batch.set((likeCountRef), {
-      [likeCount.auth]: {
-        [authorId]: likeCount.isToggle
-      }
-    }, { merge: true });
+      // ...likeCount
+      // likes: likeCount.isToggle
+    }, { merge: true })
     await batch.commit().then(console.log('done'));
     return dispatch(setLikeCounter(likeCount))
   } catch (error) {
@@ -254,14 +263,13 @@ export const getLikeCount = (review) => async (dispatch, getState, { getFirebase
   const firestore = getFirestore();
   const authorId = getState().firebase.auth.uid;
   const reviewAuth = review.authorId
-
   try {
     const reviewRef = firestore.collection('likeCounter').doc(review.movieId);
     const reviewDoc = await reviewRef.get();
 
     if (reviewDoc.exists) {
       dispatch(setOwnLikeCount(reviewDoc.data()[reviewAuth][authorId]))
-      dispatch(setLikeCount(reviewDoc.data()[reviewAuth]))
+      dispatch(setLikeCount(reviewDoc.data()))
     } else {
       console.log('No such document!')
       dispatch(setOwnLikeCount(undefined))

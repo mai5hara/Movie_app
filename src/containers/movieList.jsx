@@ -1,5 +1,12 @@
 import { connect } from 'react-redux';
-import { fetchMovies, viewCounter, getViewCount, getClipCount, getReview } from '../store/actions/movieActions';
+import {
+  fetchMovies,
+  viewCounter,
+  getViewCount,
+  getClipCount,
+  getReview,
+  getLikeCount
+} from '../store/actions/movieActions';
 import movieList from '../pages/MovieList';
 import { compose } from 'redux';
 
@@ -11,6 +18,7 @@ const mapStateToProps = (state) => {
     auth: state.firebase.auth,
     totalClipCount: state.movie.totalClipCount,
     totalViewCount: state.movie.totalViewCount,
+    totalLikeCount: state.movie.totalLikeCount
   }
 }
 
@@ -21,6 +29,7 @@ const mapDispatchToProps = (dispatch) => {
     getViewCount: (movieId) => dispatch(getViewCount(movieId)),
     getClipCount: (movieId) => dispatch(getClipCount(movieId)),
     getReview: (movieId) => dispatch(getReview(movieId)),
+    getLikeCount: (review) => dispatch(getLikeCount(review)),
   };
 };
 

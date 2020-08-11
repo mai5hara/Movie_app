@@ -10,7 +10,8 @@ const Styles = {
   `,
 }
 
-const ScoreReviews = ({ review, userId, movieId, getSelectReview, getLikeCount, ownLikeCount, totalLikeCount, history }) => {
+const ScoreReviews = ({ review, userId, movieId, getSelectReview, getLikeCount, ownLikeCount, totalLikeCount }) => {
+
   return (
     <div css={Styles.scoreWrap}>
       <h2>Score ・ Review</h2>
@@ -25,7 +26,6 @@ const ScoreReviews = ({ review, userId, movieId, getSelectReview, getLikeCount, 
             movieId={movieId}
             getSelectReview={getSelectReview}
             getLikeCount={getLikeCount}
-            history={history}
           />)
       })}
     </div>

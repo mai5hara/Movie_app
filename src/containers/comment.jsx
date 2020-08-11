@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     id: ownProps.match.params.id,
     selectReview: state.movie.selectReview,
     ownLikeCount: state.movie.ownLikeCount,
+    review: state.movie.review,
   };
 };
 
