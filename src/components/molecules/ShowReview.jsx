@@ -57,7 +57,7 @@ const linkToReview = css({
 const ShowReview = ({ review, movieId, getSelectReview, getLikeCount, totalLikeCount }) => {
 
 
-  const showTotalLikeCount = counter(totalLikeCount)
+  // const showTotalLikeCount = counter(totalLikeCount)
 
   const handleClick = () => {
     getSelectReview(review)
@@ -80,7 +80,7 @@ const ShowReview = ({ review, movieId, getSelectReview, getLikeCount, totalLikeC
             </div>
             <div css={scores}>
               <p css={buttons}><FontAwesomeIcon icon={faStar} /> {review.score}</p>&nbsp;&nbsp;
-              <p css={buttons}><FontAwesomeIcon icon={faHeart} /> {showTotalLikeCount}</p>&nbsp;&nbsp;
+              <p css={buttons}><FontAwesomeIcon icon={faHeart} /></p>&nbsp;&nbsp;
               <p css={buttons}><FontAwesomeIcon icon={faCommentAlt} /> 2</p>
             </div>
             <p css={buttons}>{review.comment}</p>
