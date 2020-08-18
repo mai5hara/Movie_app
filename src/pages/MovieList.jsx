@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { jsx, css } from '@emotion/core'
 import SearchBar from '../components/molecules/SearchBar';
 import Movie from '../components/organisms/Movie';
+import topImage from '../assets/images/topimage.png';
 
 const Styles = {
   home: css`
@@ -11,7 +12,7 @@ const Styles = {
   `,
   head: css`
   background-color: #aaaaaa;
-  height: 50vh;
+  height: 100vh;
   display: flex
   `,
   search: css`
@@ -68,7 +69,6 @@ const MovieList = ({
             <SearchBar handleChange={handleChange} />
           </form>
         </div>
-        <div css={Styles.image}>image</div>
       </div>
       <div css={Styles.movieList}>
         {loading && !error ? (

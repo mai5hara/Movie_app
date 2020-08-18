@@ -1,9 +1,10 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faCommentAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { v4 as uuidv4 } from 'uuid';
 import ReviewInputStyle from '../components/molecules/ReviewInputStyle';
 import Button from '../components/atoms/Button';
 import ReviewSpoiler from '../components/molecules/ReviewSpoiler';
@@ -56,24 +57,46 @@ const likeColor = ({ ownLikeCount }) => css({
   cursor: 'pointer',
 })
 
-const Comment = ({ likeCounter, selectReview, id, ownLikeCount, getLikeCount, postComment, getReview, review }) => {
+const Comment = ({
+  likeCounter,
+  selectReview,
+  id,
+  auth,
+  ownLikeCount,
+  getLikeCount,
+  postComment,
+  getReview,
+  review,
+  getComment,
+  reviewComments,
+  deleteComment
+}) => {
+  console.log(reviewComments)
+  console.log(selectReview)
 
   const likeBtnColor = likeColor({ ownLikeCount })
 
-  const auth = selectReview.authorId
+  const reviewAuth = selectReview.authorId
+  const name = selectReview.authorName
 
   const [likeToggle, setLikeToggle] = useState({
-    ...selectReview,
-    // auth,
-    // movieId: id,
-    likes: false,
+    reviewAuth,
+    movieId: id,
+    isToggle: false,
   });
 
   const [comment, setComment] = useState({
+    reviewAuth,
     auth,
+    name,
     movieId: id,
     comment: '',
-    isToggle: false
+    id: uuidv4()
+  })
+
+  const [deleteSelectComment, setDeleteSelectComment] = useState({
+    reviewAuth,
+    movieId: id,
   })
 
   const handleChange = (e) => {
@@ -89,11 +112,10 @@ const Comment = ({ likeCounter, selectReview, id, ownLikeCount, getLikeCount, po
     e.preventDefault();
     setLikeToggle({
       ...likeToggle,
-      likes: !likeToggle.likes,
+      isToggle: !likeToggle.isToggle,
     });
     likeCounter(likeToggle);
-    // getLikeCount(selectReview)
-    getReview(id)
+    getLikeCount(selectReview)
   };
 
   const handleSubmit = () => {
@@ -102,7 +124,22 @@ const Comment = ({ likeCounter, selectReview, id, ownLikeCount, getLikeCount, po
       ...comment,
       comment: ''
     })
+    getComment(selectReview)
   }
+
+  const handleDeleteComment = () => {
+    // setDeleteSelectComment({
+    //   ...deleteSelectComment,
+    //   deleteId: id
+    // })
+    deleteComment(comment)
+    getComment(selectReview)
+
+  }
+
+  useEffect(() => {
+    getComment(selectReview)
+  }, [])
 
   return (
     <section css={commentWrap}>
@@ -118,6 +155,21 @@ const Comment = ({ likeCounter, selectReview, id, ownLikeCount, getLikeCount, po
           <p onClick={likeHandleClick} css={likeBtnColor} ><FontAwesomeIcon icon={faHeart} /> Like!</p>
         </div>
       </div>
+      {reviewComments && Object.values(reviewComments).map((comment) => {
+        console.log(comment)
+        return (
+          <div>
+            <p>{comment.name}</p>
+            <p>{comment.comment}</p>
+            <p><FontAwesomeIcon icon={faHeart} /> Like!</p>
+            {comment.auth === auth ? (
+              <p onClick={() => handleDeleteComment()}><FontAwesomeIcon icon={faTrashAlt} /></p>
+            ) : (
+                null)}
+            <hr></hr>
+          </div>
+        )
+      })}
       <div>
         {/* <ReviewSpoiler /> */}
         <textarea onChange={handleChange}></textarea>

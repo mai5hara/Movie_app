@@ -17,7 +17,9 @@ import {
   GET_OWNLIKECOUNT,
   GET_LIKECOUNT,
   COUNT_LIKENUMBER,
-  CREATE_COMMENT
+  CREATE_COMMENT,
+  GET_COMMENT,
+  DELETE_COMMENT
 
 } from '../actions/movieActions';
 
@@ -71,10 +73,22 @@ const movieReducer = (state = initState, action) => {
         reviews,
       };
     case CREATE_COMMENT:
-      const comments = action.payload.comment
+      const comments = action.payload
       return {
         ...state,
         comments
+      }
+    case GET_COMMENT:
+      const reviewComments = action.payload
+      return {
+        ...state,
+        reviewComments
+      }
+    case DELETE_COMMENT:
+      const deleteComment = action.payload
+      return {
+        ...state,
+        deleteComment
       }
     case GET_OWNREVIEW:
       const ownReview = action.payload

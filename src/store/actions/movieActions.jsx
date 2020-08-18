@@ -19,6 +19,8 @@ export const GET_OWNLIKECOUNT = 'GET_OWNLIKECOUNT';
 export const GET_LIKECOUNT = 'GET_LIKECOUNT';
 export const COUNT_LIKENUMBER = 'COUNT_LIKENUMBER';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
+export const GET_COMMENT = 'GET_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 export const searchMovieRequest = () => {
   return {
@@ -83,9 +85,25 @@ export const setPostReview = (review) => {
 };
 
 export const setPostComment = (comment) => {
+  console.log(comment)
   return {
     type: CREATE_COMMENT,
     payload: { comment }
+  }
+}
+
+export const getReviewComment = (comment) => {
+  console.log(comment)
+  return {
+    type: GET_COMMENT,
+    payload: comment
+  }
+}
+
+export const deleteSelectComment = (comment) => {
+  return {
+    type: DELETE_COMMENT,
+    payload: comment
   }
 }
 
@@ -187,6 +205,7 @@ export const postReview = (reviews) => (dispatch, getState, { getFirebase, getFi
 };
 
 export const postComment = (comment) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(comment)
   try {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
@@ -197,18 +216,24 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
     await batch.set((userRef), {
       reviewComment: {
         [comment.movieId]: {
-          [comment.auth]: {
-            comment: comment.comment,
-            isToggle: comment.isToggle
+          [comment.reviewAuth]: {
+            auth: authorId,
+            id: comment.id,
+            name: comment.name,
+            comment: comment.comment
+            // isToggle: comment.isToggle
           }
         }
       }
     }, { merge: true });
     await batch.set((reviewCommentRef), {
-      [comment.auth]: {
+      [comment.reviewAuth]: {
         [authorId]: {
+          auth: authorId,
+          id: comment.id,
+          name: comment.name,
           comment: comment.comment,
-          isToggle: comment.isToggle
+          // isToggle: comment.isToggle
         }
       }
     }, { merge: true });
@@ -219,11 +244,50 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
   }
 }
 
+export const getComment = (comment) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(comment.movieId)
+  const firestore = getFirestore();
+  try {
+    const reviewRef = firestore.collection('reviewComment').doc(comment.movieId);
+    const reviewDoc = await reviewRef.get();
+    console.log(reviewDoc.data())
+    if (reviewDoc.exists) {
+      console.log(reviewDoc.data()[comment.authorId])
+      dispatch(getReviewComment(reviewDoc.data()[comment.authorId]))
+    } else {
+      console.log('No such document!')
+      dispatch(getReviewComment(undefined))
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const getSelectReview = (review) => (dispatch) => {
   dispatch(setSelectReview(review))
 }
 
+export const deleteComment = (comment) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(comment)
+
+  const firestore = getFirestore();
+  const authorId = getState().firebase.auth.uid;
+
+  try {
+    const reviewRef = firestore.collection('reviewComment').doc(comment.movieId);
+    await reviewRef.set({
+      [comment.reviewAuth]: {
+        [authorId]: firestore.FieldValue.delete()
+      }
+    }, { merge: true })
+    dispatch(deleteSelectComment(comment))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const likeCounter = (likeCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(likeCount)
   try {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
@@ -233,25 +297,18 @@ export const likeCounter = (likeCount) => async (dispatch, getState, { getFireba
     const likeCountRef = firestore.collection('likeCounter').doc(likeCount.movieId);
     const reviewsRef = firestore.collection('reviews').doc(likeCount.movieId);
 
-    // await batch.set((userRef), {
-    //   likeCount: {
-    //     [likeCount.movieId]: {
-    //       [likeCount.auth]: likeCount.isToggle
-    //     }
-    //   }
-    // }, { merge: true });
-    // await batch.set((likeCountRef), {
-    //   [likeCount.auth]: {
-    //     [authorId]: likeCount.isToggle
-    //   }
-    // }, { merge: true });
-    await batch.set((reviewsRef), {
-      [likeCount.authorId]: {
-        ...likeCount,
+    await batch.set((userRef), {
+      likeCount: {
+        [likeCount.movieId]: {
+          [likeCount.auth]: likeCount.isToggle
+        }
       }
-      // ...likeCount
-      // likes: likeCount.isToggle
-    }, { merge: true })
+    }, { merge: true });
+    await batch.set((likeCountRef), {
+      [likeCount.auth]: {
+        [authorId]: likeCount.isToggle
+      }
+    }, { merge: true });
     await batch.commit().then(console.log('done'));
     return dispatch(setLikeCounter(likeCount))
   } catch (error) {
@@ -260,6 +317,7 @@ export const likeCounter = (likeCount) => async (dispatch, getState, { getFireba
 };
 
 export const getLikeCount = (review) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(review)
   const firestore = getFirestore();
   const authorId = getState().firebase.auth.uid;
   const reviewAuth = review.authorId

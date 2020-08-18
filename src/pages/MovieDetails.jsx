@@ -24,6 +24,9 @@ const MovieDetails = ({
   totalLikeCount,
 }) => {
 
+  console.log(review)
+  console.log(totalLikeCount)
+
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
     isToggle: true,
@@ -44,6 +47,20 @@ const MovieDetails = ({
 
   const showTotalViewCount = counter(totalViewCount)
   const showTotalClipCount = counter(totalClipCount)
+
+  let likeCount = 0
+
+  // for (let key in review) {
+  //   console.log(key)
+  //   for (let totalKey in totalLikeCount) {
+  //     console.log(totalKey)
+  //     if (review[key] === totalLikeCount[totalKey]) {
+  //       console.log(review[key])
+  //       console.log()
+  //       console.log('Yatta!')
+  //     }
+  //   }
+  // }
 
   const viewHandleClick = (e) => {
     e.preventDefault();
@@ -70,7 +87,7 @@ const MovieDetails = ({
     getReview(id);
     getViewCount(id);
     getClipCount(id);
-    getLikeCount(review);
+    // getLikeCount(review);
   }, []);
 
   const viewClipCountStatus = {
