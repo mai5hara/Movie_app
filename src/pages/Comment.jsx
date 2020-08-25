@@ -65,14 +65,10 @@ const Comment = ({
   ownLikeCount,
   getLikeCount,
   postComment,
-  getReview,
-  review,
   getComment,
   reviewComments,
   deleteComment
 }) => {
-  console.log(reviewComments)
-  console.log(selectReview)
 
   const likeBtnColor = likeColor({ ownLikeCount })
 
@@ -92,11 +88,6 @@ const Comment = ({
     movieId: id,
     comment: '',
     id: uuidv4()
-  })
-
-  const [deleteSelectComment, setDeleteSelectComment] = useState({
-    reviewAuth,
-    movieId: id,
   })
 
   const handleChange = (e) => {
@@ -128,13 +119,8 @@ const Comment = ({
   }
 
   const handleDeleteComment = () => {
-    // setDeleteSelectComment({
-    //   ...deleteSelectComment,
-    //   deleteId: id
-    // })
     deleteComment(comment)
     getComment(selectReview)
-
   }
 
   useEffect(() => {

@@ -221,7 +221,6 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
             id: comment.id,
             name: comment.name,
             comment: comment.comment
-            // isToggle: comment.isToggle
           }
         }
       }
@@ -233,7 +232,6 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
           id: comment.id,
           name: comment.name,
           comment: comment.comment,
-          // isToggle: comment.isToggle
         }
       }
     }, { merge: true });
@@ -245,7 +243,6 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
 }
 
 export const getComment = (comment) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(comment.movieId)
   const firestore = getFirestore();
   try {
     const reviewRef = firestore.collection('reviewComment').doc(comment.movieId);
@@ -287,7 +284,6 @@ export const deleteComment = (comment) => async (dispatch, getState, { getFireba
 }
 
 export const likeCounter = (likeCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(likeCount)
   try {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
@@ -317,7 +313,6 @@ export const likeCounter = (likeCount) => async (dispatch, getState, { getFireba
 };
 
 export const getLikeCount = (review) => async (dispatch, getState, { getFirebase, getFirestore }) => {
-  console.log(review)
   const firestore = getFirestore();
   const authorId = getState().firebase.auth.uid;
   const reviewAuth = review.authorId

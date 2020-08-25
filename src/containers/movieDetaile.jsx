@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
-import { fetchPlot } from '../store/actions/movieActions';
-import { viewCounter } from '../store/actions/movieActions';
-import { clipCounter } from '../store/actions/movieActions';
-import { getViewCount } from '../store/actions/movieActions';
-import { getClipCount } from '../store/actions/movieActions';
-import { getReview } from '../store/actions/movieActions';
-import { getSelectReview } from '../store/actions/movieActions';
-import { getLikeCount } from '../store/actions/movieActions';
+import {
+  fetchPlot,
+  viewCounter,
+  clipCounter,
+  getClipCount,
+  getViewCount,
+  getReview,
+  getSelectReview,
+  getLikeCount
+} from '../store/actions/movieActions';
 import MovieDetails from '../pages/MovieDetails';
 import { compose } from 'redux';
 

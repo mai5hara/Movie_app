@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import Review from '../pages/Review';
-import { postReview } from '../store/actions/movieActions';
-import { getReview } from '../store/actions/movieActions';
+import {
+  postReview,
+  getReview
+} from '../store/actions/movieActions';
 import { compose } from 'redux';
 
 const mapStateToProps = (state) => {
