@@ -4,8 +4,8 @@ This is a diary application for making a note about the thoughts of your favorit
 
 ## DEMO
 
-You can make note of the thoughts, evaluate, save about your favorite movie. 
-Also, you can follow other users who like movies and see their evaluation and thoughts.<br>
+You can make note of the thoughts, evaluate, save about your favorite movie.<br>
+Also, you can follow other users who like movies and see their evaluation and thoughts.
 
 Visit here
 Coming soon
