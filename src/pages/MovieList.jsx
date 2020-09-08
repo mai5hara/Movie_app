@@ -44,9 +44,9 @@ const MovieList = ({
   getViewCount,
   getClipCount,
   totalLikeCount,
-  getLikeCount
+  getLikeCount,
+  getViewCountObj
 }) => {
-
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -59,6 +59,30 @@ const MovieList = ({
     fetchMovies(searchValue);
     setSearchValue('');
   };
+
+  let movieIdList = [];
+  let movieViewCountList = {};
+
+  const movieMap = () => {
+    movies.map((movie) => {
+      movieIdList.push(movie.imdbID)
+    });
+  }
+
+  getViewCountObj(movieIdList)
+  console.log('movieIdList: ', movieIdList)
+
+  // const idList = () => {
+  //   movieIdList.forEach(id => {
+  //     console.log(id)
+  //   })
+  // }
+
+
+
+  movieMap()
+
+
 
   return (
     <div css={Styles.home}>

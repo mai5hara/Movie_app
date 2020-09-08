@@ -47,17 +47,28 @@ const Styles = {
 const DEFAULT_PLACEHOLDER_IMAGE = 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg';
 
 const Movie = ({ movie, getClipCount, getViewCount, totalViewCount, totalClipCount, getLikeCount }) => {
-
     const poster = movie.poster === "N/A" ? DEFAULT_PLACEHOLDER_IMAGE : movie.Poster;
     const movieId = movie.imdbID
 
-    // const handleClick = () => {
-    //     getLikeCount(movieId)
+    // const getMovieViewCount = () => {
+    //     for (let key in totalViewCount) {
+    //         if (movieId === key) {
+    //             return Object.keys(totalLikeCount[totalKey]).length
+    //         }
+    //     }
     // }
+
+    const handleClick = () => {
+        getLikeCount(movieId)
+    }
+
+    // useEffect(() => {
+    //     getViewCount(movieId)
+    // }, [])
 
     return (
         < Link
-            to={`/${movie.imdbID}`}
+            to={`/movies/${movie.imdbID}`}
             key={movie.imdbID}
             css={Styles.movieList}
         // onClick={handleClick}

@@ -313,6 +313,7 @@ export const likeCounter = (likeCount) => async (dispatch, getState, { getFireba
 };
 
 export const getLikeCount = (review) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(review)
   const firestore = getFirestore();
   const authorId = getState().firebase.auth.uid;
   const reviewAuth = review.authorId
@@ -374,6 +375,35 @@ export const getViewCount = (movieId) => async (dispatch, getState, { getFirebas
       dispatch(setOwnViewCount(undefined))
       dispatch(setTotalViewCount(undefined))
     }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getViewCountObj = (movieIdList) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(movieIdList)
+  const firestore = getFirestore();
+
+  try {
+    const reviewRef = firestore.collection('viewCounter').get();
+    const revireList = {}
+    console.log(revireList)
+
+    reviewRef
+      .then((querySnapshot) => {
+        movieIdList.forEach((id) => {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data())
+            if (id === doc) {
+
+            }
+          })
+        })
+      })
+
+    // } else {
+    //   console.log('No such document!')
+    // }
   } catch (error) {
     console.log(error)
   }

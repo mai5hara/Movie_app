@@ -18,12 +18,12 @@ class App extends Component {
         <Navbar />
         <Switch>
           <Route exact path="/" component={MovieList} />
-          <Route exact path="/:id" component={MovieDetails} />
-          <Route path="/:id/:userId" component={Comment} />
+          <Route path="/mypage" component={Mypage} />
           <Route path="/signup" component={SignUp} />
           <Route path="/signin" component={SignIn} />
-          {/* <Route path="/:id/review" component={Review} /> */}
-          <Route path="/mypage" component={Mypage} />
+          <Route exact path="/movies/:id" component={MovieDetails} />
+          <Route path="/movies/:id/comments/:userId" component={Comment} />
+          <Route path="/movies/:id/reviews/new" component={Review} />
         </Switch>
       </BrowserRouter>
     );

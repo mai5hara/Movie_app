@@ -98,9 +98,9 @@ const Comment = ({
     })
   }
 
-  const likeHandleClick = (e) => {
+  const likeHandleClick = () => {
 
-    e.preventDefault();
+    // e.preventDefault();
     setLikeToggle({
       ...likeToggle,
       isToggle: !likeToggle.isToggle,

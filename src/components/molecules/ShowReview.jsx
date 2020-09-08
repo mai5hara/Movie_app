@@ -76,7 +76,7 @@ const ShowReview = ({ review, movieId, getSelectReview, getLikeCount, totalLikeC
   }, [])
 
   return (
-    <Link to={`/${movieId}/${review.authorName}`} onClick={handleClick} css={linkToReview}>
+    <Link to={`/movies/${movieId}/comments/${review.authorName}`} onClick={handleClick} css={linkToReview}>
       <section>
         <div css={reviewWrap}>
           <div css={acountImage}></div>
