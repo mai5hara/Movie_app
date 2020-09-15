@@ -21,6 +21,7 @@ export const COUNT_LIKENUMBER = 'COUNT_LIKENUMBER';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const GET_COMMENT = 'GET_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const GET_VIEWCOUNTOBJ = 'GET_VIEWCOUNTOBJ';
 
 export const searchMovieRequest = () => {
   return {
@@ -139,6 +140,13 @@ export const setTotalViewCount = (totalCount) => {
   return {
     type: GET_TOTALVIEWCOUNT,
     payload: totalCount
+  }
+}
+
+export const setViewCountObj = (viewCounrObj) => {
+  return {
+    type: GET_VIEWCOUNTOBJ,
+    payload: viewCounrObj
   }
 }
 
@@ -382,28 +390,22 @@ export const getViewCount = (movieId) => async (dispatch, getState, { getFirebas
 
 export const getViewCountObj = (movieIdList) => async (dispatch, getState, { getFirebase, getFirestore }) => {
   console.log(movieIdList)
+
   const firestore = getFirestore();
 
   try {
-    const reviewRef = firestore.collection('viewCounter').get();
-    const revireList = {}
-    console.log(revireList)
+    const reviewRef = firestore.collection('viewCounter');
+    let viewCountObj = {};
 
-    reviewRef
-      .then((querySnapshot) => {
-        movieIdList.forEach((id) => {
-          querySnapshot.forEach((doc) => {
-            console.log(doc.data())
-            if (id === doc) {
-
-            }
-          })
-        })
+    movieIdList.forEach(id => {
+      reviewRef.doc(id).get().then(doc => {
+        viewCountObj[id] = doc.data();
       })
+      console.log(id)
+    })
 
-    // } else {
-    //   console.log('No such document!')
-    // }
+    dispatch(setViewCountObj(viewCountObj));
+
   } catch (error) {
     console.log(error)
   }

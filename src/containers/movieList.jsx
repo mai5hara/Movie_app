@@ -20,7 +20,8 @@ const mapStateToProps = (state) => {
     auth: state.firebase.auth,
     totalClipCount: state.movie.totalClipCount,
     totalViewCount: state.movie.totalViewCount,
-    totalLikeCount: state.movie.totalLikeCount
+    totalLikeCount: state.movie.totalLikeCount,
+    viewCountObj: state.movie.viewCountObj
   }
 }
 

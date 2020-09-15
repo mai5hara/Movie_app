@@ -31,7 +31,6 @@ const Styles = {
     display: flex;
     flex-wrap: wrap;
   `,
-
 }
 
 const MovieList = ({
@@ -45,43 +44,23 @@ const MovieList = ({
   getClipCount,
   totalLikeCount,
   getLikeCount,
-  getViewCountObj
+  getViewCountObj,
+  viewCountObj
 }) => {
 
-  const [searchValue, setSearchValue] = useState('');
+  console.log(viewCountObj)
+  console.log(movies)
 
-  const handleChange = (e) => {
-    setSearchValue(e.target.value);
-  };
-
-  const callSearchFunction = (e) => {
-    e.preventDefault();
-    fetchMovies(searchValue);
-    setSearchValue('');
-  };
-
-  let movieIdList = [];
-  let movieViewCountList = {};
-
-  const movieMap = () => {
-    movies.map((movie) => {
-      movieIdList.push(movie.imdbID)
-    });
-  }
-
-  getViewCountObj(movieIdList)
-  console.log('movieIdList: ', movieIdList)
-
-  // const idList = () => {
-  //   movieIdList.forEach(id => {
-  //     console.log(id)
-  //   })
-  // }
-
-
-
-  movieMap()
-
+  useEffect(() => {
+    let movieIdArr = [];
+    const movieMap = async () => {
+      await movies.map((movie) => {
+        movieIdArr.push(movie.imdbID)
+      });
+      getViewCountObj(movieIdArr)
+    }
+    movieMap();
+  }, [movies])
 
 
   return (
@@ -89,9 +68,7 @@ const MovieList = ({
       <div css={Styles.head}>
         <div css={Styles.search}>
           <h1>Search your favorite Movies</h1>
-          <form onSubmit={callSearchFunction}>
-            <SearchBar handleChange={handleChange} />
-          </form>
+          <SearchBar fetchMovies={fetchMovies} />
         </div>
       </div>
       <div css={Styles.movieList}>
@@ -100,9 +77,11 @@ const MovieList = ({
         ) : error ? (
           <div>{error}</div>
         ) : (
-              movies.map((movie) => (
+              movies.map((movie, index) => (
                 <Movie
+                  key={index}
                   movie={movie}
+                  viewCountObj={viewCountObj}
                   getViewCount={getViewCount}
                   getClipCount={getClipCount}
                   totalClipCount={totalClipCount}

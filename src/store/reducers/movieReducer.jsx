@@ -19,7 +19,8 @@ import {
   COUNT_LIKENUMBER,
   CREATE_COMMENT,
   GET_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  GET_VIEWCOUNTOBJ
 
 } from '../actions/movieActions';
 
@@ -29,6 +30,7 @@ const initState = {
   review: {},
   error: null,
   movieDetail: [],
+  viewCountObj: {}
 };
 
 const movieReducer = (state = initState, action) => {
@@ -131,6 +133,15 @@ const movieReducer = (state = initState, action) => {
       return {
         ...state,
         totalViewCount
+      }
+    case GET_VIEWCOUNTOBJ:
+      console.log(action)
+      console.log(action.payload)
+      const viewCountObj = action.payload
+      console.log(viewCountObj)
+      return {
+        ...state,
+        viewCountObj
       }
     case GET_OWNLIKECOUNT:
       const ownLikeCount = action.payload

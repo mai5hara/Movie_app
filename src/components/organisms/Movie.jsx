@@ -46,32 +46,21 @@ const Styles = {
 
 const DEFAULT_PLACEHOLDER_IMAGE = 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg';
 
-const Movie = ({ movie, getClipCount, getViewCount, totalViewCount, totalClipCount, getLikeCount }) => {
-    const poster = movie.poster === "N/A" ? DEFAULT_PLACEHOLDER_IMAGE : movie.Poster;
+const Movie = ({ movie, viewCountObj }) => {
+    console.log('viewCountObj:', typeof viewCountObj)
+    console.log('movie:', movie)
+
     const movieId = movie.imdbID
+    const viewCount = viewCountObj['test']
+    console.log('viewCount:', viewCount)
 
-    // const getMovieViewCount = () => {
-    //     for (let key in totalViewCount) {
-    //         if (movieId === key) {
-    //             return Object.keys(totalLikeCount[totalKey]).length
-    //         }
-    //     }
-    // }
-
-    const handleClick = () => {
-        getLikeCount(movieId)
-    }
-
-    // useEffect(() => {
-    //     getViewCount(movieId)
-    // }, [])
+    const poster = movie.Poster === "N/A" ? DEFAULT_PLACEHOLDER_IMAGE : movie.Poster;
 
     return (
-        < Link
+        <Link
             to={`/movies/${movie.imdbID}`}
             key={movie.imdbID}
             css={Styles.movieList}
-        // onClick={handleClick}
         >
             <div css={Styles.movieWrap}>
                 <h2 css={Styles.movieTitle}>{movie.Title}</h2>
