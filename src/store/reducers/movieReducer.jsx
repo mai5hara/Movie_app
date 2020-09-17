@@ -20,7 +20,9 @@ import {
   CREATE_COMMENT,
   GET_COMMENT,
   DELETE_COMMENT,
-  GET_VIEWCOUNTOBJ
+  GET_VIEWCOUNTOBJ,
+  GET_CLIPCOUNTOBJ,
+  GET_REVIEWOBJ
 
 } from '../actions/movieActions';
 
@@ -30,7 +32,9 @@ const initState = {
   review: {},
   error: null,
   movieDetail: [],
-  viewCountObj: {}
+  viewCountObj: {},
+  clipCountObj: {},
+  reviewObj: {}
 };
 
 const movieReducer = (state = initState, action) => {
@@ -135,13 +139,22 @@ const movieReducer = (state = initState, action) => {
         totalViewCount
       }
     case GET_VIEWCOUNTOBJ:
-      console.log(action)
-      console.log(action.payload)
       const viewCountObj = action.payload
-      console.log(viewCountObj)
       return {
         ...state,
         viewCountObj
+      }
+    case GET_CLIPCOUNTOBJ:
+      const clipCountObj = action.payload
+      return {
+        ...state,
+        clipCountObj
+      }
+    case GET_REVIEWOBJ:
+      const reviewObj = action.payload
+      return {
+        ...state,
+        reviewObj
       }
     case GET_OWNLIKECOUNT:
       const ownLikeCount = action.payload

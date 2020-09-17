@@ -22,6 +22,8 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const GET_COMMENT = 'GET_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const GET_VIEWCOUNTOBJ = 'GET_VIEWCOUNTOBJ';
+export const GET_CLIPCOUNTOBJ = 'GET_CLIPCOUNTOBJ';
+export const GET_REVIEWOBJ = 'GET_REVIEWOBJ';
 
 export const searchMovieRequest = () => {
   return {
@@ -143,10 +145,24 @@ export const setTotalViewCount = (totalCount) => {
   }
 }
 
-export const setViewCountObj = (viewCounrObj) => {
+export const setViewCountObj = (viewCountObj) => {
   return {
     type: GET_VIEWCOUNTOBJ,
-    payload: viewCounrObj
+    payload: viewCountObj
+  }
+}
+
+export const setClipCountObj = (clipCountObj) => {
+  return {
+    type: GET_CLIPCOUNTOBJ,
+    payload: clipCountObj
+  }
+}
+
+export const setReviewObj = (reviewObj) => {
+  return {
+    type: GET_REVIEWOBJ,
+    payload: reviewObj
   }
 }
 
@@ -388,23 +404,32 @@ export const getViewCount = (movieId) => async (dispatch, getState, { getFirebas
   }
 }
 
-export const getViewCountObj = (movieIdList) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+export const getCountObj = (movieIdList) => async (dispatch, getState, { getFirebase, getFirestore }) => {
   console.log(movieIdList)
 
   const firestore = getFirestore();
 
   try {
-    const reviewRef = firestore.collection('viewCounter');
+    const viewCountRef = firestore.collection('viewCounter');
+    const clipCountRef = firestore.collection('clipCounter');
+    const reviewRef = firestore.collection('reviews')
     let viewCountObj = {};
+    let clipCountObj = {};
+    let reviewObj = {};
 
-    movieIdList.forEach(id => {
-      reviewRef.doc(id).get().then(doc => {
-        viewCountObj[id] = doc.data();
-      })
-      console.log(id)
-    })
+    await Promise.all(movieIdList.map(async id => {
+      const viewDoc = await viewCountRef.doc(id).get();
+      const clipDoc = await clipCountRef.doc(id).get();
+      const reviewDoc = await reviewRef.doc(id).get();
+      viewCountObj[id] = viewDoc.data();
+      clipCountObj[id] = clipDoc.data();
+      reviewObj[id] = reviewDoc.data();
+      return
+    }))
 
     dispatch(setViewCountObj(viewCountObj));
+    dispatch(setClipCountObj(clipCountObj));
+    dispatch(setReviewObj(reviewObj));
 
   } catch (error) {
     console.log(error)

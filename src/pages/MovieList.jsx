@@ -44,12 +44,11 @@ const MovieList = ({
   getClipCount,
   totalLikeCount,
   getLikeCount,
-  getViewCountObj,
-  viewCountObj
+  getCountObj,
+  viewCountObj,
+  clipCountObj,
+  reviewObj
 }) => {
-
-  console.log(viewCountObj)
-  console.log(movies)
 
   useEffect(() => {
     let movieIdArr = [];
@@ -57,10 +56,11 @@ const MovieList = ({
       await movies.map((movie) => {
         movieIdArr.push(movie.imdbID)
       });
-      getViewCountObj(movieIdArr)
+      getCountObj(movieIdArr)
     }
     movieMap();
   }, [movies])
+
 
 
   return (
@@ -82,6 +82,8 @@ const MovieList = ({
                   key={index}
                   movie={movie}
                   viewCountObj={viewCountObj}
+                  clipCountObj={clipCountObj}
+                  reviewObj={reviewObj}
                   getViewCount={getViewCount}
                   getClipCount={getClipCount}
                   totalClipCount={totalClipCount}

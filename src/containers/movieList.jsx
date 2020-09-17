@@ -6,13 +6,12 @@ import {
   getClipCount,
   getReview,
   getLikeCount,
-  getViewCountObj
+  getCountObj
 } from '../store/actions/movieActions';
 import movieList from '../pages/MovieList';
 import { compose } from 'redux';
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     error: state.movie.error,
     movies: state.movie.movies,
@@ -21,7 +20,9 @@ const mapStateToProps = (state) => {
     totalClipCount: state.movie.totalClipCount,
     totalViewCount: state.movie.totalViewCount,
     totalLikeCount: state.movie.totalLikeCount,
-    viewCountObj: state.movie.viewCountObj
+    viewCountObj: state.movie.viewCountObj,
+    clipCountObj: state.movie.clipCountObj,
+    reviewObj: state.movie.reviewObj
   }
 }
 
@@ -33,7 +34,7 @@ const mapDispatchToProps = (dispatch) => {
     getClipCount: (movieId) => dispatch(getClipCount(movieId)),
     getReview: (movieId) => dispatch(getReview(movieId)),
     getLikeCount: (review) => dispatch(getLikeCount(review)),
-    getViewCountObj: (movieIdObj) => dispatch(getViewCountObj(movieIdObj))
+    getCountObj: (movieIdObj) => dispatch(getCountObj(movieIdObj))
   };
 };
 
