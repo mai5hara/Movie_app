@@ -5,14 +5,13 @@ import Warning from '../../assets/images/warning.png';
 
 const checkboxContainer = css({
   display: 'flex',
-  marginTop: '0.4rem'
+  width: '25%'
 })
 
 const checkboxWrap = css({
-  display: 'flex',
   position: 'relative',
-  width: '70px',
-  height: '70px'
+  width: '100%',
+  height: '3rem'
 })
 
 const checkBoxField = css({
@@ -23,42 +22,38 @@ const checkBoxField = css({
   padding: 0
 })
 
-const btnWrap = css({
+const btnWrap = ({ active }) => css({
   zIndex: 1,
-  width: '100%',
-  background: '#d3d3d3',
+  display: 'flex',
+  justifyContent: 'center',
+  background: active ? '#ff6347' : '#d3d3d3',
   cursor: 'pointer',
   color: '#ffffff',
   textAlign: 'center',
-  borderRadius: '5px',
+  borderRadius: '10px',
   padding: '0.5rem',
   transition: 'background 0.15s linear',
   WebkitTransition: 'background 0.15s linear',
   '&:hover': {
-    background: '#ffe4b5'
-  }
-})
-
-const btnWrapClicked = css(
-  btnWrap, {
-  background: '#ff6347',
-  color: '#ffffff',
-  '&:hover': {
-    background: '#ff6347',
-    color: '#ffffff',
+    background: active ? '#ff6347' : '#ffe4b5'
   }
 })
 
 const warning = css({
   width: '30px',
+  marginRight: '1rem'
 })
 
 const btnText = css({
-  margin: '0.2rem 0 0 0',
+  margin: '0',
   fontSize: '0.9rem',
+  display: 'flex',
+  alignItems: 'center'
 })
 
-const ReviewSpoiler = ({ review, handleChangeCheck }) => {
+const ReviewSpoiler = ({ review, handleChangeCheck, active }) => {
+  const btnStyle = btnWrap({ active })
+
   return (
     <div css={checkboxContainer}>
       <label css={checkboxWrap}>
@@ -67,11 +62,11 @@ const ReviewSpoiler = ({ review, handleChangeCheck }) => {
           name="spoiler"
           id="spoiler"
           defaultChecked={false}
-          checked={review.spoiler}
-          onChange={handleChangeCheck('spoiler')}
+          checked={review}
+          onChange={handleChangeCheck}
           css={checkBoxField}
         />
-        <span css={review.spoiler === '' || review.spoiler ? btnWrapClicked : btnWrap}>
+        <span css={btnStyle}>
           <img src={Warning} css={warning} />
           <p css={btnText}>Spoiler</p>
         </span>

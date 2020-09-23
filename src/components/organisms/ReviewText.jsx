@@ -26,13 +26,13 @@ const ReviewText = ({ handleChange, review, handleChangeCheck }) => {
         id="comment"
         style="commentStyle"
         multiline={true}
-        review={review}
-        handleChange={handleChange}
+        handleChange={handleChange('comment')}
+        defaultValue={review.comment}
       />
       <ReviewSpoiler
-        review={review}
-        handleChange={handleChange}
-        handleChangeCheck={handleChangeCheck}
+        review={review.spoiler}
+        handleChangeCheck={handleChangeCheck('spoiler')}
+        active={review.spoiler === '' || review.spoiler ? true : false}
       />
       <ReviewInputStyle
         inputTitle="Tags"
@@ -41,7 +41,7 @@ const ReviewText = ({ handleChange, review, handleChangeCheck }) => {
         style="tagStyle"
         multiline={false}
         review={review}
-        handleChange={handleChange}
+        handleChange={handleChange('tags')}
       />
     </div>
   )

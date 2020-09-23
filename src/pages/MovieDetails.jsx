@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ScoreReviews from '../components/organisms/ScoreReviews';
 import MovieInfo from '../components/organisms/MovieInfo';
+import Footer from '../components/atoms/Footer';
 
 const MovieDetails = ({
   movieDetail,
@@ -23,9 +24,6 @@ const MovieDetails = ({
   ownLikeCount,
   totalLikeCount,
 }) => {
-
-  console.log(review)
-  console.log(totalLikeCount)
 
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
@@ -54,6 +52,7 @@ const MovieDetails = ({
       ...viewToggle,
       isToggle: !viewToggle.isToggle,
     });
+    console.log(viewToggle)
     viewCounter(viewToggle);
     getViewCount(id);
   };
@@ -104,6 +103,7 @@ const MovieDetails = ({
         getSelectReview={getSelectReview}
         getLikeCount={getLikeCount}
       />
+      <Footer />
     </div>
   );
 };

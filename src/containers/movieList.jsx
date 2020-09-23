@@ -13,10 +13,9 @@ import { compose } from 'redux';
 
 const mapStateToProps = (state) => {
   return {
-    error: state.movie.error,
     movies: state.movie.movies,
     loading: state.movie.loading,
-    auth: state.firebase.auth,
+    auth: state.firebase.auth.uid,
     totalClipCount: state.movie.totalClipCount,
     totalViewCount: state.movie.totalViewCount,
     totalLikeCount: state.movie.totalLikeCount,

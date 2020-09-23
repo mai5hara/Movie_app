@@ -46,10 +46,19 @@ const accountName = css({
   margin: '0.4rem 0 0 0'
 })
 
-
 const buttons = css({
   padding: '0',
   margin: '0'
+})
+
+const btnWrap = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+})
+
+const trash = css({
+  color: '#FF6E00',
+  cursor: 'pointer'
 })
 
 const likeColor = ({ ownLikeCount }) => css({
@@ -73,7 +82,6 @@ const Comment = ({
   const likeBtnColor = likeColor({ ownLikeCount })
 
   const reviewAuth = selectReview.authorId
-  const name = selectReview.authorName
 
   const [likeToggle, setLikeToggle] = useState({
     reviewAuth,
@@ -84,23 +92,31 @@ const Comment = ({
   const [comment, setComment] = useState({
     reviewAuth,
     auth,
-    name,
     movieId: id,
     comment: '',
+    spoiler: false,
     id: uuidv4()
   })
+
+  console.log(comment)
 
   const handleChange = (e) => {
     e.preventDefault();
     setComment({
       ...comment,
-      comment: e.target.value
+      comment: e.target.value,
+    })
+  }
+
+  const handleChangeCheck = () => {
+    setComment({
+      ...comment,
+      spoiler: !comment.spoiler
     })
   }
 
   const likeHandleClick = () => {
 
-    // e.preventDefault();
     setLikeToggle({
       ...likeToggle,
       isToggle: !likeToggle.isToggle,
@@ -112,7 +128,6 @@ const Comment = ({
   const handleSubmit = () => {
     postComment(comment)
     setComment({
-      ...comment,
       comment: ''
     })
     getComment(selectReview)
@@ -142,24 +157,32 @@ const Comment = ({
         </div>
       </div>
       {reviewComments && Object.values(reviewComments).map((comment) => {
-        console.log(comment)
         return (
           <div>
             <p>{comment.name}</p>
             <p>{comment.comment}</p>
-            <p><FontAwesomeIcon icon={faHeart} /> Like!</p>
-            {comment.auth === auth ? (
-              <p onClick={() => handleDeleteComment()}><FontAwesomeIcon icon={faTrashAlt} /></p>
-            ) : (
-                null)}
+            <div css={btnWrap}>
+              <p><FontAwesomeIcon icon={faHeart} /> Like!</p>
+              {comment.auth === auth ? (
+                <p css={trash} onClick={() => handleDeleteComment()}><FontAwesomeIcon icon={faTrashAlt} /></p>
+              ) : (
+                  null)}
+            </div>
             <hr></hr>
           </div>
         )
       })}
       <div>
-        {/* <ReviewSpoiler /> */}
-        <textarea onChange={handleChange}></textarea>
-        <Button style="publishBtn" text="Send" onClick={handleSubmit} />
+        <ReviewInputStyle
+          type="text"
+          style="inputReviewStyle"
+          handleChange={handleChange}
+          multiline={true}
+        />
+        <div css={btnWrap}>
+          <ReviewSpoiler handleChangeCheck={handleChangeCheck} checked='checked' active={comment.spoiler ? true : false} />
+          <Button style="publishBtn" text="Send" onClick={handleSubmit} />
+        </div>
       </div>
     </section>
   )

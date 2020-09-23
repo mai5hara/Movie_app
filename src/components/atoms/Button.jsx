@@ -38,7 +38,7 @@ const cancelBtnStyle = ({ active }) => css(
 })
 
 const reviewLinkBtn = ({ active }) => css(
-  countBtn(active), {
+  countBtn({ active }), {
   width: '100%',
   backgroung: active ? '#c71585' : '#d3d3d3',
 })

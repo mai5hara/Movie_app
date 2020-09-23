@@ -1,10 +1,9 @@
 /** @jsx jsx */
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { jsx, css } from '@emotion/core'
 import SearchBar from '../components/molecules/SearchBar';
 import Movie from '../components/organisms/Movie';
-import topImage from '../assets/images/topimage.png';
 
 const Styles = {
   home: css`
@@ -34,15 +33,14 @@ const Styles = {
 }
 
 const MovieList = ({
-  error,
   movies,
+  auth,
   loading,
   fetchMovies,
   totalClipCount,
   totalViewCount,
   getViewCount,
   getClipCount,
-  totalLikeCount,
   getLikeCount,
   getCountObj,
   viewCountObj,
@@ -53,15 +51,15 @@ const MovieList = ({
   useEffect(() => {
     let movieIdArr = [];
     const movieMap = async () => {
-      await movies.map((movie) => {
-        movieIdArr.push(movie.imdbID)
-      });
-      getCountObj(movieIdArr)
+      if (movies) {
+        await movies.map((movie) => {
+          movieIdArr.push(movie.imdbID)
+        });
+      }
+      return getCountObj(movieIdArr)
     }
     movieMap();
   }, [movies])
-
-
 
   return (
     <div css={Styles.home}>
@@ -72,23 +70,19 @@ const MovieList = ({
         </div>
       </div>
       <div css={Styles.movieList}>
-        {loading && !error ? (
+        {loading && !movies ? (
           <span>...loading</span>
-        ) : error ? (
-          <div>{error}</div>
+        ) : !movies ? (
+          <div>Search again</div>
         ) : (
               movies.map((movie, index) => (
                 <Movie
                   key={index}
                   movie={movie}
+                  auth={auth}
                   viewCountObj={viewCountObj}
                   clipCountObj={clipCountObj}
                   reviewObj={reviewObj}
-                  getViewCount={getViewCount}
-                  getClipCount={getClipCount}
-                  totalClipCount={totalClipCount}
-                  totalViewCount={totalViewCount}
-                  getLikeCount={getLikeCount}
                 />
               ))
             )}

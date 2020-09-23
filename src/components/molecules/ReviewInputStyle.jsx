@@ -10,6 +10,7 @@ const titleStyle = css({
 const inputComment = css({
   width: '100%',
   height: '200px',
+  marginBottom: '0.6rem',
   boxSizing: 'border-box',
   padding: '1rem',
   outlineStyle: 'none',
@@ -24,9 +25,15 @@ const inputTag = css(
   height: '10px',
 })
 
+const inputReviewComment = css(
+  inputComment, {
+  height: '100px'
+})
+
 const map = {
   commentStyle: inputComment,
-  tagStyle: inputTag
+  tagStyle: inputTag,
+  inputReviewStyle: inputReviewComment
 }
 
 const ReviewInputStyle = ({
@@ -34,9 +41,9 @@ const ReviewInputStyle = ({
   inputTitle,
   id,
   type,
-  review,
   style,
-  multiline
+  multiline,
+  defaultValue
 }) => {
 
   const btnStyle = map[style]
@@ -49,10 +56,10 @@ const ReviewInputStyle = ({
           css={btnStyle}
           type={type}
           id={id}
-          onChange={handleChange('comment')}
-          defaultValue={review.comment}
+          onChange={handleChange}
+          defaultValue={defaultValue}
         /> :
-        <input css={btnStyle} type={type} id={id} onChange={handleChange('tags')} />
+        <input css={btnStyle} type={type} id={id} onChange={handleChange} />
       }
     </div>
   )

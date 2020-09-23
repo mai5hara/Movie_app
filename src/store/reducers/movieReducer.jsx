@@ -1,7 +1,6 @@
 import {
   SEARCH_MOVIES_REQUEST,
   SEARCH_MOVIES_SECCESS,
-  SEARCH_MOVIES_FAILURE,
   SEARCH_PLOT_SUCCESS,
   SEARCH_PLOT_FAILURE,
   CREATE_REVIEW,
@@ -52,12 +51,6 @@ const movieReducer = (state = initState, action) => {
         ...state,
         loading: false,
         movies,
-      };
-    case SEARCH_MOVIES_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
       };
     case SEARCH_PLOT_SUCCESS:
       const movieDetail = action.payload;

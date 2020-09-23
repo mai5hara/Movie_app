@@ -1,7 +1,6 @@
 const axios = require('axios');
 export const SEARCH_MOVIES_REQUEST = 'SEARCH_MOVIES_REQUEST';
 export const SEARCH_MOVIES_SECCESS = 'SEARCH_MOVIES_SECCESS';
-export const SEARCH_MOVIES_FAILURE = 'SEARCH_MOVIES_FAILURE';
 export const SEARCH_PLOT_SUCCESS = 'SEARCH_PLOT_SUCCESS';
 export const SEARCH_PLOT_FAILURE = 'SEARCH_PLOT_FAILURE';
 export const CREATE_REVIEW = 'CREATE_REVIEW';
@@ -35,13 +34,6 @@ export const searchMovieSuccess = (movies) => {
   return {
     type: SEARCH_MOVIES_SECCESS,
     payload: { movies },
-  };
-};
-
-export const searchMovieFeilure = (error) => {
-  return {
-    type: SEARCH_MOVIES_FAILURE,
-    payload: error,
   };
 };
 
@@ -232,18 +224,21 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
   console.log(comment)
   try {
     const firestore = getFirestore();
+    const profile = getState().firebase.profile;
     const authorId = getState().firebase.auth.uid;
     const batch = firestore.batch();
     const userRef = firestore.collection('users').doc(authorId);
     const reviewCommentRef = firestore.collection('reviewComment').doc(comment.movieId);
-
+    const reviewCommentIdRef = firestore.collection('reviewComment');
+    const id = reviewCommentIdRef.where("id", "==", comment.id);
+    console.log(id)
     await batch.set((userRef), {
       reviewComment: {
         [comment.movieId]: {
           [comment.reviewAuth]: {
             auth: authorId,
             id: comment.id,
-            name: comment.name,
+            name: profile.name,
             comment: comment.comment
           }
         }
@@ -254,11 +249,12 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
         [authorId]: {
           auth: authorId,
           id: comment.id,
-          name: comment.name,
+          name: profile.name,
           comment: comment.comment,
         }
       }
     }, { merge: true });
+
     await batch.commit().then(console.log('done'));
     return dispatch(setPostComment(comment))
   } catch (error) {
@@ -312,10 +308,8 @@ export const likeCounter = (likeCount) => async (dispatch, getState, { getFireba
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
     const batch = firestore.batch();
-    const commentAuthId = likeCount.authorId
     const userRef = firestore.collection('users').doc(authorId);
     const likeCountRef = firestore.collection('likeCounter').doc(likeCount.movieId);
-    const reviewsRef = firestore.collection('reviews').doc(likeCount.movieId);
 
     await batch.set((userRef), {
       likeCount: {
@@ -460,19 +454,32 @@ export const getClipCount = (movieId) => async (dispatch, getState, { getFirebas
 export const clipCounter = (clipCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
   try {
     const firestore = getFirestore();
+    const firebase = getFirebase();
     const authorId = getState().firebase.auth.uid;
     const batch = firestore.batch();
     const userRef = firestore.collection('users').doc(authorId);
     const clipCountRef = firestore.collection('clipCounter').doc(clipCount.movieId);
 
-    await batch.set((userRef), {
-      clipCount: {
-        [clipCount.movieId]: clipCount.isToggle
-      }
-    }, { merge: true });
-    await batch.set((clipCountRef), {
-      [authorId]: clipCount.isToggle
-    }, { merge: true });
+    if (clipCount.isToggle) {
+      await batch.set((userRef), {
+        clipCount: {
+          [clipCount.movieId]: clipCount.isToggle
+        }
+      }, { merge: true });
+      await batch.set((clipCountRef), {
+        [authorId]: clipCount.isToggle
+      }, { merge: true });
+    } else {
+      await batch.set((userRef), {
+        clipCount: {
+          [clipCount.movieId]: firebase.firestore.FieldValue.delete()
+        }
+      }, { merge: true });
+      await batch.set((clipCountRef), {
+        [authorId]: firebase.firestore.FieldValue.delete()
+      }, { merge: true });
+    }
+
     await batch.commit().then(console.log('done'));
     return dispatch(setClipCounter(clipCount))
   } catch (error) {
@@ -481,21 +488,35 @@ export const clipCounter = (clipCount) => async (dispatch, getState, { getFireba
 };
 
 export const viewCounter = (viewCount) => async (dispatch, getState, { getFirebase, getFirestore }) => {
+  console.log(viewCount.isToggle)
   try {
     const firestore = getFirestore();
+    const firebase = getFirebase();
     const authorId = getState().firebase.auth.uid;
     const batch = firestore.batch();
     const userRef = firestore.collection('users').doc(authorId);
     const viewCountRef = firestore.collection('viewCounter').doc(viewCount.movieId);
 
-    await batch.set((userRef), {
-      viewCount: {
-        [viewCount.movieId]: viewCount.isToggle
-      }
-    }, { merge: true });
-    await batch.set((viewCountRef), {
-      [authorId]: viewCount.isToggle
-    }, { merge: true })
+    if (viewCount.isToggle) {
+      await batch.set((userRef), {
+        viewCount: {
+          [viewCount.movieId]: viewCount.isToggle
+        }
+      }, { merge: true });
+      await batch.set((viewCountRef), {
+        [authorId]: viewCount.isToggle
+      }, { merge: true });
+    } else {
+      await batch.set((userRef), {
+        viewCount: {
+          [viewCount.movieId]: firebase.firestore.FieldValue.delete()
+        }
+      }, { merge: true });
+      await batch.set((viewCountRef), {
+        [authorId]: firebase.firestore.FieldValue.delete()
+      }, { merge: true });
+    }
+
     await batch.commit().then(console.log('done'));
     return dispatch(setViewCounter(viewCount))
   } catch (error) {
@@ -508,9 +529,16 @@ export const fetchMovies = (value) => async (dispatch) => {
   try {
     const res = await axios.get(`https://www.omdbapi.com/?s=${value}&apikey=4a3b711b`);
     const data = res.data;
-    return dispatch(searchMovieSuccess(data.Search));
+    console.log(data)
+    console.log(data.exists)
+    if (data) {
+      dispatch(searchMovieSuccess(data.Search));
+    } else {
+      console.log('Movie not found')
+      dispatch(searchMovieSuccess(undefined));
+    }
   } catch (error) {
-    return dispatch(searchMovieFeilure(error));
+    console.log(error)
   }
 };
 
