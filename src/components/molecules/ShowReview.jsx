@@ -87,14 +87,14 @@ const ShowReview = ({
   }, [])
 
   return (
-    <Link to={`/movies/${movieId}/comments/${review.authorName}`} onClick={handleClick} css={linkToReview}>
+    <Link to={`/movies/${movieId}/comments/${review.userid}`} onClick={handleClick} css={linkToReview}>
       <section>
         <div css={reviewWrap}>
           <div css={acountImage}></div>
           <div css={reviewDetail}>
             <div css={nameWrap}>
-              <p css={authorName}>{review.authorName}</p>
-              <p css={accountName}>@Mai</p>
+              <p css={authorName}>{review.username}</p>
+              <p css={accountName}>@{review.userid}</p>
             </div>
             <div css={scores}>
               <p css={buttons}><FontAwesomeIcon icon={faStar} /> {review.score}</p>&nbsp;&nbsp;

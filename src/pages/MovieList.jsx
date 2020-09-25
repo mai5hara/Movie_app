@@ -17,6 +17,7 @@ const Styles = {
     height: 100vh;
     background-image: url(${topImage});
     margin-top: -4rem;
+    background-size: cover;
   `,
   headText: css`
     position: absolute;
@@ -93,7 +94,7 @@ const MovieList = ({
             <span>...loading</span>
           ) : !movies ? (
             <div>
-              <p css={Styles.errorText}>Search again!</p>
+              <p css={Styles.errorText}>Please Search Again!</p>
               <img src={error} css={Styles.errorImg} />
             </div>
           ) : (

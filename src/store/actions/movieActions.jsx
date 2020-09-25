@@ -205,7 +205,8 @@ export const postReview = (reviews) => (dispatch, getState, { getFirebase, getFi
   batch.set((userRef), {
     review: {
       [reviews.movieId]: {
-        authorName: profile.name,
+        username: profile.username,
+        userid: profile.userid,
         authorId: authorId,
         createdAt: new Date(),
         ...reviews,
@@ -215,7 +216,8 @@ export const postReview = (reviews) => (dispatch, getState, { getFirebase, getFi
   batch.set((reviewsRef), {
     [authorId]: {
       authorId,
-      authorName: profile.name,
+      username: profile.username,
+      userid: profile.userid,
       createdAt: new Date(),
       ...reviews,
     }
@@ -246,7 +248,8 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
           [comment.reviewAuth]: {
             auth: authorId,
             id: comment.id,
-            name: profile.name,
+            username: profile.username,
+            userid: profile.userid,
             comment: comment.comment
           }
         }
@@ -257,7 +260,8 @@ export const postComment = (comment) => async (dispatch, getState, { getFirebase
         [authorId]: {
           auth: authorId,
           id: comment.id,
-          name: profile.name,
+          username: profile.username,
+          userid: profile.userid,
           comment: comment.comment,
         }
       }

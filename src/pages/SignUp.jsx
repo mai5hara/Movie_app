@@ -47,12 +47,15 @@ const error = css({
 const SignUp = ({ auth, signUp }) => {
 
     const handleSubmit = (value) => {
+        console.log(value)
         signUp(value)
     }
 
     const validationSchema = Yup.object({
-        name: Yup.string()
+        username: Yup.string()
             .required('Please Enter your name'),
+        userid: Yup.string()
+            .required('Please Enter your user name'),
         email: Yup.string()
             .email('Please Enter a correct email')
             .required('Please Enter your email'),
@@ -65,6 +68,7 @@ const SignUp = ({ auth, signUp }) => {
         confirmpassword: Yup.string()
             .oneOf([Yup.ref('password'), null])
     })
+    console.log(validationSchema)
 
     if (auth.uid) return <Redirect to="/" />
 
@@ -78,7 +82,7 @@ const SignUp = ({ auth, signUp }) => {
                     setSubmitting(false);
                     handleSubmit(values);
                 }}
-                initialValues={{ name: '', email: '', password: '', confirmpassword: '' }}
+                initialValues={{ username: '', useid: '', email: '', password: '', confirmpassword: '' }}
                 validationSchema={validationSchema}
             >
                 {props => {
@@ -89,16 +93,27 @@ const SignUp = ({ auth, signUp }) => {
                                 <p css={subTitle}>Sign Up</p>
                                 <Form>
                                     <SignForm
-                                        signTitle="Name"
-                                        name="name"
+                                        signTitle="User Name"
+                                        name="username"
                                         type="text"
-                                        id="name"
-                                        placeholder="Name"
+                                        id="username"
+                                        placeholder="User Name"
                                         handleChange={handleChange}
                                         errors={errors}
                                         touched={touched}
                                     />
-                                    {errors.name && touched.name && (<div css={error}>{errors.name}</div>)}
+                                    {errors.username && touched.username && (<div css={error}>{errors.username}</div>)}
+                                    <SignForm
+                                        signTitle="User ID"
+                                        name="userid"
+                                        type="text"
+                                        id="userid"
+                                        placeholder="User ID"
+                                        handleChange={handleChange}
+                                        errors={errors}
+                                        touched={touched}
+                                    />
+                                    {errors.userid && touched.userid && (<div css={error}>{errors.userid}</div>)}
                                     <SignForm
                                         signTitle="Email"
                                         name="email"

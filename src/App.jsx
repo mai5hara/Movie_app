@@ -6,7 +6,7 @@ import SignIn from './containers/signIn';
 import SignUp from './containers/signUp';
 import MovieDetails from './containers/movieDetaile';
 import Review from './containers/review';
-import Mypage from './pages/Mypage';
+import Mypage from './containers/myPage';
 import Comment from './containers/comment';
 
 import './App.css';

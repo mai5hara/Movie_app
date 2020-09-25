@@ -29,7 +29,7 @@ const SignedInLinks = ({ signOut, profile }) => {
     return (
         <ul css={Styles.navlink}>
             <Lists><NavLink to="/mypage" css={Styles.linkto}>My page</NavLink></Lists>
-            <Lists>{profile.name}</Lists>
+            <Lists>{profile.username}</Lists>
             <Lists><a onClick={signOut}>Log out</a></Lists>
         </ul>
     );

@@ -150,8 +150,8 @@ const Comment = ({
         <div css={acountImage}></div>
         <div css={reviewDetail}>
           <div css={nameWrap}>
-            <p css={authorName}>{selectReview.authorName}</p>
-            <p css={accountName}>@Mai</p>
+            <p css={authorName}>{selectReview.username}</p>
+            <p css={accountName}>@{selectReview.userid}</p>
           </div>
           <p css={buttons}>{selectReview.comment}</p>
           <hr></hr>
