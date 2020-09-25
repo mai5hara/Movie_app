@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from 'react';
+/** @jsx jsx */
+
+import { jsx, css } from '@emotion/core'
+import { useEffect, useState } from 'react';
 import ScoreReviews from '../components/organisms/ScoreReviews';
 import MovieInfo from '../components/organisms/MovieInfo';
 import Footer from '../components/atoms/Footer';
+
+const movieDetailWrap = css({
+  fontFamily: 'Gill sans'
+})
 
 const MovieDetails = ({
   movieDetail,
@@ -16,6 +23,7 @@ const MovieDetails = ({
   ownViewCount,
   totalClipCount,
   totalViewCount,
+  totalCommentCount,
   getReview,
   ownReview,
   review,
@@ -23,8 +31,10 @@ const MovieDetails = ({
   getLikeCount,
   ownLikeCount,
   totalLikeCount,
-}) => {
+  reviewComments,
+  getComment,
 
+}) => {
   const [viewToggle, setViewToggle] = useState({
     movieId: id,
     isToggle: true,
@@ -52,7 +62,6 @@ const MovieDetails = ({
       ...viewToggle,
       isToggle: !viewToggle.isToggle,
     });
-    console.log(viewToggle)
     viewCounter(viewToggle);
     getViewCount(id);
   };
@@ -72,7 +81,6 @@ const MovieDetails = ({
     getReview(id);
     getViewCount(id);
     getClipCount(id);
-    // getLikeCount(review);
   }, []);
 
   const viewClipCountStatus = {
@@ -83,7 +91,7 @@ const MovieDetails = ({
   }
 
   return (
-    <div>
+    <div css={movieDetailWrap}>
       <MovieInfo
         viewHandleClick={viewHandleClick}
         clipHandleClick={clipHandleClick}
@@ -92,6 +100,7 @@ const MovieDetails = ({
         movieDetail={movieDetail}
         viewClipCountStatus={viewClipCountStatus}
         ownReview={ownReview}
+        review={review}
       />
       <ScoreReviews
         key={id}
@@ -102,6 +111,8 @@ const MovieDetails = ({
         totalLikeCount={totalLikeCount}
         getSelectReview={getSelectReview}
         getLikeCount={getLikeCount}
+        getComment={getComment}
+        totalCommentCount={totalCommentCount}
       />
       <Footer />
     </div>

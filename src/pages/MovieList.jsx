@@ -4,32 +4,52 @@ import { useEffect } from 'react';
 import { jsx, css } from '@emotion/core'
 import SearchBar from '../components/molecules/SearchBar';
 import Movie from '../components/organisms/Movie';
+import topImage from '../imgs/top_image.jpg';
+import error from '../imgs/error.png';
 
 const Styles = {
   home: css`
     width: 100%;
+    font-family: Gill sans;
   `,
   head: css`
-  background-color: #aaaaaa;
-  height: 100vh;
-  display: flex
+    background-color: #aaaaaa;
+    height: 100vh;
+    background-image: url(${topImage});
+    margin-top: -4rem;
   `,
-  search: css`
-    width: 50%;
-    height: 50%;
-    margin-left: 10rem;
-  `,
-  image: css`
-    width: 50%;
-    height: auto;
-    background-color: #ffffff;
+  headText: css`
+    position: absolute;
+    color: #A30076;
+    top: 30%;
+    left: 8rem;
+    white-space: pre-line;
+    font-size: 4rem;
   `,
   movieList: css`
-    width:80%;
-    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
+    margin: 1.5rem 0;
   `,
+  movieWrap: css`
+    width:80%;
+    margin: 0 auto;
+  `,
+  movieTotalNum: css`
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 1.2rem;
+  `,
+  errorText: css`
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  `,
+  errorImg: css`
+    width: 30%;
+    margin: 0 auto;
+    display: inherit;
+  `
 }
 
 const MovieList = ({
@@ -37,16 +57,13 @@ const MovieList = ({
   auth,
   loading,
   fetchMovies,
-  totalClipCount,
-  totalViewCount,
-  getViewCount,
-  getClipCount,
-  getLikeCount,
   getCountObj,
   viewCountObj,
   clipCountObj,
   reviewObj
 }) => {
+
+  const movieNum = movies ? movies.length : 0
 
   useEffect(() => {
     let movieIdArr = [];
@@ -61,31 +78,37 @@ const MovieList = ({
     movieMap();
   }, [movies])
 
+  const text = 'Write memory\nfor Your\nFavorite Movies'
+
   return (
     <div css={Styles.home}>
       <div css={Styles.head}>
-        <div css={Styles.search}>
-          <h1>Search your favorite Movies</h1>
-          <SearchBar fetchMovies={fetchMovies} />
-        </div>
+        <p css={Styles.headText}>{text}</p>
       </div>
-      <div css={Styles.movieList}>
-        {loading && !movies ? (
-          <span>...loading</span>
-        ) : !movies ? (
-          <div>Search again</div>
-        ) : (
-              movies.map((movie, index) => (
-                <Movie
-                  key={index}
-                  movie={movie}
-                  auth={auth}
-                  viewCountObj={viewCountObj}
-                  clipCountObj={clipCountObj}
-                  reviewObj={reviewObj}
-                />
-              ))
-            )}
+      <div css={Styles.movieWrap}>
+        <SearchBar fetchMovies={fetchMovies} />
+        <p css={Styles.movieTotalNum}>{movieNum === 0 ? 'Search your favorite movie!' : `Search result ${movieNum} movies`}</p>
+        <div css={Styles.movieList}>
+          {loading && !movies ? (
+            <span>...loading</span>
+          ) : !movies ? (
+            <div>
+              <p css={Styles.errorText}>Search again!</p>
+              <img src={error} css={Styles.errorImg} />
+            </div>
+          ) : (
+                movies.map((movie, index) => (
+                  <Movie
+                    key={index}
+                    movie={movie}
+                    auth={auth}
+                    viewCountObj={viewCountObj}
+                    clipCountObj={clipCountObj}
+                    reviewObj={reviewObj}
+                  />
+                ))
+              )}
+        </div>
       </div>
     </div >
   );

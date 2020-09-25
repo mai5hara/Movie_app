@@ -7,7 +7,8 @@ import {
   getViewCount,
   getReview,
   getSelectReview,
-  getLikeCount
+  getLikeCount,
+  getComment
 } from '../store/actions/movieActions';
 import MovieDetails from '../pages/MovieDetails';
 import { compose } from 'redux';
@@ -24,7 +25,9 @@ const mapStateToProps = (state, ownProps) => {
     review: state.movie.review,
     ownReview: state.movie.ownReview,
     ownLikeCount: state.movie.ownLikeCount,
-    totalLikeCount: state.movie.totalLikeCount
+    totalLikeCount: state.movie.totalLikeCount,
+    reviewComments: state.movie.reviewComments,
+    totalCommentCount: state.movie.totalCommentCount
   };
 };
 
@@ -38,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     getReview: (movieId) => dispatch(getReview(movieId)),
     getSelectReview: (review) => dispatch(getSelectReview(review)),
     getLikeCount: (review) => dispatch(getLikeCount(review)),
+    getComment: (review) => dispatch(getComment(review))
   };
 };
 

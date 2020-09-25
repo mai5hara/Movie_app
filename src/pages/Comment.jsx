@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 import ReviewInputStyle from '../components/molecules/ReviewInputStyle';
 import Button from '../components/atoms/Button';
 import ReviewSpoiler from '../components/molecules/ReviewSpoiler';
@@ -61,6 +62,10 @@ const trash = css({
   cursor: 'pointer'
 })
 
+const cancelBtn = css({
+  width: '25%'
+})
+
 const likeColor = ({ ownLikeCount }) => css({
   color: ownLikeCount ? '#c71585' : '#d3d3d3',
   cursor: 'pointer',
@@ -98,8 +103,6 @@ const Comment = ({
     id: uuidv4()
   })
 
-  console.log(comment)
-
   const handleChange = (e) => {
     e.preventDefault();
     setComment({
@@ -116,7 +119,6 @@ const Comment = ({
   }
 
   const likeHandleClick = () => {
-
     setLikeToggle({
       ...likeToggle,
       isToggle: !likeToggle.isToggle,
@@ -173,14 +175,19 @@ const Comment = ({
         )
       })}
       <div>
-        <ReviewInputStyle
-          type="text"
-          style="inputReviewStyle"
-          handleChange={handleChange}
-          multiline={true}
-        />
-        <div css={btnWrap}>
+        <div>
           <ReviewSpoiler handleChangeCheck={handleChangeCheck} checked='checked' active={comment.spoiler ? true : false} />
+          <ReviewInputStyle
+            type="text"
+            style="inputReviewStyle"
+            handleChange={handleChange}
+            multiline={true}
+          />
+        </div>
+        <div css={btnWrap}>
+          <Link to={`/movies/${id}`} css={cancelBtn}>
+            <Button text="Cancel" style="cancelBtn" />
+          </Link>
           <Button style="publishBtn" text="Send" onClick={handleSubmit} />
         </div>
       </div>

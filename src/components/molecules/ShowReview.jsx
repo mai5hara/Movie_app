@@ -54,25 +54,36 @@ const linkToReview = css({
   color: '#222222'
 })
 
-const ShowReview = ({ review, movieId, getSelectReview, getLikeCount, totalLikeCount }) => {
+const ShowReview = ({
+  review,
+  movieId,
+  getSelectReview,
+  getLikeCount,
+  totalLikeCount,
+  totalCommentCount,
+  getComment
+}) => {
 
-  const getSelectLinkCount = () => {
-    for (let totalKey in totalLikeCount) {
+  const getSelectLinkCount = (totalCount) => {
+    for (let totalKey in totalCount) {
       if (review.authorId === totalKey) {
-        return Object.keys(totalLikeCount[totalKey]).length
+        return Object.keys(totalCount[totalKey]).length
       }
     }
   }
 
-  const showTotalLikeCount = getSelectLinkCount()
+  const showTotalLikeCount = getSelectLinkCount(totalLikeCount)
+  const showTotalCommentCount = getSelectLinkCount(totalCommentCount)
 
   const handleClick = () => {
     getSelectReview(review)
     getLikeCount(review)
+    getComment(review)
   }
 
   useEffect(() => {
     getLikeCount(review);
+    getComment(review)
   }, [])
 
   return (
@@ -87,8 +98,8 @@ const ShowReview = ({ review, movieId, getSelectReview, getLikeCount, totalLikeC
             </div>
             <div css={scores}>
               <p css={buttons}><FontAwesomeIcon icon={faStar} /> {review.score}</p>&nbsp;&nbsp;
-              <p css={buttons}><FontAwesomeIcon icon={faHeart} /> {showTotalLikeCount}</p>&nbsp;&nbsp;
-              <p css={buttons}><FontAwesomeIcon icon={faCommentAlt} /> 2</p>
+              <p css={buttons}><FontAwesomeIcon icon={faHeart} /> {!showTotalLikeCount ? '0' : showTotalLikeCount}</p>&nbsp;&nbsp;
+              <p css={buttons}><FontAwesomeIcon icon={faCommentAlt} /> {!showTotalCommentCount ? '0' : showTotalCommentCount}</p>
             </div>
             <p css={buttons}>{review.comment}</p>
           </div>

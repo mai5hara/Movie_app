@@ -33,7 +33,6 @@ const Navbar = ({ auth, profile, signOut, signIn, signUp }) => {
   return (
     <nav css={Styles.nav}>
       <Link to="/" css={Styles.logo}>Movie Diary</Link>
-      {/* <SearchBar /> */}
       {auth.isLoaded && links}
     </nav>
   );

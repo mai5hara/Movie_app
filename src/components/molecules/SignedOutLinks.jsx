@@ -15,6 +15,7 @@ const Styles = {
         color: #fff;
     `,
     navlink: css`
+        font-family: Gill sans;
         margin: 0;
         padding: 0;
         list-style: none;

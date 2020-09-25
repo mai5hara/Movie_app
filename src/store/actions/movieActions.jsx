@@ -23,6 +23,7 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const GET_VIEWCOUNTOBJ = 'GET_VIEWCOUNTOBJ';
 export const GET_CLIPCOUNTOBJ = 'GET_CLIPCOUNTOBJ';
 export const GET_REVIEWOBJ = 'GET_REVIEWOBJ';
+export const GET_TOTALCOMMENTCOUNT = 'GET_TOTALCOMMENTCOUNT';
 
 export const searchMovieRequest = () => {
   return {
@@ -133,6 +134,13 @@ export const setOwnViewCount = (ownCount) => {
 export const setTotalViewCount = (totalCount) => {
   return {
     type: GET_TOTALVIEWCOUNT,
+    payload: totalCount
+  }
+}
+
+export const setTotalCommentCount = (totalCount) => {
+  return {
+    type: GET_TOTALCOMMENTCOUNT,
     payload: totalCount
   }
 }
@@ -271,9 +279,11 @@ export const getComment = (comment) => async (dispatch, getState, { getFirebase,
     if (reviewDoc.exists) {
       console.log(reviewDoc.data()[comment.authorId])
       dispatch(getReviewComment(reviewDoc.data()[comment.authorId]))
+      dispatch(setTotalCommentCount(reviewDoc.data()))
     } else {
       console.log('No such document!')
       dispatch(getReviewComment(undefined))
+      dispatch(setTotalCommentCount(undefined))
     }
   } catch (error) {
     console.log(error)
@@ -314,12 +324,12 @@ export const likeCounter = (likeCount) => async (dispatch, getState, { getFireba
     await batch.set((userRef), {
       likeCount: {
         [likeCount.movieId]: {
-          [likeCount.auth]: likeCount.isToggle
+          [likeCount.reviewAuth]: likeCount.isToggle
         }
       }
     }, { merge: true });
     await batch.set((likeCountRef), {
-      [likeCount.auth]: {
+      [likeCount.reviewAuth]: {
         [authorId]: likeCount.isToggle
       }
     }, { merge: true });

@@ -21,7 +21,8 @@ import {
   DELETE_COMMENT,
   GET_VIEWCOUNTOBJ,
   GET_CLIPCOUNTOBJ,
-  GET_REVIEWOBJ
+  GET_REVIEWOBJ,
+  GET_TOTALCOMMENTCOUNT
 
 } from '../actions/movieActions';
 
@@ -112,6 +113,12 @@ const movieReducer = (state = initState, action) => {
       return {
         ...state,
         ownClipCount
+      }
+    case GET_TOTALCOMMENTCOUNT:
+      const totalCommentCount = action.payload
+      return {
+        ...state,
+        totalCommentCount
       }
     case GET_TOTALCLIPCOUNT:
       const totalClipCount = action.payload

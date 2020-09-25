@@ -1,8 +1,6 @@
 /** @jsx jsx */
 
 import { jsx, css } from '@emotion/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const searchBar = css({
   borderRadius: '30px',
@@ -11,6 +9,7 @@ const searchBar = css({
   borderStyle: 'none',
   padding: '0 1rem',
   outline: 'none',
+  border: '1px solid #777777'
 })
 
 const map = {

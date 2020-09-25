@@ -11,7 +11,6 @@ import Comment from '../pages/Comment';
 import { compose } from 'redux';
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps)
   return {
     auth: state.firebase.auth.uid,
     id: ownProps.match.params.id,
