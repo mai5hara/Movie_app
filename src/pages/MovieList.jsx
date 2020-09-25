@@ -1,99 +1,117 @@
 /** @jsx jsx */
 
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { jsx, css } from '@emotion/core'
 import SearchBar from '../components/molecules/SearchBar';
 import Movie from '../components/organisms/Movie';
-import { Link } from 'react-router-dom';
+import topImage from '../imgs/top_image.jpg';
+import error from '../imgs/error.png';
 
 const Styles = {
   home: css`
     width: 100%;
+    font-family: Gill sans;
   `,
   head: css`
-  background-color: #aaaaaa;
-  height: 50vh;
-  display: flex
+    background-color: #aaaaaa;
+    height: 100vh;
+    background-image: url(${topImage});
+    margin-top: -4rem;
+    background-size: cover;
   `,
-  search: css`
-    width: 50%;
-    height: 50%;
-    margin-left: 10rem;
-  `,
-  image: css`
-    width: 50%;
-    height: auto;
-    background-color: #ffffff;
+  headText: css`
+    position: absolute;
+    color: #A30076;
+    top: 30%;
+    left: 8rem;
+    white-space: pre-line;
+    font-size: 4rem;
   `,
   movieList: css`
-    width:80%;
-    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
+    margin: 1.5rem 0;
   `,
   movieWrap: css`
-    width: 25%;
-    text-decoration: none;
-    color: #777777;
-    &:hove {
-      color: pink;
-    }
+    width:80%;
+    margin: 0 auto;
   `,
+  movieTotalNum: css`
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 1.2rem;
+  `,
+  errorText: css`
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  `,
+  errorImg: css`
+    width: 30%;
+    margin: 0 auto;
+    display: inherit;
+  `
 }
 
 const MovieList = ({
-  error,
   movies,
+  auth,
   loading,
   fetchMovies,
-  id,
+  getCountObj,
+  viewCountObj,
+  clipCountObj,
+  reviewObj
 }) => {
 
-  const [searchValue, setSearchValue] = useState('');
+  const movieNum = movies ? movies.length : 0
 
-  const handleChange = (e) => {
-    setSearchValue(e.target.value);
-  };
+  useEffect(() => {
+    let movieIdArr = [];
+    const movieMap = async () => {
+      if (movies) {
+        await movies.map((movie) => {
+          movieIdArr.push(movie.imdbID)
+        });
+      }
+      return getCountObj(movieIdArr)
+    }
+    movieMap();
+  }, [movies])
 
-  const callSearchFunction = (e) => {
-    e.preventDefault();
-    fetchMovies(searchValue);
-    setSearchValue('');
-  };
+  const text = 'Write memory\nfor Your\nFavorite Movies'
 
   return (
     <div css={Styles.home}>
       <div css={Styles.head}>
-        <div css={Styles.search}>
-          <h1>Search your favorite Movies</h1>
-          <form onSubmit={callSearchFunction}>
-            <SearchBar handleChange={handleChange} />
-          </form>
-        </div>
-        <div css={Styles.image}>image</div>
+        <p css={Styles.headText}>{text}</p>
       </div>
-      <div css={Styles.movieList}>
-        {loading && !error ? (
-          <span>...loading</span>
-        ) : error ? (
-          <div>{error}</div>
-        ) : (
-              movies.map((movie) => (
-                <Link
-                  to={'/movie/' + movie.imdbID}
-                  key={movie.imdbID}
-                  movieId={movie.imdbID}
-                  css={Styles.movieWrap}
-                >
+      <div css={Styles.movieWrap}>
+        <SearchBar fetchMovies={fetchMovies} />
+        <p css={Styles.movieTotalNum}>{movieNum === 0 ? 'Search your favorite movie!' : `Search result ${movieNum} movies`}</p>
+        <div css={Styles.movieList}>
+          {loading && !movies ? (
+            <span>...loading</span>
+          ) : !movies ? (
+            <div>
+              <p css={Styles.errorText}>Please Search Again!</p>
+              <img src={error} css={Styles.errorImg} />
+            </div>
+          ) : (
+                movies.map((movie, index) => (
                   <Movie
+                    key={index}
                     movie={movie}
-                    id={id}
+                    auth={auth}
+                    viewCountObj={viewCountObj}
+                    clipCountObj={clipCountObj}
+                    reviewObj={reviewObj}
                   />
-                </Link>
-              ))
-            )}
+                ))
+              )}
+        </div>
       </div>
-    </div>
+    </div >
   );
 };
 

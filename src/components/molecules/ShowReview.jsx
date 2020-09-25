@@ -1,6 +1,10 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/core'
+import { jsx, css } from '@emotion/core';
+import { useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faHeart, faCommentAlt } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const reviewWrap = css({
   display: 'flex',
@@ -44,27 +48,65 @@ const buttons = css({
   margin: '0'
 })
 
-const ShowReview = ({ review }) => {
+const linkToReview = css({
+  textDecoration: 'none',
+  cursor: 'pointer',
+  color: '#222222'
+})
+
+const ShowReview = ({
+  review,
+  movieId,
+  getSelectReview,
+  getLikeCount,
+  totalLikeCount,
+  totalCommentCount,
+  getComment
+}) => {
+
+  const getSelectLinkCount = (totalCount) => {
+    for (let totalKey in totalCount) {
+      if (review.authorId === totalKey) {
+        return Object.keys(totalCount[totalKey]).length
+      }
+    }
+  }
+
+  const showTotalLikeCount = getSelectLinkCount(totalLikeCount)
+  const showTotalCommentCount = getSelectLinkCount(totalCommentCount)
+
+  const handleClick = () => {
+    getSelectReview(review)
+    getLikeCount(review)
+    getComment(review)
+  }
+
+  useEffect(() => {
+    getLikeCount(review);
+    getComment(review)
+  }, [])
 
   return (
-    <section>
-      <div css={reviewWrap}>
-        <div css={acountImage}></div>
-        <div css={reviewDetail}>
-          <div css={nameWrap}>
-            <p css={authorName}>{review.authorName}</p>
-            <p css={accountName}>@Mai</p>
+    <Link to={`/movies/${movieId}/comments/${review.userid}`} onClick={handleClick} css={linkToReview}>
+      <section>
+        <div css={reviewWrap}>
+          <div css={acountImage}></div>
+          <div css={reviewDetail}>
+            <div css={nameWrap}>
+              <p css={authorName}>{review.username}</p>
+              <p css={accountName}>@{review.userid}</p>
+            </div>
+            <div css={scores}>
+              <p css={buttons}><FontAwesomeIcon icon={faStar} /> {review.score}</p>&nbsp;&nbsp;
+              <p css={buttons}><FontAwesomeIcon icon={faHeart} /> {!showTotalLikeCount ? '0' : showTotalLikeCount}</p>&nbsp;&nbsp;
+              <p css={buttons}><FontAwesomeIcon icon={faCommentAlt} /> {!showTotalCommentCount ? '0' : showTotalCommentCount}</p>
+            </div>
+            <p css={buttons}>{review.comment}</p>
           </div>
-          <div css={scores}>
-            <p css={buttons}>{review.score}</p>
-            <p css={buttons}>❤︎ 2</p>
-            <p css={buttons}>■ 2</p>
-          </div>
-          <p css={buttons}>{review.comment}</p>
         </div>
-      </div>
-      <hr></hr>
-    </section>
+        <hr></hr>
+      </section>
+    </Link>
   )
 };
 

@@ -2,6 +2,7 @@
 
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom';
+// import SearchBar from '../molecules/SearchBar';
 import SignedInLinks from '../molecules/SignedInLinks';
 import SignedOutLinks from '../molecules/SignedOutLinks';
 
@@ -13,6 +14,8 @@ const Styles = {
     justify-content: space-between;
     background-color: #23589e;
     color: #fff;
+    position: sticky;
+    top: 0;
   `,
   navWrap: css`
     display: flex;

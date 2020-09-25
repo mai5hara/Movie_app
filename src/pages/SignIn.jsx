@@ -102,7 +102,7 @@ const SignIn = ({ auth, signIn }) => {
                     touched={touched}
                   />
                   {errors.password && touched.password && (<div css={error}>{errors.password}</div>)}
-                  <Button btnText="Sign In" type="submit" submit={isSubmitting} style="signDefault" />
+                  <Button text="Sign In" type="submit" submit={isSubmitting} style="signDefault" />
                 </Form>
               </div>
             </div>

@@ -5,11 +5,12 @@ import { jsx, css } from '@emotion/core'
 import ReviewText from '../components/organisms/ReviewText';
 import ReviewBtns from '../components/molecules/ReviewBtns';
 import ReviewConditions from '../components/organisms/ReviewConditions';
+import { useHistory } from 'react-router-dom';
 
 const Styles = {
   formwrap: css`
     width: 60%;
-    margin: 0 auto;
+    margin: 5rem auto;
   `,
 }
 
@@ -31,15 +32,14 @@ const reducer = (state = initialState, action) => {
 
 
 const Review = ({ match, postReview, getReview }) => {
+  let history = useHistory();
 
   const movieId = match.params.id;
 
   const [reviewDetail, dispatch] = useReducer(reducer, initialState);
 
   const handleChangeCheck = (key) => (e) => {
-    e.preventDefault();
     dispatch({ type: 'UPDATE', payload: { key, value: !reviewDetail.spoiler } })
-
   };
 
   const handleChange = (key) => (e) => {
@@ -50,6 +50,7 @@ const Review = ({ match, postReview, getReview }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     postReview(reviewDetail);
+    history.push(`/movies/${movieId}`)
   };
 
   useEffect(() => {

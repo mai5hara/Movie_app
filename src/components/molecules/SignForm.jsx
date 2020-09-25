@@ -4,6 +4,7 @@ import { jsx, css } from '@emotion/core'
 import { Field } from 'formik';
 
 const inputField = css({
+  fontFamily: 'American Typewriter, serif',
   marginTop: '1.8rem',
   marginBottom: '0.7rem'
 })

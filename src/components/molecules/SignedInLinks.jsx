@@ -15,6 +15,7 @@ const Styles = {
         color: #fff;
     `,
     navlink: css`
+        font-family: Gill sans;
         margin: 0;
         padding: 0;
         list-style: none;
@@ -27,9 +28,8 @@ const Styles = {
 const SignedInLinks = ({ signOut, profile }) => {
     return (
         <ul css={Styles.navlink}>
-            <Lists><NavLink to="/" css={Styles.linkto}>Home</NavLink></Lists>
-            <Lists><NavLink to="mypage" css={Styles.linkto}>My page</NavLink></Lists>
-            <Lists>{profile.name}</Lists>
+            <Lists><NavLink to="/mypage" css={Styles.linkto}>My page</NavLink></Lists>
+            <Lists>{profile.username}</Lists>
             <Lists><a onClick={signOut}>Log out</a></Lists>
         </ul>
     );

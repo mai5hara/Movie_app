@@ -3,6 +3,9 @@
 import { jsx, css } from '@emotion/core'
 import styled from '@emotion/styled';
 import MovieDetailBtns from '../molecules/MovieDetailBtns';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Styles = {
   infoSection: css`
@@ -18,6 +21,20 @@ const Styles = {
   imageWrap: css`
     display: flex;
   `,
+  movieTitle: css`
+    margin: 2rem 0 0 0;
+  `,
+  score: css`
+    margin-top: 0.5rem;
+  `,
+  backLink: css`
+    text-decoration: none;
+    color: #222222;
+    margin-top: 1.5rem;
+    &:hover {
+      color: #c71585;
+    }
+  `
 }
 
 const DetailWrap = styled.div`
@@ -52,13 +69,32 @@ const MovieInfo = ({
   totalViewCount,
   viewClipCountStatus,
   id,
-  ownReview
+  ownReview,
+  review
 }) => {
+
+  const scoreFunc = () => {
+    if (review === undefined) {
+      return 'No Data'
+    } else {
+      let arr = []
+      const scoreNum = Object.values(review).length;
+      let scoreAverage;
+      for (let key in review) {
+        arr.push(Number(review[key].score))
+        scoreAverage = arr.reduce((acc, current) => acc + current) / scoreNum
+      }
+      return scoreAverage ? Math.round(scoreAverage) + ' Point' : 0 + ' Point'
+    }
+  }
+
+  const scoreAverage = scoreFunc()
 
   return (
     <div css={Styles.infoSection}>
-      <h2>{movieDetail.Title}</h2>
-      <p>★★★★★ 5.0</p>
+      <Link to="/" css={Styles.backLink}><p><FontAwesomeIcon icon={faArrowLeft} /> Back to movie list</p></Link>
+      <h2 css={Styles.movieTitle}>{movieDetail.Title}</h2>
+      <p css={Styles.score}>★ {scoreAverage}</p>
       <div css={Styles.detailWrap}>
         <div css={Styles.imageWrap}>
           <img
